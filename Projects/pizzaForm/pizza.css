@@ -1,0 +1,10 @@
+
+form, div{
+    width:fit-content;
+    display:inline-block
+}
+
+.order-summary{
+    margin-left: 100px;
+    margin-top: 0%;
+}
