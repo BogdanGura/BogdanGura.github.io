@@ -7,12 +7,12 @@ img{
     height:200px;
 }
 
-.btn:hover{
+button:hover{
     background-color:darkslateblue;
     color:whitesmoke;
 }
 
-.btn:active{
+button:active{
     background-color:darkred;
     color:darkgoldenrod;
 }
