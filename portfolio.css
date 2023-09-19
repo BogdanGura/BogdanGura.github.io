@@ -1,0 +1,18 @@
+body{
+    background-color: bisque;
+}
+
+img{
+    width:150px;
+    height:200px;
+}
+
+.btn:hover{
+    background-color:darkslateblue;
+    color:whitesmoke;
+}
+
+.btn:active{
+    background-color:darkred;
+    color:darkgoldenrod;
+}
