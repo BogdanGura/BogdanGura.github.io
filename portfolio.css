@@ -3,9 +3,15 @@ body{
 }
 
 img{
-    width:150px;
-    height:200px;
+    width:300px;
+    height:400px;
 }
+
+p, li{
+    font-size:larger;
+    font-weight: bold;
+}
+
 
 button:hover{
     background-color:darkslateblue;
