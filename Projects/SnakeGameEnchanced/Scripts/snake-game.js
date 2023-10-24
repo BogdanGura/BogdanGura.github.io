@@ -231,7 +231,7 @@ function checkForHits(squares)
        (currentSnake[0] % width === width -1 && direction === 1) ||
        (currentSnake[0] % width === 0 && direction === -1) ||
        (currentSnake[0] - width < 0 && direction === -width))
-      //Thanks Kaden
+       //Thanks Kaden :)
     {
         //Make multiple phrases input them into an array and select randomly
         gameOverMessage = "You hit matrix walls";
@@ -270,7 +270,8 @@ function randomApple(squares) {
     do {
         appleIndex = Math.floor(Math.random() * squares.length);
     } while (squares[appleIndex].classList.contains("snake") || 
-             squares[appleIndex].classList.contains("mine"));
+             squares[appleIndex].classList.contains("mine") ||
+             squares[appleIndex].classList.contains("apple"));
     squares[appleIndex].classList.add("apple");
     console.log(`Apple added at ${appleIndex}`);
 }
@@ -352,25 +353,53 @@ function control(event)
     //Up, W or up arrow or up button (-10)
     if(event.keyCode === 38 || event.keyCode === 87)
     {
-        direction = -width;
+        //If the direction selected before hand
+        // isn't down, than register the button
+        //if not do nothing
+        if(direction !== +width)
+        {
+            direction = -width;
+        }
+        else{
+            console.log("Can't go backwards");
+        }
         //console.log("UP botton is pressed");
     }
     //Left button, a or a left arrow (-1)
     if(event.keyCode === 37 || event.keyCode === 65)
     {
-        direction = -1;
+        if(direction !== 1)
+        {
+            direction = -1;
+        }
+        else{
+            console.log("Can't go backwards");
+        }
         //console.log("LEFT botton is pressed");
     }
     //Right button, d or a right arrow (1)
     if(event.keyCode === 39 || event.keyCode === 68)
     {
-        direction = 1;
+        if(direction !== -1)
+        {
+            direction = 1;
+        }
+        else{
+            console.log("Can't go backwards");
+        }
         //console.log("RIGHT botton is pressed");
     }
     //Down button, s or a down arrow (+10)
     if(event.keyCode === 40 || event.keyCode === 83)
     {
-        direction = +width;
+        if(direction !== -width)
+        {
+            direction = +width;
+        }
+        else{
+            console.log("Can't go backwards");
+        }
+        
         //console.log("DOWN botton is pressed");
     }
 }
