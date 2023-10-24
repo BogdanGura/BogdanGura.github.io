@@ -22,7 +22,7 @@ window.onload = loadAchivements;
 
 function loadAchivements()
 {
-    if(localStorage.getItem("achivements") !== null)
+    if(localStorage.getItem("achievements") !== null)
     {
         let achivementsArray = JSON.parse(localStorage.getItem("achievements"));
         //Check each ahcivement in the array
