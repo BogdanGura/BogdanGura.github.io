@@ -1,0 +1,289 @@
+body{
+    background-color: black;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 800;
+}
+
+/* Scrolling effect */
+html {
+    scroll-behavior: smooth;
+}
+
+/* customizing anchors */
+a{
+    color: white;
+}
+
+a:hover{
+    text-decoration: none;
+    color: purple;
+}
+
+/* Spacing out the list items on index.html */
+.navbar-nav > li{
+    padding-left:30px;
+    padding-right:30px;
+}
+
+.navbar{
+    border-bottom: 2px solid white;
+}
+
+/* navbar color styling */
+#index-navbar{
+    background-color: black;
+}
+
+/* Styling index's page intro content */
+.jumbotron-fluid{
+    height: 770px;
+    width: 100%;
+    color: white;
+    border-bottom: 2px solid white;
+    background-image: url("/Pictures/background.png");
+}
+
+/* Styling intro text */
+.intro-text{
+    margin-top: 40px;
+    font-size:20px;
+    width: 50%;
+    text-align: center;
+    font-weight:bolder;
+}
+
+/* Main Content Styling */
+#personal-img,
+#personal-img2{
+    width: 200px;
+}
+
+/* Styling main div */
+.container-main{
+    width: 100%;
+    height: 100%;
+    border-bottom: 2px white solid;
+}
+
+/* Main Text container */
+.main-text{
+    margin-bottom: 250px;
+}
+
+/* Main's text */
+.main-text h4{
+    font-size: 30px;
+}
+
+/* Personal Photo Styling */
+#personal-img{
+    border: 7px #E5E4E2 solid;
+    border-radius: 90px;
+    height: 80%;
+    width: 20%;
+    margin-left: 100px;
+}
+
+/* Styling a footer */
+.container-footer{
+    width: 100%;
+    height: 100%;
+}
+
+/* Text typing animation */
+/* The typing effect */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  /* The typewriter cursor effect */
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+  }
+
+.typewriter-1 h1{
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: .15em solid orange; /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    animation: 
+      typing 3.5s steps(40, end),
+      blink-caret .75s step-end infinite;
+}
+
+/* Games list Container */
+#project-container{
+    /* Text styling */
+    margin-top: 20px;
+    font-weight: 600;
+    font-size: 50px;
+
+    /* Positioning */
+    margin: auto;
+    width: 45%;
+    height: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -70%);
+    left: 50%;
+}
+
+/* Text styling in the #project-container */
+#project-container h1{
+    font-size: 60px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#project-container h3{
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Projects List Styling */
+.game-list{
+    width: 350px;
+    font-size: 24px;
+    margin-left: 180px;
+}
+
+.game-list li{
+    margin-top: 30px;
+}
+
+/* button styling */
+.btn-danger{
+    margin-left: 2%;
+}
+
+/* Styling Projects main container */
+.container-main{
+    color: white;
+}
+
+/* Unorganized list in container main */
+.container-main ul{
+    margin-left: 30%;
+}
+
+.container-main h1{
+    margin-bottom: 40px;
+}
+
+.projects-list li{
+    margin-bottom: 80px;
+}
+
+/* Text sizing */
+.projects-list p{
+    font-size: 20px;
+}
+
+.project-img{
+    width: 250px;
+    height: 250px;
+    border: 15px greenyellow ridge;
+}
+
+/* text hints styling */
+.mine{
+    color: red;
+}
+
+.achievements{
+    color: green;
+}
+
+.tetrominoes{
+    color: yellow;
+}
+
+.AI{
+    color: orangered;
+}
+
+.XP{
+    color:rgb(0, 132, 255);
+}
+
+.💰{
+    color:rgb(8, 208, 8);
+}
+
+/* Status label styling */
+.status-label{
+    font-size: 20px;
+}
+
+/* Credentials Intro text styling */
+.credentials-text{
+    margin-top: 17%;
+    width: 100%;
+    text-align: center;
+}
+
+.credentials-text h1{
+    font-size: 60px;
+    font-weight:bold;
+}
+
+.credentials-text h3{
+    font-size: 30px;
+    font-weight:bold;
+}
+
+/* Main body styling */
+#award-plaque{
+    width: 600px;
+    height: 750px;
+    margin: 10px 0px 40px 250px;
+    padding: 20px;
+    border: 30px #855E42 ridge;
+    background-color: #5a3e2a;
+}
+/* Award Plaque Styling */
+
+/* Top part of the plaque */
+.top-part{
+    background-color: #DAA520;
+}
+
+.top-part #description-text{
+    margin-top: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #047;
+    font-size: 30px;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+#award-plaque #bpa-logo{
+    width: 75%;
+    height: 55%;
+    margin-left: 70px;
+}
+
+#award-plaque #ohio-logo{
+    width: 60%;
+    height: 60%;
+    margin-left: 100px;
+}
+
+/* Bottom part styling */
+.bottom-part{
+    margin-top: 20px;
+    background-color: #DAA520;
+    text-align: center;
+    font-size: 20px;
+}
+
+/* Styling Resume */
+#resume button{
+    font-size: 30px;
+    margin-left: 200%;
+    width: 300px;
+    margin-bottom: 20px;
+}
