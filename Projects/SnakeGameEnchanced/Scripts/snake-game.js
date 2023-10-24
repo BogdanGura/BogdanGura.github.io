@@ -230,7 +230,8 @@ function checkForHits(squares)
     if((currentSnake[0] + width >= width * width && direction === width) ||
        (currentSnake[0] % width === width -1 && direction === 1) ||
        (currentSnake[0] % width === 0 && direction === -1) ||
-       (currentSnake[0] - width <= 0 && direction === -width))
+       (currentSnake[0] - width < 0 && direction === -width))
+      //Thanks Kaden
     {
         //Make multiple phrases input them into an array and select randomly
         gameOverMessage = "You hit matrix walls";
