@@ -208,8 +208,9 @@ function moveSnake(squares)
     squares[tail].classList.remove("snake");
     currentSnake.unshift(currentSnake[0] + direction);
     //movement ends
-    eatApple(squares, tail);
     squares[currentSnake[0]].classList.add("snake");
+    //Apple clipping bug fixed (Thanks Kaden. Again)
+    eatApple(squares, tail);
 }
 
 //Checks if the snake has hit a wall or a mine
