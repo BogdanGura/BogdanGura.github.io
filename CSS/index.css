@@ -1,7 +1,8 @@
 body{
-    background-color: #212529;;
+    background-color: black;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 800;
+    color: white;
 }
 
 /* Scrolling effect */
@@ -219,13 +220,15 @@ a:hover{
 }
 
 /* Credentials Intro text styling */
-.credentials-text{
+.credentials-text,
+.about-text{
     margin-top: 17%;
     width: 100%;
     text-align: center;
 }
 
-.credentials-text h1{
+.credentials-text h1,
+.about-text h1{
     font-size: 60px;
     font-weight:bold;
 }
@@ -287,3 +290,65 @@ a:hover{
     width: 300px;
     margin-bottom: 20px;
 }
+
+/* Styling the medal */
+
+
+.medal-inline{
+    width: 300px; /* Set the width of your centered div */
+    height: 300px; /* Set the height of your centered div */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(80%, -67%);
+    background-color: #d9c400;
+    border-radius: 50%;
+    border: 20px goldenrod solid;
+}
+
+.medal-inline h2{
+    color: #047;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-left: 13%;
+    font-weight: bold;
+    
+}
+
+#regional{
+    font-size: 25px;
+    margin-top: 40px;
+    margin-left: 27%;
+}
+
+#events{
+    font-size: 18px;
+}
+
+.medal-inline img{
+    width: 80%;
+    margin-left: 18px;
+    margin-top: 25px;
+}
+
+.container-main-about-me{
+    width: 800px;
+    font-size: 30px;
+    margin-left: 10%;
+    text-wrap: wrap;
+}
+
+#personal-img2{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(35%, 49%);
+    width: 600px;
+    height: 700px;
+    border-radius: 50%;
+}
+
+.list-travel{
+    margin-left: 100px;
+}
+
