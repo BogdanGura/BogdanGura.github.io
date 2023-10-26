@@ -1,0 +1,95 @@
+body{
+    font-family: ‘Actor’;
+    background-color: rgb(110, 182, 249);
+    background-repeat: no-repeat;
+    color: black;
+}
+
+a,
+a:hover{
+    text-decoration: none;
+    color: black;
+}
+
+/* Styling main container (positioning) */
+.menu-container{
+    margin: 0 auto;
+    position: relative;
+    top: 100%;
+    left: -1%;
+    width: 800px;
+    height: 890px;
+}
+
+/* Styling main-content */
+header{
+    margin-left: 50px;
+    text-wrap: nowrap;
+}
+
+header h1,
+header h3{
+    text-align: center;
+}
+
+header h1{
+    font-size: 65px;
+}
+
+header h3{
+    font-size: 45px;
+}
+
+header input{
+    font-size: 25px;
+    padding: 20px;
+    margin-left: 7%;
+    margin-right: 15px;
+    margin-top: 20px;
+}
+
+#error-div{
+    margin: 0;
+    margin-left: 45px;
+}
+
+/* Styling user-input field */
+#record-field{
+    display: inline;
+}
+
+/* Styling button container */
+.button-container{
+    display: block;
+    margin-left: 50px;
+    margin-top: 20px;
+    width: 400px;
+}
+
+/* Styling buttons inside button container */
+.button-container button{
+    display: block;
+    color: black;
+    background-color: rgb(255, 140, 0);
+    margin-top: 10px;
+    font-size: 40px;
+    padding: 40px;
+    width: 400px;
+    margin-left: 10px;
+    /* Positioning buttons */
+    margin-left: 40%;
+}
+
+.button-container button:hover{
+    background-color: rgb(217, 121, 3);
+}
+
+.button-container button:active{
+    background-color: rgb(233, 84, 3);
+}
+
+#creator{
+    font-style: italic;
+    color: gold;
+    font-weight: bold;
+}

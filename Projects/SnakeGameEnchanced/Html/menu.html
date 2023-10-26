@@ -1,0 +1,48 @@
+<!-- Bogdan Gura -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/Projects/SnakeGameEnchanced/Images/snake-icon.png">
+    <!-- BootStrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <!-- Custom Font -->
+    <link href=’https://fonts.googleapis.com/css?family=Actor’ rel=’stylesheet’>
+    <!-- Personal CSS -->
+    <link rel="stylesheet" href="/Projects/SnakeGameEnchanced/Styles/menu.css">
+    <title>Snake Game Menu</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="menu-container">
+            
+            <header>
+                <h1>Snake Game Enchanced</h1>
+                <h3>Created By: <span id="creator">Bogdan Gura</span></h3>
+
+                <!-- Input field -->
+                <h4 id="error-div"></h4>
+                <input id="input-username" placeholder="Type your username...">
+                <!-- Players Record Score -->
+                <h3 id="record-field">Record Score: <span id="recordScore">0</span></h3>
+            </header>
+            
+            <div class="button-container">
+                <!-- Menu Buttons -->
+                <button id="playBtn">Play</button>
+                <button id="clearBtn">Clear Save</button>
+                <a href="/Projects/SnakeGameEnchanced/Html/achievements.html">
+                    <button>Achivements</button>
+                </a>
+                    <!-- Qutting leads to my portfolio website
+                to the projects section-->
+                <a id="a-quit" href="https://bogdangura.github.io/HTML/projects.html">
+                    <button>Quit</button>
+                </a>
+            </div>
+        </div>
+    </div>
+<script src="/Projects/SnakeGameEnchanced/Scripts/log-In-Manager.js"></script>
+</body>
+</html>
