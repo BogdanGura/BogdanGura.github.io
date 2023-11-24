@@ -1,0 +1,116 @@
+body{
+    background-color: rgb(101, 143, 144);
+}
+
+button{
+    background-color: gray;
+}
+/* Styling the board */
+.board-container{
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 710px;
+    height: 710px;
+    border: 5px rgb(255, 115, 0) ridge;
+}
+
+#game-board{
+    width: 350px;
+    height: 100%;
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Styling for small divs inside the 
+   game board
+*/
+#game-board div{
+    background-color: black;
+    /* border: 1px rgb(117, 8, 108) solid; */
+    width: 35px;
+    height: 35px;
+}
+
+/* 
+Styling for tetrominoes
+*/
+
+.I {
+    background-color:#011efe !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+  }
+/* I shadow */
+.I-shadow{
+    border:1px #011efe solid !important;
+}
+
+.O{
+    background-color: #fdfe02 !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+}
+/* O shadow */
+.O-shadow{
+    border:1px #fdfe02 solid !important;
+}
+
+.S{
+    background-color: #fe0000 !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+}
+/* S shadow */
+.S-shadow{
+    border:1px #fe0000 solid !important; 
+}
+
+.Z{
+    background-color: #0bff01 !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+}
+/* Z shadow */
+.Z-shadow{
+    border:1px #0bff01 solid !important; 
+}
+
+.L{
+    background-color: #ffac00 !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3) !important;
+}
+/* L shadow */
+.L-shadow{
+    border:1px #ffac00 solid !important; 
+}
+
+.J{
+    background-color: #f52789 !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+}
+/* L shadow */
+.J-shadow{
+    border:1px #f52789 solid !important;
+}
+
+.T{
+    background-color: #e900ff !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+}
+/* L shadow */
+.T-shadow{
+    border:1px #e900ff solid !important; 
+}
+
+/* class for tetrominoes (detection) */
+.tetromino{
+    /* Filler rule, doesn't mean anything */
+    text-align: none; 
+}
+
+#stats-board{
+    width: 350px;
+    height: 100%;
+    background-color: rgb(151, 121, 95);
+    padding-top: 20px;
+    padding-left: 20px;
+    border-left: 4px gray solid; 
+    float:right;
+}

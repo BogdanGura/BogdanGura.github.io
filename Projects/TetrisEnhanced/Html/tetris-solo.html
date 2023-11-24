@@ -1,0 +1,85 @@
+<!-- Bogdan Gura -->
+<!-- Date Started: 11/2/2023 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="">
+    <title>Tetris</title>
+    <!-- BootStrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- Personal CSS -->
+    <link rel="stylesheet" href="/Projects/TetrisEnhanced/Css/tetris-solo.css">
+    
+</head>
+
+<body>
+    <div class="container-fluid">  
+
+        <div class="board-container">
+            
+            <!-- Main Board -->
+            <div id="game-board"></div>
+
+            <!-- Stats Board -->
+            <div id="stats-board">
+
+                <!-- Make a smooth counter -->
+                <h4>Points: </h4>
+                <!-- Make a smooth counter here too -->
+                <h4>Rows Cleared:</h4>
+
+                <h4>Achievement Earned: </h4>
+                <!-- 4 buttons for mobile -->
+                <button type="button" id="btn-up" class="btn btn-inverted btn-lg">
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                </button>
+
+                <button type="button" id="btn-left" class="btn btn-inverted btn-lg">   
+                    <span class="glyphicon glyphicon-arrow-left"></span>   
+                </button>
+
+                <button type="button" id="btn-right" class="btn btn-inverted btn-lg">
+                    <span class="glyphicon glyphicon-arrow-right"></span>
+                </button>
+
+                <button type="button" id="btn-down" class="btn btn-inverted btn-lg">
+                    <span class="glyphicon glyphicon-arrow-down"></span>
+                </button>
+            </div>
+        </div>
+
+           <!-- Pop up modals -->
+
+           <!-- Pop up menu -->
+           <dialog class="popup-menu">
+            <!-- Heading -->
+            <h1>Menu <button id="closeMenuBtn"><span id="X">X</span></button></h1> 
+
+                <button id="quitGameBtn1">Quit</button>
+            
+                <button id="gameRestart1">Restart</button>
+           </dialog>
+
+           <!-- Pop up lost -->
+           <dialog class="popup-lost">
+                <h1>You Lost</h1> 
+                <!-- When Quit button is clicked it send the 
+                player to the menu -->
+                <h3 id="reasonForLoss"></h3>
+
+                
+                <button id="quitGameBtn2">Quit</button>
+                
+                <button id="gameRestart2">Restart</button>
+            </dialog>
+    </div>
+    <!-- BootStrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!-- Personal JS -->
+    <script type="module" src="/Projects/TetrisEnhanced/Scripts/tetris-solo.js"></script>
+</body>
+</html>
