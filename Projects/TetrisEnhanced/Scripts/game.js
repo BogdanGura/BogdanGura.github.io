@@ -46,7 +46,8 @@ export class Game
             position: [5, 6, 7, 8],
             tetrominoRotationIndex: 1, //Side (Second)
             rotationIncrement: -11 //Same here 
-        }]
+        }],
+        nextPosition: [4, 5, 6, 7]
     }
 
     O = {
@@ -61,7 +62,8 @@ export class Game
         }, {
             position: [7, 8, 17, 18],
             tetrominoRotationIndex: 0
-        }]
+        }],
+        nextPosition: [5, 6, 9, 10]
     }
     //If shadow doesn't show. Check if the border has solid in the attribute defenition
     T = {
@@ -76,7 +78,8 @@ export class Game
         }, {
             position: [2, 12, 22, 13],
             tetrominoRotationIndex: 1
-        }]
+        }],
+        nextPosition: [6, 9, 10, 11]
     }
 
     S = {
@@ -91,7 +94,8 @@ export class Game
         }, {
             position: [2, 12, 13, 23],
             tetrominoRotationIndex: 1
-        }]
+        }],
+        nextPosition: [7, 6, 10, 9]
     }
 
     Z = {
@@ -106,7 +110,8 @@ export class Game
         }, {
             position: [3, 13, 12, 22],
             tetrominoRotationIndex: 1
-        }]
+        }],
+        nextPosition: [5, 6, 10, 11]
     }
 
     J = {
@@ -121,7 +126,8 @@ export class Game
         }, {
             position: [14, 13, 12, 2],
             tetrominoRotationIndex: 1
-        }]
+        }],
+        nextPosition: [2, 6, 10, 9]
     }
 
     L = {
@@ -136,7 +142,8 @@ export class Game
         }, {
             position: [11, 12, 13, 3],
             tetrominoRotationIndex: 1
-        }]
+        }],
+        nextPosition: [1, 5, 9, 10]
     }
 
     //create and fill the tetrominoesArray
@@ -151,33 +158,95 @@ export class Game
         this.tetrominoRotationIndex = 0;
         this.landedTetrominoes = [];
         this.shadowPosition = [];
+        // next tetromino is an object that represents 
+        //the next tetromino to be generated
+        this.nextTetromino;
     }
 
-    //Method that will generate a tetromino
-    //that will have a random position and a random color
-    generateTetromino(board)
+    //pick a random tetromino function picks a random tetromino 
+    //fron an array of tetrominoes
+    pickRandomTetromino()
     {
         //Picking random tetromino
         let tetrominoIndex = Math.floor(Math.random() * this.tetrominoesArray.length);
         let tetromino = this.tetrominoesArray[tetrominoIndex];
-        let tetrominoName = tetromino.name;
+        return tetromino;
+    }
 
-        //this.currentTetromino = tetromino.position
-
-        //Tetromino color is the name of the class that has its color
-        this.tetrominoColor = tetrominoName;
-
-        //Picking tetromino spawn (array with position)
-        let positionIndex = Math.floor(Math.random() * tetromino.spawnPositions.length);
-        console.log(tetromino.spawnPositions[positionIndex]);
-        this.tetrominoPosition = tetromino.spawnPositions[positionIndex].position.slice();
-        this.tetrominoRotationIndex = tetromino.spawnPositions[positionIndex].tetrominoRotationIndex;
-
-        console.log("Tetromino position:" + this.tetrominoPosition);
-        //Setting each board element the class 'tetromino'
-        this.tetrominoPosition.forEach(boardIndex => {
-            board[boardIndex].classList.add(tetrominoName, "tetromino");
+    clearNextScreen(nextScreen)
+    {
+        console.log(nextScreen);
+        //clear the nextScreen divs
+        nextScreen.forEach(screenDiv => {
+            screenDiv.classList.remove(this.tetrominoColor);
         });
+    }
+
+    renderTheNextTetromino(nextScreen)
+    {
+        //and outputting the next piece on the sceen
+        this.nextTetromino.nextPosition.forEach(boardIndex => {
+            nextScreen[boardIndex].classList.add(this.nextTetromino.name);
+        });
+    }
+
+    //Method that will generate a tetromino
+    //that will have a random position and a random color
+    generateTetromino(board, nextScreen)
+    {
+        
+        //If its the first time pickRandomTetromino for current and 
+        //next
+        if(this.nextTetromino === undefined)
+        {
+            let currentTetromino = this.pickRandomTetromino();
+            this.nextTetromino = this.pickRandomTetromino();
+            //Tetromino color is the name of the class that has its color
+            this.tetrominoColor = currentTetromino.name;
+
+            //Picking tetromino spawn (array with position)
+            let positionIndex = Math.floor(Math.random() * currentTetromino.spawnPositions.length);
+            console.log(currentTetromino.spawnPositions[positionIndex]);
+            this.tetrominoPosition = currentTetromino.spawnPositions[positionIndex].position.slice();
+            this.tetrominoRotationIndex = currentTetromino.spawnPositions[positionIndex].tetrominoRotationIndex;
+
+            //Setting each board element the class 'tetromino'
+            this.tetrominoPosition.forEach(boardIndex => {
+                board[boardIndex].classList.add(this.tetrominoColor, "tetromino");
+            });
+
+            console.log(nextScreen);
+            this.clearNextScreen(nextScreen);
+            
+            this.renderTheNextTetromino(nextScreen);
+        }
+        else
+        {
+            let currentTetromino = this.nextTetromino;
+            this.nextTetromino = this.pickRandomTetromino();
+            //Tetromino color is the name of the class that has its color
+            this.tetrominoColor = currentTetromino.name;
+
+            //Picking tetromino spawn (array with position)
+            let positionIndex = Math.floor(Math.random() * currentTetromino.spawnPositions.length);
+            console.log(currentTetromino.spawnPositions[positionIndex]);
+            this.tetrominoPosition = currentTetromino.spawnPositions[positionIndex].position.slice();
+            this.tetrominoRotationIndex = currentTetromino.spawnPositions[positionIndex].tetrominoRotationIndex;
+
+            console.log("Tetromino position:" + this.tetrominoPosition);
+
+            //Setting each board element the class 'tetromino'
+            this.tetrominoPosition.forEach(boardIndex => {
+                board[boardIndex].classList.add(this.tetrominoColor, "tetromino");
+            });
+
+            
+
+            this.clearNextScreen(nextScreen);
+
+            this.renderTheNextTetromino(nextScreen);
+        }
+        
 
     }
 

@@ -6,21 +6,23 @@
 //Date Finished:
 
 //Importing Achievement Class
-import { Achievement } from "/Projects/TetrisEnhanced/Scripts/achievement.js";
+import { Achievement } from "/BogdanGura.github.io/Projects/TetrisEnhanced/Scripts/achievement.js";
 
 //Importing Game Class
-import { Game } from "/Projects/TetrisEnhanced/Scripts/game.js";
+import { Game } from "/BogdanGura.github.io/Projects/TetrisEnhanced/Scripts/game.js";
 
 //Importing Player Class
-import { Player } from "/Projects/TetrisEnhanced/Scripts/player.js";
+import { Player } from "/BogdanGura.github.io/Projects/TetrisEnhanced/Scripts/player.js";
 
 //Importing Player Class
-import { AI } from "/Projects/TetrisEnhanced/Scripts/AI.js";
+import { AI } from "/BogdanGura.github.io/Projects/TetrisEnhanced/Scripts/AI.js";
 
 
 //Variables
 let gameBoard = document.getElementById("game-board");
+let nextTetrominoScreen = document.getElementById("next-tetromino-screen");
 let boardPieces;
+let nextScreenPieces;
 const game = new Game();
 const player = new Player("Bogdan", "Yey I won", "No, I lost")
 const boardWidth = 10;
@@ -36,7 +38,7 @@ const normalSpeed = 400;
 const fasterSpeed = 300;
 window.addEventListener("DOMContentLoaded", startGame);
 
-//Making 100 divs and appending them to the board
+//Making 200 divs and appending them to the board
 function generateBoard()
 {
     for (let i = 0; i < 200; i++) 
@@ -46,14 +48,25 @@ function generateBoard()
     }
 }
 
+function generateNextTetrominoScreen()
+{
+    for (let i = 0; i < 12; i++) 
+    {
+        let boardPiece = document.createElement("div");
+        nextTetrominoScreen.appendChild(boardPiece);
+    }
+}
+
 function startGame()
 {
     generateBoard();
+    generateNextTetrominoScreen();
     boardPieces = document.querySelectorAll("#game-board div");
+    nextScreenPieces = document.querySelectorAll("#next-tetromino-screen div");
 
     //Create Event listeners for clicks
     window.addEventListener("keydown", control);
-    game.generateTetromino(boardPieces);
+    game.generateTetromino(boardPieces, nextScreenPieces);
 
     intervalSpeed = normalSpeed;
     interval = setInterval(moveOutcome, intervalSpeed);
@@ -91,7 +104,7 @@ function moveOutcome()
         }
 
         console.log("Tetromino accounter for");
-        game.generateTetromino(boardPieces);
+        game.generateTetromino(boardPieces, nextScreenPieces);
         clearInterval(interval);
 
         console.log("Tetromino generated");

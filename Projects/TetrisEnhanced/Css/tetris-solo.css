@@ -1,5 +1,6 @@
 body{
     background-color: rgb(101, 143, 144);
+    color: white;
 }
 
 button{
@@ -22,6 +23,32 @@ button{
     flex-wrap: wrap;
 }
 
+/* #stats-board{
+    width: 200px;
+} */
+
+#tetromino-screen-label{
+    margin-left: 50px;
+}
+
+#next-tetromino-screen{
+    width: 230px;
+    height: 140px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    float: right;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0px;
+}
+
+#next-tetromino-screen div
+{
+    background-color: black;
+    width: 48px;
+    height: 48px;
+}
+
 /* Styling for small divs inside the 
    game board
 */
@@ -31,6 +58,7 @@ button{
     width: 35px;
     height: 35px;
 }
+
 
 /* 
 Styling for tetrominoes
