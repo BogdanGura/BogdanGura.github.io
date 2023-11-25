@@ -6,16 +6,16 @@
 //Date Finished:
 
 //Importing Achievement Class
-import { Achievement } from "/BogdanGura.github.io/Projects/TetrisEnhanced/Scripts/achievement.js";
+import { Achievement } from "/Projects/TetrisEnhanced/Scripts/achievement.js";
 
 //Importing Game Class
-import { Game } from "/BogdanGura.github.io/Projects/TetrisEnhanced/Scripts/game.js";
+import { Game } from "/Projects/TetrisEnhanced/Scripts/game.js";
 
 //Importing Player Class
-import { Player } from "/BogdanGura.github.io/Projects/TetrisEnhanced/Scripts/player.js";
+import { Player } from "/Projects/TetrisEnhanced/Scripts/player.js";
 
 //Importing Player Class
-import { AI } from "/BogdanGura.github.io/Projects/TetrisEnhanced/Scripts/AI.js";
+import { AI } from "/Projects/TetrisEnhanced/Scripts/AI.js";
 
 
 //Variables
