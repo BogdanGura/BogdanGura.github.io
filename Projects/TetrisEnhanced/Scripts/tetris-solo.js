@@ -20,9 +20,21 @@ import { AI } from "/Projects/TetrisEnhanced/Scripts/AI.js";
 
 //Variables
 let gameBoard = document.getElementById("game-board");
+//F stands for Field
+let clearedLinesF = document.getElementById("rows-cleared");
+let pointsScoredF = document.getElementById("points");
 let nextTetrominoScreen = document.getElementById("next-tetromino-screen");
+let openMenu = document.getElementById("openMenu");
+let closeMenu = document.getElementById("closeMenuBtn");
+let quitBtn1 = document.getElementById("quitGameBtn1");
+let quitBtn2 = document.getElementById("quitGameBtn2");
+let popupMenu = document.getElementById("popup-menu");
+let popupLost = document.getElementById("popup-lost");
 let boardPieces;
 let nextScreenPieces;
+//Actual variables that store the games score
+let pointScore = 0;
+let rowsCleared = 0;
 const game = new Game();
 const player = new Player("Bogdan", "Yey I won", "No, I lost")
 const boardWidth = 10;
@@ -68,6 +80,26 @@ function startGame()
     window.addEventListener("keydown", control);
     game.generateTetromino(boardPieces, nextScreenPieces);
 
+    //Open menu when the menu button is clicked
+    openMenu.addEventListener("click", () => {
+        //close the menu modal
+        popupMenu.showModal();
+        //Restore the games movement
+        clearInterval(interval);
+    });
+
+    //Close menu and resume the game when X is clicked
+    closeMenu.addEventListener("click", () => {
+        //close the menu modal
+        popupMenu.close();
+        //Restore the games movement
+        interval = setInterval(moveOutcome, normalSpeed);
+    });
+
+    //Event Listener for quit button on both modals
+    quitBtn1.addEventListener("click", quit);
+    quitBtn2.addEventListener("click", quit);
+
     intervalSpeed = normalSpeed;
     interval = setInterval(moveOutcome, intervalSpeed);
 }
@@ -86,29 +118,71 @@ function moveOutcome()
         //if so it will be added to the landedTetrominos array
         //and a new tetromino will be generated
 
-        //Registering landed tetromino
-        game.registerLandedTetromino(boardPieces);
-        console.log("Tetromino registered");
-
-        //Find completed rows
-        let completedRows = game.findCompleteRows(boardPieces, boardHeight, boardWidth);
-
-        //Check if completedRows has any completed rows
-        if(completedRows.length > 0)
+        //Check if player LOST
+        if(game.checkForLose(boardPieces))
         {
-            //Remove any completed rows for points
-            game.clearCompleteRows(boardPieces, boardWidth, completedRows);
+            //close the menu modal
+            popupLost.showModal();
+            //Restore the games movement
+            clearInterval(interval);
         }
-        else{
-            console.log("No completed rows detected");
+        else
+        {
+            //Registering landed tetromino
+            game.registerLandedTetromino(boardPieces);
+            console.log("Tetromino registered");
+
+            //Find completed rows
+            let completedRows = game.findCompleteRows(boardPieces, boardHeight, boardWidth);
+
+            //Check if completedRows has any completed rows
+            if(completedRows.length > 0)
+            {
+                //Increment cleared rows and points 
+                rowsCleared += completedRows.length;
+                //Adding a certain amount of points depending on the amount of lines 
+                //cleared
+                if(completedRows.length === 1)
+                {
+                    //if 1 line is cleared add 40 points to the score
+                    pointScore += 40;
+                }
+                else if(completedRows.length === 2)
+                {
+                    //if 2 lines were cleared add 100 points to the score
+                    pointScore += 100;
+                }
+                else if(completedRows.length === 3)
+                {
+                    //if 3 lines are cleared add 300 points to the score
+                    pointScore += 300;
+                }
+                //TETRIS !!!
+                else if(completedRows.length === 4)
+                {
+                    //if tetris is achieved add 1200 points to the score
+                    pointScore += 1200;
+                }
+
+                //Then update the values in our points and cleared rows fields
+                //Remove any completed rows for points
+                clearedLinesF.innerText = rowsCleared;
+                pointsScoredF.innerText = pointScore;
+                
+                //Remove thouse cleared rows
+                game.clearCompleteRows(boardPieces, boardWidth, completedRows);
+            }
+            else{
+                console.log("No completed rows detected");
+            }
+
+            console.log("Tetromino accounter for");
+            game.generateTetromino(boardPieces, nextScreenPieces);
+            clearInterval(interval);
+
+            console.log("Tetromino generated");
+            interval = setInterval(moveOutcome, normalSpeed);
         }
-
-        console.log("Tetromino accounter for");
-        game.generateTetromino(boardPieces, nextScreenPieces);
-        clearInterval(interval);
-
-        console.log("Tetromino generated");
-        interval = setInterval(moveOutcome, normalSpeed);
     }
     else
     {
@@ -121,6 +195,18 @@ function moveOutcome()
     }
 
     //clearInterval(interval)
+}
+
+//A function that runs when the quit button is pressed
+//it send the user to the main menu of tetris enhanced
+function quit(){
+    //Making achievementsArray into a JSON String
+    /* const achievementArrayJSON = JSON.stringify(achievementsArray);
+    The setting it recordScore name and value of achievementArrayJSON
+    localStorage.setItem("achievements", achievementArrayJSON); */
+
+    //Send the user back to the menu
+    window.location.replace("menu.html");
 }
 
 //Function that controls tetrominoes movement and

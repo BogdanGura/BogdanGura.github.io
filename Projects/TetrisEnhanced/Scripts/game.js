@@ -455,8 +455,29 @@ export class Game
             });
         }
     }
-    
 
+    //checkForLose is a method that will check if player has lost their game of tetris
+    checkForLose(board)
+    {
+        //scan the first row for tetrominoes
+        //if it has any return true (game over)
+        //else false (game continues)
+        let lost = false;
+
+        for(let i = 0; i < 10; i++)
+        {
+            if(board[i].classList.contains("tetromino"))
+            {
+                //if tetromino is in the first row
+                //instantly return the lost as true
+                lost = true;
+                return lost;
+            }
+        }
+        //if not returns false for lost
+        return lost;
+    }
+    
     //Rotates the tetromino
     rotate(board)
     {
