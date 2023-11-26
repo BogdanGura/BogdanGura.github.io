@@ -26,14 +26,15 @@
             <!-- Stats Board -->
             <div id="stats-board">
 
+                <button id="openMenu">Pause</button>
                 <h2 id="tetromino-screen-label">Next Tetromino</h2>
                 <!-- Next piece screen -->
                 <div id="next-tetromino-screen"></div>
 
                 <!-- Make a smooth counter -->
-                <h4 id="points">Points: </h4>
+                <h4>Points: <span id="points">0</span></h4>
                 <!-- Make a smooth counter here too -->
-                <h4>Rows Cleared:</h4>
+                <h4>Rows Cleared: <span id="rows-cleared">0</span></h4>
 
                 <h4>Achievement Earned: </h4>
                 <!-- 4 buttons for mobile -->
@@ -58,26 +59,27 @@
            <!-- Pop up modals -->
 
            <!-- Pop up menu -->
-           <dialog class="popup-menu">
+           <dialog id="popup-menu">
             <!-- Heading -->
             <h1>Menu <button id="closeMenuBtn"><span id="X">X</span></button></h1> 
 
                 <button id="quitGameBtn1">Quit</button>
             
-                <button id="gameRestart1">Restart</button>
+                <a href="tetris-solo.html">
+                    <button>Restart</button>
+                </a>
            </dialog>
 
            <!-- Pop up lost -->
-           <dialog class="popup-lost">
+           <dialog id="popup-lost">
                 <h1>You Lost</h1> 
                 <!-- When Quit button is clicked it send the 
                 player to the menu -->
-                <h3 id="reasonForLoss"></h3>
-
-                
                 <button id="quitGameBtn2">Quit</button>
                 
-                <button id="gameRestart2">Restart</button>
+                <a href="tetris-solo.html">
+                    <button>Restart</button>
+                </a>
             </dialog>
     </div>
     <!-- BootStrap JS -->
