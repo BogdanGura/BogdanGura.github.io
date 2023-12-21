@@ -30,6 +30,7 @@ let quitBtn1 = document.getElementById("quitGameBtn1");
 let quitBtn2 = document.getElementById("quitGameBtn2");
 let popupMenu = document.getElementById("popup-menu");
 let popupLost = document.getElementById("popup-lost");
+let levelIndicator = document.getElementById("level-indicator");
 let boardPieces;
 let nextScreenPieces;
 //Actual variables that store the games score
@@ -46,8 +47,10 @@ const left = -1;
 const right = 1;
 //interval speeds
 let intervalSpeed = 0;
-const normalSpeed = 400;
-const fasterSpeed = 300;
+const level_1 = 450;
+const level_2 = 400;
+const level_3 = 305;
+const fasterSpeed = 200;
 window.addEventListener("DOMContentLoaded", startGame);
 
 //Making 200 divs and appending them to the board
@@ -76,6 +79,9 @@ function startGame()
     boardPieces = document.querySelectorAll("#game-board div");
     nextScreenPieces = document.querySelectorAll("#next-tetromino-screen div");
 
+    //Set the starting level to 1
+    levelIndicator.innerText = "1";
+
     //Create Event listeners for clicks
     window.addEventListener("keydown", control);
     game.generateTetromino(boardPieces, nextScreenPieces);
@@ -93,14 +99,14 @@ function startGame()
         //close the menu modal
         popupMenu.close();
         //Restore the games movement
-        interval = setInterval(moveOutcome, normalSpeed);
+        interval = setInterval(moveOutcome, intervalSpeed);
     });
 
     //Event Listener for quit button on both modals
     quitBtn1.addEventListener("click", quit);
     quitBtn2.addEventListener("click", quit);
 
-    intervalSpeed = normalSpeed;
+    intervalSpeed = level_1;
     interval = setInterval(moveOutcome, intervalSpeed);
 }
 
@@ -164,13 +170,35 @@ function moveOutcome()
                     pointScore += 1200;
                 }
 
+                //Then check if the player has made enough 
+                //points to go to the next level
+                //level 1: 0-1499 points
+                //level 2: 1500 points
+                //level 3 5000 points
+                if (pointScore >= 5000) 
+                {
+                    // Level 3
+                    levelIndicator.innerText = "3";
+                    clearInterval(interval);
+                    intervalSpeed = level_3;
+                    interval = setInterval(moveOutcome, intervalSpeed);
+                } else if (pointScore >= 1500) 
+                {
+                    // Level 2
+                    levelIndicator.innerText = "2";
+                    clearInterval(interval);
+                    intervalSpeed = level_2;
+                    interval = setInterval(moveOutcome, intervalSpeed);
+                }
+                
+
                 //Then update the values in our points and cleared rows fields
                 //Remove any completed rows for points
                 clearedLinesF.innerText = rowsCleared;
                 pointsScoredF.innerText = pointScore;
                 
                 //Remove thouse cleared rows
-                game.clearCompleteRows(boardPieces, boardWidth, completedRows, interval, intervalSpeed, moveOutcome);
+                game.clearCompleteRows(boardPieces, boardWidth, completedRows);
             }
             else{
                 console.log("No completed rows detected");
@@ -181,7 +209,7 @@ function moveOutcome()
             clearInterval(interval);
 
             console.log("Tetromino generated");
-            interval = setInterval(moveOutcome, normalSpeed);
+            interval = setInterval(moveOutcome, intervalSpeed);
         }
     }
     else
