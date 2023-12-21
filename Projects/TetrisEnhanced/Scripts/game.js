@@ -2833,23 +2833,19 @@ export class Game
         //console.log("Completed rows:" + completedRows);
         return completedRows;
     }
-    
-    //clearCompleteRows, clear the completed rows
-    //from findCompletedRows method
-    // Function to pause the game by clearing the interval
 
     // Function to clear completed rows with animation
-    clearCompleteRows(board, boardWidth, completedRows) {
-        // Pause the game
-        this.pauseGame(interval);
-
+    clearCompleteRows(board, boardWidth, completedRows) 
+    {
         // This nested loop adds the flash class to the completed rows
         completedRows.forEach(row => {
-            for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) 
-            {
+            for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) {
+                // Add the flash class to initiate the animation
                 board[item].classList = [];
             }
         });
+
+        this.moveLandedTetrominosDown(board, boardWidth, completedRows)
     }
 
     //Check functions for each tetromino
