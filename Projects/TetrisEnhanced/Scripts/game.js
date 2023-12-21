@@ -2833,51 +2833,19 @@ export class Game
         //console.log("Completed rows:" + completedRows);
         return completedRows;
     }
-    
-    //clearCompleteRows, clear the completed rows
-    //from findCompletedRows method
-    // Function to pause the game by clearing the interval
-    pauseGame(interval) {
-        clearInterval(interval);
-    }
-
-    // Function to resume the game by restarting the interval
-    resumeGame(gameSpeed, callBack) {
-        interval = setInterval(() => {
-            callBack();
-        }, gameSpeed);
-    }
 
     // Function to clear completed rows with animation
-    clearCompleteRows(board, boardWidth, completedRows, interval, gameSpeed, callBack) {
-        // Pause the game
-        this.pauseGame(interval);
+    clearCompleteRows(board, boardWidth, completedRows) {
 
         // This nested loop adds the flash class to the completed rows
         completedRows.forEach(row => {
             for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) {
                 // Add the flash class to initiate the animation
-                board[item].classList.add("flash");
+                board[item].classList = [];
             }
         });
-
-        // After a short delay, remove the flash class and resume the game
-        setTimeout(() => {
-            // Remove the flash class after the animation is complete
-            completedRows.forEach(row => {
-                for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) {
-                    board[item].classList.remove("flash");
-                    // Remove the styling from the cleared cell
-                    board[item].classList = [];
-                }
-            });
-
-            // Resume the game
-            this.resumeGame(gameSpeed, callBack);
-
-            // Call moveLandedTetrominosDown
-            this.moveLandedTetrominosDown(board, boardWidth, completedRows);
-        }, 500);
+        // Call moveLandedTetrominosDown
+        this.moveLandedTetrominosDown(board, boardWidth, completedRows);
     }
 
     //Check functions for each tetromino
