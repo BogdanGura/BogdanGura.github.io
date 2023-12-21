@@ -148,7 +148,7 @@ export class Game
     }
 
     //create and fill the tetrominoesArray
-    tetrominoesArray = [this.I, this.J]; //this.I, this.O, this.T, this.S, this.Z
+    tetrominoesArray = [this.I, this.O, this.T, this.S, this.Z, this.J, this.L]; //this.I, this.O, this.T, this.S, this.Z, this.J, this.L
 
     //Constructor
     constructor()
@@ -533,6 +533,7 @@ export class Game
             });
         }
     }
+
     //checkForLose is a method that will check if player has lost their game of tetris
     checkForLose(board)
     {
@@ -2835,22 +2836,48 @@ export class Game
     
     //clearCompleteRows, clear the completed rows
     //from findCompletedRows method
-    clearCompleteRows(board, boardWidth, completedRows)
-    {
-        //!Just remove the class for now, add animation later
+    // Function to pause the game by clearing the interval
+    pauseGame(interval) {
+        clearInterval(interval);
+    }
 
-        //This nested loop removes all classes from the completed
-        //rows, so they turn black as div in a container
+    // Function to resume the game by restarting the interval
+    resumeGame(gameSpeed, callBack) {
+        interval = setInterval(() => {
+            callBack();
+        }, gameSpeed);
+    }
+
+    // Function to clear completed rows with animation
+    clearCompleteRows(board, boardWidth, completedRows, interval, gameSpeed, callBack) {
+        // Pause the game
+        this.pauseGame(interval);
+
+        // This nested loop adds the flash class to the completed rows
         completedRows.forEach(row => {
-
-            for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) 
-            {
-                //Removing all styling from the element
-                board[item].classList = [];
+            for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) {
+                // Add the flash class to initiate the animation
+                board[item].classList.add("flash");
             }
         });
-        //Call moveLandedTetrominosDown
-        this.moveLandedTetrominosDown(board, boardWidth, completedRows);
+
+        // After a short delay, remove the flash class and resume the game
+        setTimeout(() => {
+            // Remove the flash class after the animation is complete
+            completedRows.forEach(row => {
+                for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) {
+                    board[item].classList.remove("flash");
+                    // Remove the styling from the cleared cell
+                    board[item].classList = [];
+                }
+            });
+
+            // Resume the game
+            this.resumeGame(gameSpeed, callBack);
+
+            // Call moveLandedTetrominosDown
+            this.moveLandedTetrominosDown(board, boardWidth, completedRows);
+        }, 500);
     }
 
     //Check functions for each tetromino
@@ -3100,7 +3127,8 @@ export class Game
         //Check at all of the rotation indexes
         if(tetromino.tetrominoRotationIndex === 0)
         {
-            if(tetromino.position.length === 4)
+            if(tetromino.position.length === 4 || 
+               tetromino.position.length === 3)
             {
                 //Check the bottom 3 indexes if they have anything below them
                 let one = tetromino.position[0];
@@ -4110,8 +4138,8 @@ export class Game
             {
                 //Just need to check the first index of the div
                 //and the last one too
-                let third = tetromino.position[2];
-                let last = tetromino.position[3];
+                let third = tetromino.position[1];
+                let last = tetromino.position[0];
 
                 //Checking for the third and fourth cube missing
                 // fall needs to from the bottom most div (first)
@@ -4122,10 +4150,10 @@ export class Game
                 if(!board[three].classList.contains("tetromino") && 
                    !board[four].classList.contains("tetromino"))
                 {
-                    let bottoCube = tetromino.position[0];
+                    let bottomCube = tetromino.position[0];
 
                     //Check if it can fall
-                    if(board[bottoCube + direction].classList.contains("tetromino") ||
+                    if(board[bottomCube + direction].classList.contains("tetromino") ||
                        board[third + direction] === undefined)
                     {
                         return true;
@@ -4267,6 +4295,72 @@ export class Game
                     return false;
                 }
             }
+            else if(tetromino.position.length === 3)
+            {
+                //check if the second cube is missing (variables)
+                let second = tetromino.position[0] + 10;
+
+                //Check if the first cube is missing then have falling logic 
+                //same as for length 4
+                let first = tetromino.position[0] - 10;
+
+                //Check if the first cube is missing
+                if(!board[first].classList.contains("tetromino"))
+                {
+                    //same logic as for length 4
+                    let third = tetromino.position[2];
+                    let fourth = tetromino.position[3];
+
+                    if(board[third + direction] === undefined ||
+                    board[fourth + direction] === undefined)
+                    {
+                        return true;
+                    }
+                    else if(board[third + direction].classList.contains("tetromino") ||
+                            board[fourth + direction].classList.contains("tetromino"))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                //check if the second cube is missing
+                else if(!board[second].classList.contains("tetromino"))
+                {
+                    //erase the old position
+                    this.removeStyles(tetromino, "new", board);
+
+                    //set a new position
+                    tetromino.position[0] = second;
+
+                    //add the styling back
+                    this.addStyles(tetromino, "new", board);
+
+                    return true;
+                }
+                else{
+                     //check the bottom 2 indexes for tetrominoes in the way
+                    let third = tetromino.position[1];
+                    let fourth = tetromino.position[2];
+
+                    if(board[third + direction] === undefined ||
+                    board[fourth + direction] === undefined)
+                    {
+                        return true;
+                    }
+                    else if(board[third + direction].classList.contains("tetromino") ||
+                            board[fourth + direction].classList.contains("tetromino"))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
             else if(tetromino.position.length === 2)
             {
                 //Check the 2nd block 
@@ -4308,7 +4402,8 @@ export class Game
 
         if(tetromino.tetrominoRotationIndex === 1)
         {
-            if(tetromino.position.length === 4)
+            if(tetromino.position.length === 4 ||
+               tetromino.position.length === 3)
             {
                 //check the bottom 3 indexes for tetrominoes in the way
                 let first = tetromino.position[0];
@@ -4336,7 +4431,7 @@ export class Game
             else if(tetromino.position.length === 1)
             {
                 //Check the 1st block 
-                let fourth = tetromino.position[3];
+                let fourth = tetromino.position[0];
 
                 if(board[fourth + direction] === undefined)
                  {
@@ -4379,11 +4474,28 @@ export class Game
             else if(tetromino.position.length === 3)
             {
                 //check the bottom 2 indexes for tetrominoes in the way
-                let second = tetromino.position[1];
+                let second = tetromino.position[0];
                 let fourth = tetromino.position[2];
 
+                //Cheking for the 2nd cube missing
+                let two = tetromino.position[0] - 10;
 
-                if(board[fourth + direction].classList.contains("tetromino") ||
+                if(!board[two].classList.contains("tetromino"))
+                {
+                    //Alter the position
+                    //erase the old position
+                    this.removeStyles(tetromino, "new", board);
+
+                    //set a new position
+                    tetromino.position[1] += 10;
+                    tetromino.position[2] += 10;
+
+                    //add the styling back
+                    this.addStyles(tetromino, "new", board);
+
+                    return true;
+                }
+                else if(board[fourth + direction].classList.contains("tetromino") ||
                    board[second + direction].classList.contains("tetromino"))
                 {
                     return true;
@@ -4399,12 +4511,28 @@ export class Game
             }
             else if(tetromino.position.length === 2)
             {
-                let third = tetromino.position[2];
-                let fourth = tetromino.position[3];
+                //Variables for a horizontal 2 length check
+                let third = tetromino.position[0];
+                let fourth = tetromino.position[1];
 
+                //Variables for a vertical 2 length check
+                let three = tetromino.position[1] - 10;
+                let four = tetromino.position[1] - 9;
+                let lastCube = tetromino.position[0];
 
-                if(board[third + direction].classList.contains("tetromino") ||
-                   board[fourth + direction].classList.contains("tetromino"))
+                //Vertical Check
+                if(!board[three].classList.contains("tetromino") && 
+                   !board[four].classList.contains("tetromino"))
+                {
+                    if(board[lastCube + direction].classList.contains("tetromino") ||
+                       board[lastCube + direction] === undefined)
+                    {
+                        return true;
+                    }
+                }
+                //Horizontal Check
+                else if(board[third + direction].classList.contains("tetromino") ||
+                        board[fourth + direction].classList.contains("tetromino"))
                 {
                     return true;
                 }
@@ -4417,6 +4545,24 @@ export class Game
                 {
                     return false;
                 }
+            }
+            else if(tetromino.position.length === 1)
+            {
+                //Check the 1st block 
+                let first = tetromino.position[0];
+
+                if(board[first + direction] === undefined)
+                 {
+                     return true;
+                 }
+                 else if(board[first + direction].classList.contains("tetromino"))
+                 {
+                     return true;
+                 }
+                 else
+                 {
+                     return false;
+                 }
             }
             
         }
@@ -4466,6 +4612,24 @@ export class Game
                 {
                     return false;
                 }
+            }
+            else if(tetromino.position.length === 1)
+            {
+                //Check the 1st block 
+                let first = tetromino.position[0];
+
+                if(board[first + direction] === undefined)
+                 {
+                     return true;
+                 }
+                 else if(board[first + direction].classList.contains("tetromino"))
+                 {
+                     return true;
+                 }
+                 else
+                 {
+                     return false;
+                 }
             }
             
         }
