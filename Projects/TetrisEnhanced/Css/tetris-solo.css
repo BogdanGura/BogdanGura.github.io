@@ -69,6 +69,27 @@ button{
     height: 35px;
 }
 
+@keyframes flashColors {
+    0% {
+        background-color: red;
+    }
+    25% {
+        background-color: yellow;
+    }
+    50% {
+        background-color: blue;
+    }
+    75% {
+        background-color: yellow;
+    }
+    100% {
+        background-color: red;
+    }
+}
+
+.flash {
+    animation: flashColors 0.5s ease-in-out 2; 
+}
 
 /* 
 Styling for tetrominoes

@@ -170,7 +170,7 @@ function moveOutcome()
                 pointsScoredF.innerText = pointScore;
                 
                 //Remove thouse cleared rows
-                game.clearCompleteRows(boardPieces, boardWidth, completedRows);
+                game.clearCompleteRows(boardPieces, boardWidth, completedRows, interval, intervalSpeed, moveOutcome);
             }
             else{
                 console.log("No completed rows detected");
