@@ -1,8 +1,7 @@
 body{
     font-family: ‘Actor’;
-    background-color: #3d144c;
+    background-color: black;
     background-repeat: no-repeat;
-    color: #1685f8;
 }
 
 a,
@@ -58,38 +57,226 @@ header input{
     display: inline;
 }
 
+#creator-label
+{
+    margin-bottom: 50px;;
+}
+
 /* Styling button container */
 .button-container{
     display: block;
-    margin-left: 50px;
-    margin-top: 20px;
+    margin-left: 60px;
+    margin-top: 60px;
     width: 400px;
 }
 
 /* Styling buttons inside button container */
 .button-container button{
     display: block;
-    color: black;
-    background-color: rgb(255, 140, 0);
-    margin-top: 10px;
-    font-size: 40px;
-    padding: 40px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 25px;
+    padding: 20px;
     width: 400px;
     margin-left: 10px;
     /* Positioning buttons */
     margin-left: 40%;
+    border-radius: 30px;
+    border: none;
 }
 
-.button-container button:hover{
-    background-color: rgb(217, 121, 3);
-}
-
-.button-container button:active{
-    background-color: rgb(233, 84, 3);
-}
-
-#creator{
+.creator{
     font-style: italic;
-    color: gold;
+    color: cyan;
     font-weight: bold;
+}
+
+.made-by{
+    color:#ff66ff;
+}
+
+/* Tetris Enchanced styling */
+.tetris{
+    color: #9900ff;
+}
+
+/* Glow animations */
+
+@keyframes glow-creator {
+    0% {
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff; /* Adjust the color and size as needed */
+    }
+    50% {
+      text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 20px #00ffff; /* Adjust the color and size as needed */
+    }
+    100% {
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff; /* Adjust the color and size as needed */
+    }
+  }
+
+  
+  @keyframes glow-made-by {
+    0% {
+      text-shadow: 0 0 10px #ff66ff, 0 0 20px #ff66ff, 0 0 30px #ff66ff;
+    }
+    50% {
+      text-shadow: 0 0 20px #ff66ff, 0 0 30px #ff66ff, 0 0 40px #ff66ff;
+    }
+    100% {
+      text-shadow: 0 0 10px #ff66ff, 0 0 20px #ff66ff, 0 0 30px #ff66ff;
+    }
+  }
+  
+
+  
+
+@keyframes glow-tetris {
+    0% {
+      text-shadow: 0 0 10px #9900ff, 0 0 20px #9900ff, 0 0 30px #9900ff; 
+    }
+    50% {
+      text-shadow: 0 0 20px #9900ff, 0 0 30px #9900ff, 0 0 40px #9900ff; 
+    }
+    100% {
+      text-shadow: 0 0 10px #9900ff, 0 0 20px #9900ff, 0 0 30px #9900ff; 
+    }
+  }
+
+  @keyframes glow-play-btn {
+    0% {
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; 
+    }
+    50% {
+      text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00; 
+    }
+    100% {
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; 
+    }
+  }
+
+  @keyframes glow-play-in-development {
+    0% {
+      text-shadow: 0 0 10px rgb(255, 162, 0), 0 0 20px rgb(255, 162, 0), 0 0 30px rgb(255, 162, 0);
+    }
+    50% {
+      text-shadow: 0 0 20px rgb(255, 162, 0), 0 0 30px rgb(255, 162, 0), 0 0 40px rgb(255, 162, 0);
+    }
+    100% {
+      text-shadow: 0 0 10px rgb(255, 162, 0), 0 0 20px rgb(255, 162, 0), 0 0 30px rgb(255, 162, 0);
+    }
+  }  
+
+  @keyframes glow-play-exit-btn {
+    0% {
+      text-shadow: 0 0 10px rgb(255, 0, 0), 0 0 20px rgb(255, 0, 0), 0 0 30px rgb(255, 0, 0);
+    }
+    50% {
+      text-shadow: 0 0 20px rgb(255, 0, 0), 0 0 30px rgb(255, 0, 0), 0 0 40px rgb(255, 0, 0);
+    }
+    100% {
+      text-shadow: 0 0 10px rgb(255, 0, 0), 0 0 20px rgb(255, 0, 0), 0 0 30px rgb(255, 0, 0);
+    }
+  }
+  
+
+  /* Border glow animation */
+  @keyframes glow-border-play-btn {
+    0% {
+      box-shadow: 0 0 5px 0px #00ff00; 
+    }
+    50% {
+      box-shadow: 0 0 10px 5px #00ff00;
+    }
+    100% {
+      box-shadow: 0 0 5px 0px #00ff00;
+    }
+  }
+
+  @keyframes glow-border-in-development{
+    0% {
+      box-shadow: 0 0 5px 0px rgb(255, 175, 37);
+    }
+    50% {
+      box-shadow: 0 0 10px 5px rgb(255, 175, 37);
+    }
+    100% {
+      box-shadow: 0 0 5px 0px rgb(255, 175, 37);
+    }
+  }
+
+  @keyframes glow-border-exit-btn{
+    0% {
+      box-shadow: 0 0 5px 0px red;
+    }
+    50% {
+      box-shadow: 0 0 10px 5px red;
+    }
+    100% {
+      box-shadow: 0 0 5px 0px red;
+    }
+  }
+  
+  
+.glowing-text-tetris {
+    animation: glow-tetris 1.5s infinite; 
+}
+
+.glowing-text-made-by {
+    animation: glow-made-by 1.5s infinite; 
+}
+
+.glowing-text-creator {
+    animation: glow-creator 1.5s infinite; 
+}
+
+.glowing-text-play-btn {
+    animation: glow-play-btn 1.5s infinite; 
+}
+
+.glowing-text-in-development {
+    animation: glow-play-in-development 1.5s infinite; 
+}
+
+.glowing-text-exit-btn {
+  animation: glow-exit-btn 1.5s infinite; 
+}
+
+/* Buttons styling */
+.playBtn{
+    color: lime;
+    background-color: black;
+    border: 4px solid lime !important;
+}
+
+.playBtn:hover{
+    color: rgba(0, 255, 0, 0.671);
+    background-color: black;
+    border: 4px solid #00ff00; 
+    animation: glow-border-play-btn 1.5s infinite;
+}
+
+.in-development{
+    color: rgb(255, 162, 0);
+    background-color: black;
+    border: 4px solid rgb(255, 162, 0) !important;
+}
+
+.in-development:hover{
+    color: rgb(255, 175, 37);
+    background-color: black;
+    border: 4px solid rgb(255, 175, 37);
+    animation: glow-border-in-development 1.5s infinite;
+}
+
+.btn-quit{
+  color: red;
+  background-color: black;
+  border: 4px solid red !important;
+}
+
+.btn-quit:hover{
+  color: red;
+  background-color: black;
+  border: 4px solid red;
+  animation: glow-border-exit-btn 1.5s infinite;
 }

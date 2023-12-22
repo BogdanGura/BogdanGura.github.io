@@ -539,12 +539,12 @@ export class Game
     //checkForLose is a method that will check if player has lost their game of tetris
     checkForLose(board)
     {
-        //scan the first row for tetrominoes
+        //scan the second row for tetrominoes
         //if it has any return true (game over)
         //else false (game continues)
         let lost = false;
 
-        for(let i = 0; i < 10; i++)
+        for(let i = 10; i < 20; i++)
         {
             if(board[i].classList.contains("tetromino"))
             {
@@ -1704,7 +1704,12 @@ export class Game
                 let firstIndex = this.tetrominoPosition[0];
                 let thirdIndex = this.tetrominoPosition[2];
 
-                if(firstIndex % 10 === 0 && thirdIndex % 10 === 0)
+                if(board[firstIndex + direction].classList.contains("tetromino") ||
+                   board[thirdIndex + direction].classList.contains("tetromino"))
+                {
+                    collisionResult = "borderLeft";
+                }
+                else if(firstIndex % 10 === 0 && thirdIndex % 10 === 0)
                 {
                     collisionResult = "borderLeft";
                 }
@@ -2189,7 +2194,12 @@ export class Game
                 let secondIndex = this.tetrominoPosition[1];
                 let fourthIndex = this.tetrominoPosition[3];
 
-                if(((secondIndex - 9) % 10) === 0 && (fourthIndex - 9) % 10 === 0)
+                if(board[secondIndex + direction].classList.contains("tetromino") ||
+                   board[fourthIndex + direction].classList.contains("tetromino"))
+                {
+                    collisionResult = "borderRight";
+                }
+                else if(((secondIndex - 9) % 10) === 0 && (fourthIndex - 9) % 10 === 0)
                 {
                     collisionResult = "borderRight";
                 }
@@ -3239,6 +3249,11 @@ export class Game
                     return true;
                 }
                 //first and third cubes missing check
+                else if(board[third] === undefined ||
+                        board[first] === undefined)
+                {
+                    return true;
+                }
                 else if(!board[first].classList.contains("tetromino") &&
                         !board[third].classList.contains("tetromino"))
                 {
@@ -3259,8 +3274,11 @@ export class Game
                 {
                     let lastBlock  = tetromino.position[1];
                     //check if the last one has anything below it
-                    if(board[lastBlock + direction].classList.contains("tetromino") ||
-                       board[lastBlock + direction] === undefined)
+                    if(board[lastBlock + direction] === undefined)
+                    {
+                        return true;
+                    }
+                    else if(board[lastBlock + direction].classList.contains("tetromino"))
                     {
                         return true;
                     }
@@ -3668,8 +3686,13 @@ export class Game
                 let one = tetromino.position[0];
                 let two = tetromino.position[1];
 
-                if(!board[second].classList.contains("tetromino") &&
-                   !board[third].classList.contains("tetromino"))
+                if(board[second] === undefined ||
+                   board[third] === undefined)
+                {
+                    return true;
+                }
+                else if(!board[second].classList.contains("tetromino") &&
+                        !board[third].classList.contains("tetromino"))
                 {
                     //Remove old position styling 
                     this.removeStyles(tetromino, "new", board);
@@ -4579,14 +4602,14 @@ export class Game
                         return true;
                     }
                 }
-                //Horizontal Check
-                else if(board[third + direction].classList.contains("tetromino") ||
-                        board[fourth + direction].classList.contains("tetromino"))
+                else if(board[third + direction] === undefined ||
+                        board[fourth + direction] === undefined)
                 {
                     return true;
                 }
-                else if(board[third + direction] === undefined ||
-                        board[fourth + direction] === undefined)
+                //Horizontal Check
+                else if(board[third + direction].classList.contains("tetromino") ||
+                        board[fourth + direction].classList.contains("tetromino"))
                 {
                     return true;
                 }

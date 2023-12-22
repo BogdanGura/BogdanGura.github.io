@@ -18,28 +18,32 @@
         <div class="menu-container">
             
             <header>
-                <h1>Tetris Enhanced</h1>
-                <h3>Created By: <span id="creator">Bogdan Gura</span></h3>
+                <h1 class="tetris glowing-text-tetris">Tetris Enhanced</h1>
+                <h3><span class ="made-by glowing-text-made-by">Created By:</span> <span class="creator glowing-text-creator">Bogdan Gura</span></h3>
 
+                
                 <!-- Input field -->
-                <h4 id="error-div"></h4>
-                <input id="input-username" placeholder="Type your username...">
+                <!-- <h4 id="error-div"></h4> -->
+                <!-- <input id="input-username" placeholder="Type your username..."> -->
                 <!-- Players Record Score -->
-                <h3 disabled id="record-field">Record Score: <span id="recordScore">0</span></h3>
+                <!-- <h3 disabled id="record-field">Record Score: <span id="recordScore">0</span></h3> -->
             </header>
             
             <div class="button-container">
                 <!-- Menu Buttons -->
-                <button id="playBtn">Single Player</button>
-                <button id="">VS A.I (Not Available yet)</button>
-                <button id="clearBtn">Clear Save (Not Available yet)</button>
+                <a href="tetris-solo.html">
+                    <button class="playBtn glowing-border-play-btn"><span class ="glowing-text-play-btn">Single Player</span></button>
+                </a>
+                
+                <button class="in-development"><span class="glowing-text-in-development">VS A.I - In Development</span></button>
+                <button class="in-development"><span class="glowing-text-in-development">Clear Save - In Development</span ></button>
                 <a href="">
-                    <button >Achivements (Not Available yet)</button>
+                    <button class="in-development"><span class="glowing-text-in-development">Achievements - In Development</span ></button>
                 </a>
                     <!-- Qutting leads to my portfolio website
                 to the projects section-->
-                <a id="a-quit" href="https://bogdangura.github.io/HTML/projects.html">
-                    <button>Quit</button>
+                <a href="https://bogdangura.github.io/HTML/projects.html">
+                    <button class="btn-quit"><span class="glowing-text-exit-btn">Quit</span></button>
                 </a>
             </div>
         </div>
