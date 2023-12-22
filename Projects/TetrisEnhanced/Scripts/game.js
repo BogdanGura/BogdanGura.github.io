@@ -544,7 +544,7 @@ export class Game
         //else false (game continues)
         let lost = false;
 
-        for(let i = 10; i < 20; i++)
+        for(let i = 0; i < 10; i++)
         {
             if(board[i].classList.contains("tetromino"))
             {

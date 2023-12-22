@@ -31,6 +31,10 @@ let quitBtn2 = document.getElementById("quitGameBtn2");
 let popupMenu = document.getElementById("popup-menu");
 let popupLost = document.getElementById("popup-lost");
 let levelIndicator = document.getElementById("level-indicator");
+let btn_down = document.getElementById("btn-down");
+let btn_up = document.getElementById("btn-up");
+let btn_left = document.getElementById("btn-left");
+let btn_right = document.getElementById("btn-right");
 let boardPieces;
 let nextScreenPieces;
 //Actual variables that store the games score
@@ -40,6 +44,7 @@ const game = new Game();
 const player = new Player("Bogdan", "Yey I won", "No, I lost")
 const boardWidth = 10;
 const boardHeight = 20;
+let gameStopped = false;
 let interval;
 //Movement directions
 const down = 10;
@@ -86,8 +91,63 @@ function startGame()
     window.addEventListener("keydown", control);
     game.generateTetromino(boardPieces, nextScreenPieces);
 
+    //Listener for buttons
+    btn_down.addEventListener("mouseup", () => {
+        clearInterval(interval);
+        intervalSpeed = level_1;
+        interval = setInterval(moveOutcome, intervalSpeed);
+    });
+    
+    // Event listener for mousedown to initiate downward movement
+    btn_down.addEventListener("mousedown", () => {
+        if (game.collisionDetector(down, boardPieces, boardWidth) === "landed") {
+            console.log("Tetromino landed");
+        } else {
+            // Set a faster speed
+            intervalSpeed = fasterSpeed;
+
+            // Update the interval with the new speed
+            clearInterval(interval);
+            interval = setInterval(moveOutcome, intervalSpeed);
+
+            // Move the tetromino immediately
+            game.moveTetromino(down, boardPieces);
+        }
+    });
+
+    btn_left.addEventListener("mousedown", () => {
+        //First check if the there won't be any collisions
+        if(game.collisionDetector(left, boardPieces, boardWidth) === "borderLeft")
+        {
+            console.log("Can't move past border (LEFT)");
+        }
+        else
+        {
+            game.moveTetromino(left, boardPieces);
+        }
+    });
+
+    btn_right.addEventListener("mousedown", () => {
+        if(game.collisionDetector(right, boardPieces, boardWidth) === "borderRight")
+        {
+            console.log("Can't move past border (Right)");
+        }
+        else
+        {
+            game.moveTetromino(right, boardPieces);
+        }
+        
+    });
+
+    //Rotation when pressing up arrow
+    btn_up.addEventListener("mousedown", () => {
+        game.rotate(boardPieces);
+    });
+
+
     //Open menu when the menu button is clicked
     openMenu.addEventListener("click", () => {
+        gameStopped = true;
         //close the menu modal
         popupMenu.showModal();
         //Restore the games movement
@@ -96,6 +156,7 @@ function startGame()
 
     //Close menu and resume the game when X is clicked
     closeMenu.addEventListener("click", () => {
+        gameStopped = false;
         //close the menu modal
         popupMenu.close();
         //Restore the games movement
@@ -127,6 +188,7 @@ function moveOutcome()
         //Check if player LOST
         if(game.checkForLose(boardPieces))
         {
+            gameStopped = true;
             //close the menu modal
             popupLost.showModal();
             //Restore the games movement
@@ -241,58 +303,63 @@ function quit(){
 //its rotation
 function control(event)
 {
-    //left
-    if(event.keyCode === 65 || event.keyCode === 37)
+    //if game is not stopped 
+    //proceed
+    if(!gameStopped)
     {
-        console.log("left movement trigger");
-        //First check if the there won't be any collisions
-        if(game.collisionDetector(left, boardPieces, boardWidth) === "borderLeft")
+        //left
+        if(event.keyCode === 65 || event.keyCode === 37)
         {
-            console.log("Can't move past border (LEFT)");
+            console.log("left movement trigger");
+            //First check if the there won't be any collisions
+            if(game.collisionDetector(left, boardPieces, boardWidth) === "borderLeft")
+            {
+                console.log("Can't move past border (LEFT)");
+            }
+            else
+            {
+                game.moveTetromino(left, boardPieces);
+            }
         }
-        else
+        //right
+        if(event.keyCode === 68 || event.keyCode === 39)
         {
-            game.moveTetromino(left, boardPieces);
+            console.log("right movement trigger");
+            //First check if the there won't be any collisions
+            if(game.collisionDetector(right, boardPieces, boardWidth) === "borderRight")
+            {
+                console.log("Can't move past border (Right)");
+            }
+            else
+            {
+                game.moveTetromino(right, boardPieces);
+            }
         }
-    }
 
-    //right
-    if(event.keyCode === 68 || event.keyCode === 39)
-    {
-        console.log("right movement trigger");
-        //First check if the there won't be any collisions
-        if(game.collisionDetector(right, boardPieces, boardWidth) === "borderRight")
+        //rotate (up)
+        if(event.keyCode === 87 || event.keyCode === 38)
         {
-            console.log("Can't move past border (Right)");
+            //Rotate the current tetromino using its
+            //rotationIndex and rotate it with the 
+            //turnValue
+            game.rotate(boardPieces);
         }
-        else
-        {
-            game.moveTetromino(right, boardPieces);
-        }
-    }
 
-    //rotate (up)
-    if(event.keyCode === 87 || event.keyCode === 38)
-    {
-        //Rotate the current tetromino using its
-        //rotationIndex and rotate it with the 
-        //turnValue
-        game.rotate(boardPieces);
-    }
-
-    //place down faster (doubleDown)
-    if(event.keyCode === 83 || event.keyCode === 40)
-    {
-        console.log("faster down movement trigger");
-        //First check if the there won't be any collisions
-        if(game.collisionDetector(down, boardPieces, boardWidth) === "landed")
+        //place down faster (doubleDown)
+        if(event.keyCode === 83 || event.keyCode === 40)
         {
-            console.log("Tetromino landed");
-        }
-        else
-        {
-            intervalSpeed = fasterSpeed;
-            game.moveTetromino(down, boardPieces);
+            console.log("faster down movement trigger");
+            //First check if the there won't be any collisions
+            if(game.collisionDetector(down, boardPieces, boardWidth) === "landed")
+            {
+                console.log("Tetromino landed");
+            }
+            else
+            {
+                intervalSpeed = fasterSpeed;
+                game.moveTetromino(down, boardPieces);
+            }
         }
     }
+    
 }
