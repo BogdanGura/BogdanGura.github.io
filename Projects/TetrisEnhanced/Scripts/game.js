@@ -2,156 +2,6 @@ export class Game
 {
     "use strict"
 
-    //Work on the moveLandedTetrominoes Tommorow
-
-    /*Add a new tetromino check list
-
-    1.add a check function that will check if that tetromino
-      with its rotation has anything under it (add all of its rotation varients)
-
-    2.Add it to the collision detector. down will get a check function,
-     left and right will get their own custom collision depending on a 
-     tetromino being added
-
-    3. Shadow collisions will be powered by the check-tetromino name placeholder
-
-    4. Rotation, make possible positions depending on the rotationIndex and
-       position
-
-    5.rotation valid custom validation for the tetromino
-    */
-    
-    //! BUG AND FEATURES 
-    //!T has incomplete logic on rotation 1 and 3 (length 3)
-    //! that doesnt account for different length 3's
-    //!That should be it
-
-    //Tetrominoes objects
-
-    //Create tetromino objects that will represent 
-    //their respected piece on the board
-    I = {
-        name: "I",
-        //Possible spawn position for the tetromino
-        spawnPositions: [{
-            position: [2, 12, 22, 32],
-            tetrominoRotationIndex: 0, //First,Vertical
-            rotationIncrement: 11 
-            //Value that will rotate a vertical I into a 
-            //horizontal I
-        }, {
-            position: [3, 4, 5, 6],
-            tetrominoRotationIndex: 1, //Side (Second)
-            rotationIncrement: -11 
-            //Value that will rotate a horizontal I into a 
-            //vertical I
-        }, {
-            position: [5, 6, 7, 8],
-            tetrominoRotationIndex: 1, //Side (Second)
-            rotationIncrement: -11 //Same here 
-        }],
-        nextPosition: [4, 5, 6, 7]
-    }
-
-    O = {
-        name: "O",
-        //Possible spawn position for the tetromino
-        spawnPositions: [{
-            position: [4, 5, 14, 15],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [6, 7, 16, 17],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [7, 8, 17, 18],
-            tetrominoRotationIndex: 0
-        }],
-        nextPosition: [5, 6, 9, 10]
-    }
-    //If shadow doesn't show. Check if the border has solid in the attribute defenition
-    T = {
-        name: "T",
-        //Possible spawn position for the tetromino
-        spawnPositions: [{
-            position: [11, 12, 13, 2],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [15, 16, 17, 6],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [2, 12, 22, 13],
-            tetrominoRotationIndex: 1
-        }],
-        nextPosition: [6, 9, 10, 11]
-    }
-
-    S = {
-        name: "S",
-        //Possible spawn position for the tetromino
-        spawnPositions: [{
-            position: [13, 12, 22, 21],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [17, 16, 26, 25],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [2, 12, 13, 23],
-            tetrominoRotationIndex: 1
-        }],
-        nextPosition: [7, 6, 10, 9]
-    }
-
-    Z = {
-        name: "Z",
-        //Possible spawn position for the tetromino
-        spawnPositions: [{
-            position: [1, 2, 12, 13],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [6, 7, 17, 18],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [3, 13, 12, 22],
-            tetrominoRotationIndex: 1
-        }],
-        nextPosition: [5, 6, 10, 11]
-    }
-
-    J = {
-        name: "J",
-        //Possible spawn position for the tetromino
-        spawnPositions: [{
-            position: [3, 13, 23, 22],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [7, 17, 27, 26],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [14, 13, 12, 2],
-            tetrominoRotationIndex: 1
-        }],
-        nextPosition: [2, 6, 10, 9]
-    }
-
-    L = {
-        name: "L",
-        //Possible spawn position for the tetromino
-        spawnPositions: [{
-            position: [3, 13, 23, 24],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [5, 15, 25, 26],
-            tetrominoRotationIndex: 0
-        }, {
-            position: [11, 12, 13, 3],
-            tetrominoRotationIndex: 1
-        }],
-        nextPosition: [1, 5, 9, 10]
-    }
-
-    //create and fill the tetrominoesArray
-    tetrominoesArray = [this.I, this.O, this.T, this.S, this.Z, this.J, this.L]; //this.I, this.O, this.T, this.S, this.Z, this.J, this.L
-
     //Constructor
     constructor()
     {
@@ -168,11 +18,11 @@ export class Game
 
     //pick a random tetromino function picks a random tetromino 
     //fron an array of tetrominoes
-    pickRandomTetromino()
+    pickRandomTetromino(array)
     {
         //Picking random tetromino
-        let tetrominoIndex = Math.floor(Math.random() * this.tetrominoesArray.length);
-        let tetromino = this.tetrominoesArray[tetrominoIndex];
+        let tetrominoIndex = Math.floor(Math.random() * array.length);
+        let tetromino = array[tetrominoIndex];
         return tetromino;
     }
 
@@ -195,15 +45,15 @@ export class Game
 
     //Method that will generate a tetromino
     //that will have a random position and a random color
-    generateTetromino(board, nextScreen)
+    generateTetromino(board, nextScreen, array)
     {
         
         //If its the first time pickRandomTetromino for current and 
         //next
         if(this.nextTetromino === undefined)
         {
-            let currentTetromino = this.pickRandomTetromino();
-            this.nextTetromino = this.pickRandomTetromino();
+            let currentTetromino = this.pickRandomTetromino(array);
+            this.nextTetromino = this.pickRandomTetromino(array);
             //Tetromino color is the name of the class that has its color
             this.tetrominoColor = currentTetromino.name;
 
@@ -226,7 +76,7 @@ export class Game
         else
         {
             let currentTetromino = this.nextTetromino;
-            this.nextTetromino = this.pickRandomTetromino();
+            this.nextTetromino = this.pickRandomTetromino(array);
             //Tetromino color is the name of the class that has its color
             this.tetrominoColor = currentTetromino.name;
 
@@ -3181,17 +3031,17 @@ export class Game
             else if(tetromino.position.length === 3)
             {
                 //check if the first cube is missing (vars)
-                let first = tetromino.position[1] - 10;
+                let first = tetromino.position[2] - 11;
 
                 //check if the last cube is missing (vars)
-                let last = tetromino.position[0] + 10;
+                let last = tetromino.position[2] + 9;
 
                 //check if the first cube is missing
                 if(!board[first].classList.contains("T"))
                 {
                     //falling logic for first cube missing
-                    let one = tetromino.position[0];
-                    let three = tetromino.position[2];
+                    let one = tetromino.oldPosition[0];
+                    let three = tetromino.oldPosition[2];
 
                     if(board[one + direction] === undefined)
                     {
@@ -3206,11 +3056,12 @@ export class Game
                         return false;
                     }
                 }
+                //check if the last cube is missing
                 else if(!board[last].classList.contains("T"))
                 {
-                    //falling logic for first cube missing
-                    let one = tetromino.position[0];
-                    let three = tetromino.position[1];
+                    //falling logic for last cube missing
+                    let one = tetromino.position[1];
+                    let three = tetromino.position[2];
 
                         if(board[one + direction].classList.contains("tetromino") ||
                             board[three + direction].classList.contains("tetromino"))
@@ -3221,41 +3072,36 @@ export class Game
                         return false;
                     }
                 }
+                
             }
             else if(tetromino.position.length === 2)
             {
-                //first and third cubes missing check (variables)
-                let first = tetromino.position[0] - 10;
-                let third = tetromino.position[0] + 10;
-
                 //if 2nd and 4th cubes are missing (variables)
-                let second = tetromino.position[1] - 10;
-                let fourth = tetromino.position[1] - 9;
+                let second = tetromino.position[0];
+                let fourth = tetromino.position[1];
 
                 //if 2nd and 4th cubes are missing
                 //third that reperesent the missing 2nd cube (don't change) 
-                if(!board[second].classList.contains("tetromino") &&
-                   !board[fourth].classList.contains("tetromino"))
+                if(fourth - second === 20)
                 {
                     //erase the old position
                     this.removeStyles(tetromino, "new", board);
 
                     //set a new position
-                    tetromino.position[0] = third;
+                    tetromino.position[0] += 10;
 
                     //add the styling back
                     this.addStyles(tetromino, "new", board);
 
                     return true;
                 }
-                //first and third cubes missing check
-                else if(board[third] === undefined ||
-                        board[first] === undefined)
+                //second and fourth cubes missing check
+                else if(board[second + direction] === undefined ||
+                        board[fourth + direction] === undefined)
                 {
                     return true;
                 }
-                else if(!board[first].classList.contains("tetromino") &&
-                        !board[third].classList.contains("tetromino"))
+                else if(fourth - second === 1)
                 {
                     //erase the old position
                     this.removeStyles(tetromino, "new", board);
@@ -3290,13 +3136,15 @@ export class Game
                     let two  = tetromino.position[1];
 
                     //check if the last one has anything below it
-                    if(board[one + direction].classList.contains("tetromino") ||
-                       board[one + direction] === undefined)
+                    
+                    if(board[one + direction] === undefined ||
+                       board[one + direction].classList.contains("tetromino"))
                     {
                         return true;
                     }
-                    else if(board[two + direction].classList.contains("tetromino") ||
-                            board[two + direction] === undefined)
+                    
+                    else if(board[two + direction] === undefined ||
+                            board[two + direction].classList.contains("tetromino"))
                     {
                         return true;
                     }
@@ -3427,7 +3275,7 @@ export class Game
                 }
                 //Check the first one
                 else if(board[two + direction].classList.contains("tetromino") ||
-                board[four + direction].classList.contains("tetromino"))
+                        board[four + direction].classList.contains("tetromino"))
                 {
                     return true
                 }
@@ -3438,18 +3286,13 @@ export class Game
             }
             else if(tetromino.position.length === 2)
             {
-                //if 2nd and 4th cubes are missing (variables)
-                let second = tetromino.position[1] + 10;
-                let fourth = tetromino.position[1] + 9;
-
                 //checking if 1st and third cubes are missing (variables)
-                let first = tetromino.position[0] - 10;
-                let third = tetromino.position[0] + 10;
+                let first = tetromino.position[0];
+                let third = tetromino.position[1];
 
-                //if 2nd and 4th cubes are missing
+                //if 1st and 3rd cubes are missing
                 //third that reperesent the missing 2nd cube (don't change) 
-                if(!board[second].classList.contains("tetromino") &&
-                   !board[fourth].classList.contains("tetromino"))
+                if(first - third === 20)
                 {
                     //erase the old position
                     this.removeStyles(tetromino, "new", board);
@@ -3462,9 +3305,13 @@ export class Game
 
                     return true;
                 }
-                
-                else if(!board[first].classList.contains("tetromino") &&
-                        !board[third].classList.contains("tetromino"))
+                //first and third cubes missing check
+                else if(board[first + direction] === undefined ||
+                        board[third + direction] === undefined)
+                {
+                    return true;
+                }
+                else if(first - third === 1)
                 {
                     //erase the old position
                     this.removeStyles(tetromino, "new", board);
@@ -3608,7 +3455,7 @@ export class Game
             else if(tetromino.position.length === 3)
             {
                 let third = tetromino.position[2];
-                let fourth = tetromino.position[2] + 10;
+                let fourth = tetromino.position[1] + 10;
                 
                 //Variable for checking if the top square is missing
                 let first = tetromino.position[0] - 10;
@@ -3833,7 +3680,7 @@ export class Game
                 //if the fourth cube is missing
                 let second = tetromino.position[1];
                 let third = tetromino.position[2];
-                let fourth = tetromino.position[2] + 10;
+                let fourth = tetromino.position[1] + 10;
 
                 //if first cube is missing
                 let one = tetromino.position[0] - 10;

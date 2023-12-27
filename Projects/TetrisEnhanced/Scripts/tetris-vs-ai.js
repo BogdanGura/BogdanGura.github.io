@@ -11,45 +11,61 @@ import { Achievement } from "/Projects/TetrisEnhanced/Scripts/achievement.js";
 //Importing Game Class
 import { Game } from "/Projects/TetrisEnhanced/Scripts/game.js";
 
+//Importing AI Class
+import { AI } from "/Projects/TetrisEnhanced/Scripts/AI.js";
+
 //Variables
-let gameBoard = document.getElementById("game-board");
+let gameBoard = document.querySelector(".game-board");
+let gameBoard_AI = document.querySelector(".game-board-ai");
 //F stands for Field
 let clearedLinesF = document.getElementById("rows-cleared");
 let pointsScoredF = document.getElementById("points");
+let clearedLinesF_AI = document.getElementById("rows-cleared-AI");
+let pointsScoredF_AI = document.getElementById("points-AI");
 let nextTetrominoScreen = document.getElementById("next-tetromino-screen");
+let nextTetrominoScreen_AI = document.getElementById("next-tetromino-screen-ai");
 let openMenu = document.getElementById("openMenu");
 let closeMenu = document.getElementById("closeMenuBtn");
 let quitBtn1 = document.getElementById("quitGameBtn1");
 let quitBtn2 = document.getElementById("quitGameBtn2");
 let popupMenu = document.getElementById("popup-menu");
 let popupLost = document.getElementById("popup-lost");
+let popupWon = document.getElementById("popup-won");
 let levelIndicator = document.getElementById("level-indicator");
+let levelIndicator_AI = document.getElementById("level-indicator-AI");
 let btn_down = document.getElementById("btn-down");
 let btn_up = document.getElementById("btn-up");
 let btn_left = document.getElementById("btn-left");
 let btn_right = document.getElementById("btn-right");
 let boardPieces;
+let boardPieces_AI;
 let nextScreenPieces;
+let nextScreenPieces_AI;
 //Actual variables that store the games score
 let pointScore = 0;
 let rowsCleared = 0;
+//Variables for AI score and line tracking
+let pointScore_AI = 0;
+let rowsCleared_AI = 0;
 const game = new Game();
+const ai = new AI();
 const boardWidth = 10;
 const boardHeight = 20;
 let gameStopped = false;
 let interval;
+let interval_AI;
 //Movement directions
 const down = 10;
 const left = -1;
 const right = 1;
 //interval speeds
 let intervalSpeed = 0;
+let intervalSpeed_AI = 0;
 const level_1 = 450;
 const level_2 = 400;
 const level_3 = 305;
 const fasterSpeed = 200;
 
-//Tetrominoes
 //Tetrominoes for Player
 let I = {
     name: "I",
@@ -170,17 +186,90 @@ let L = {
     nextPosition: [1, 5, 9, 10]
 }
 
-let tetrominoesArray = [I, O, T, J, L, S, Z];//I, O, T, J, L, S, Z
+//Tetrominoes for AI
+let I_AI = {
+    name: "I",
+    //Possible spawn position for the tetromino
+    spawnPositions: [{
+        position: [0, 1, 2, 3],
+        tetrominoRotationIndex: 1 //Horizaontal starting position
+    }],
+    nextPosition: [4, 5, 6, 7]
+}
+
+let O_AI = {
+    name: "O",
+    //Possible spawn position for the tetromino
+    spawnPositions: [{
+        position: [0, 1, 10, 11],
+        tetrominoRotationIndex: 0
+    }],
+    nextPosition: [5, 6, 9, 10]
+}
+//If shadow doesn't show. Check if the border has solid in the attribute defenition
+let T_AI = {
+    name: "T",
+    //Possible spawn position for the tetromino
+    spawnPositions: [{
+        position: [10, 11, 12, 1],
+        tetrominoRotationIndex: 0
+    }],
+    nextPosition: [6, 9, 10, 11]
+}
+
+let S_AI= {
+    name: "S",
+    //Possible spawn position for the tetromino
+    spawnPositions: [{
+        position: [0, 10, 11, 21],
+        tetrominoRotationIndex: 1
+    }],
+    nextPosition: [7, 6, 10, 9]
+}
+
+let Z_AI = {
+    name: "Z",
+    //Possible spawn position for the tetromino
+    spawnPositions: [{
+        position: [1, 11, 10, 20],
+        tetrominoRotationIndex: 1
+    }],
+    nextPosition: [5, 6, 10, 11]
+}
+
+let J_AI = {
+    name: "J",
+    //Possible spawn position for the tetromino
+    spawnPositions: [{
+        position: [1, 11, 21, 20],
+        tetrominoRotationIndex: 0
+    }],
+    nextPosition: [2, 6, 10, 9]
+}
+
+let L_AI = {
+    name: "L",
+    //Possible spawn position for the tetromino
+    spawnPositions: [{
+        position: [0, 10, 20, 21],
+        tetrominoRotationIndex: 0
+    }],
+    nextPosition: [1, 5, 9, 10]
+}
+
+let tetrominoesArray_Player = [I, O, T, S, Z, J, L];
+
+let tetrominoesArray_AI = [I_AI, O_AI, T_AI, S_AI, Z_AI, J_AI, L_AI];
 
 window.addEventListener("DOMContentLoaded", startGame);
 
 //Making 200 divs and appending them to the board
-function generateBoard()
+function generateBoard(board)
 {
     for (let i = 0; i < 200; i++) 
     {
         let boardPiece = document.createElement("div");
-        gameBoard.appendChild(boardPiece);
+        board.appendChild(boardPiece);
     }
 }
 
@@ -195,17 +284,39 @@ function generateNextTetrominoScreen(nextTetrominoScreen)
 
 function startGame()
 {
+    // Generate Player's Board
     generateBoard(gameBoard);
+
+    // Then A.I's
+    generateBoard(gameBoard_AI);
+
+    // Player
     generateNextTetrominoScreen(nextTetrominoScreen);
-    boardPieces = document.querySelectorAll("#game-board div");
+
+    // A.I
+    generateNextTetrominoScreen(nextTetrominoScreen_AI);
+    //Player Elemenets
+    boardPieces = document.querySelectorAll(".game-board div");
     nextScreenPieces = document.querySelectorAll("#next-tetromino-screen div");
+
+    //A.I elements
+    boardPieces_AI = document.querySelectorAll(".game-board-ai div");
+    nextScreenPieces_AI = document.querySelectorAll("#next-tetromino-screen-ai div");
 
     //Set the starting level to 1
     levelIndicator.innerText = "1";
 
+    //Set A.I's level to 1
+    levelIndicator_AI.innerText = "69";
+
     //Create Event listeners for clicks
     window.addEventListener("keydown", control);
-    game.generateTetromino(boardPieces, nextScreenPieces, tetrominoesArray);
+
+    // Generate Tetromino for player
+    game.generateTetromino(boardPieces, nextScreenPieces, tetrominoesArray_Player);
+
+    // Generate Tetromino for AI
+    ai.generateTetromino(boardPieces_AI, nextScreenPieces_AI, tetrominoesArray_AI);
 
     //Listener for buttons
     btn_down.addEventListener("mouseup", () => {
@@ -266,8 +377,9 @@ function startGame()
         gameStopped = true;
         //close the menu modal
         popupMenu.showModal();
-        //Restore the games movement
+        //Stop games movement
         clearInterval(interval);
+        clearInterval(interval_AI);
     });
 
     //Close menu and resume the game when X is clicked
@@ -277,14 +389,22 @@ function startGame()
         popupMenu.close();
         //Restore the games movement
         interval = setInterval(moveOutcome, intervalSpeed);
+
+        //Restore A.I's game movement
+        //interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
     });
 
     //Event Listener for quit button on both modals
     quitBtn1.addEventListener("click", quit);
     quitBtn2.addEventListener("click", quit);
 
-    intervalSpeed = level_1;
-    interval = setInterval(moveOutcome, intervalSpeed);
+    //Starting the interval for player
+    /* intervalSpeed = level_1;
+    interval = setInterval(moveOutcome, intervalSpeed); */
+
+    //Starting the interval for AI
+    intervalSpeed_AI = level_1;
+    interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
 }
 
 //Function that runs every second and checks if tetromino
@@ -313,7 +433,7 @@ function moveOutcome()
         else
         {
             //Registering landed tetromino
-            game.registerLandedTetromino();
+            game.registerLandedTetromino(boardPieces);
             console.log("Tetromino registered");
 
             //Find completed rows
@@ -383,12 +503,9 @@ function moveOutcome()
             }
 
             console.log("Tetromino accounter for");
-            game.generateTetromino(boardPieces, nextScreenPieces, tetrominoesArray);
+            game.generateTetromino(boardPieces, nextScreenPieces, tetrominoesArray_Player);
             clearInterval(interval);
 
-            //Reset the speed of a tetromino
-            intervalSpeed = level_1;
-            
             console.log("Tetromino generated");
             interval = setInterval(moveOutcome, intervalSpeed);
         }
@@ -400,6 +517,124 @@ function moveOutcome()
 
         console.log("Tetromino is still faling");
         game.moveTetromino(down, boardPieces)
+        
+    }
+
+    //clearInterval(interval)
+}
+
+//Same as moveOutcome function, just configured for AI
+function moveOutcome_AI()
+{
+    //Check for imminent collision (down)
+    if(ai.collisionDetector(down, boardPieces_AI, boardWidth) === "landed")
+    {
+        console.log("Tetromino landed");
+        //if landed is returned then it means that 
+        //tetromino can't move down anymore and has to 
+        //stay and the bottom
+        //if so it will be added to the landedTetrominos array
+        //and a new tetromino will be generated
+
+        //Check if AI LOST
+        if(ai.checkForLose(boardPieces_AI))
+        {
+            gameStopped = true;
+            //close the menu modal
+            popupWon.showModal();
+            //Stop games movement, player
+            clearInterval(interval);
+
+            //Stop games movement, AI
+            clearInterval(interval_AI);
+        }
+        else
+        {
+            //Registering landed tetromino
+            ai.registerLandedTetromino(boardPieces_AI);
+            ai.log("Tetromino registered");
+
+            //Find completed rows
+            let completedRows = ai.findCompleteRows(boardPieces_AI, boardHeight, boardWidth);
+
+            //Check if completedRows has any completed rows
+            if(completedRows.length > 0)
+            {
+                //Increment cleared rows and points 
+                rowsCleared_AI += completedRows.length;
+                //Adding a certain amount of points depending on the amount of lines 
+                //cleared
+                if(completedRows.length === 1)
+                {
+                    //if 1 line is cleared add 40 points to the score
+                    pointScore_AI += 40;
+                }
+                else if(completedRows.length === 2)
+                {
+                    //if 2 lines were cleared add 100 points to the score
+                    pointScore_AI += 100;
+                }
+                else if(completedRows.length === 3)
+                {
+                    //if 3 lines are cleared add 300 points to the score
+                    pointScore_AI += 300;
+                }
+                //TETRIS !!!
+                else if(completedRows.length === 4)
+                {
+                    //if tetris is achieved add 1200 points to the score
+                    pointScore_AI += 1200;
+                }
+
+                //Then check if the player has made enough 
+                //points to go to the next level
+                //level 1: 0-1499 points
+                //level 2: 1500 points
+                //level 3 5000 points
+                if (pointScore_AI >= 5000) 
+                {
+                    // Level 3
+                    levelIndicator_AI.innerText = "3";
+                    clearInterval(interval_AI);
+                    intervalSpeed_AI = level_3;
+                    interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
+                } else if (pointScore_AI >= 1500) 
+                {
+                    // Level 2
+                    levelIndicator_AI.innerText = "2";
+                    clearInterval(interval_AI);
+                    intervalSpeed_AI = level_2;
+                    interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
+                }
+                
+
+                //Then update the values in our points and cleared rows fields
+                //Remove any completed rows for points
+                clearedLinesF_AI.innerText = rowsCleared_AI;
+                pointsScoredF_AI.innerText = pointScore_AI;
+                
+                //Remove thouse cleared rows
+                ai.clearCompleteRows(boardPieces_AI, boardWidth, completedRows);
+            }
+            else{
+                console.log("No completed rows detected");
+            }
+
+            console.log("Tetromino accounter for");
+            ai.generateTetromino(boardPieces_AI, nextScreenPieces_AI, nextTetrominoScreen_AI);
+            clearInterval(interval_AI);
+
+            console.log("Tetromino generated");
+            interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
+        }
+    }
+    else
+    {
+        //Reset the interval back up (preventing accumilating 
+        // intervals)
+
+        console.log("Tetromino is still faling");
+        game.moveTetromino(down, boardPieces_AI)
         
     }
 
