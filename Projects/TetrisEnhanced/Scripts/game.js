@@ -3040,8 +3040,8 @@ export class Game
                 if(!board[first].classList.contains("T"))
                 {
                     //falling logic for first cube missing
-                    let one = tetromino.oldPosition[0];
-                    let three = tetromino.oldPosition[2];
+                    let one = tetromino.position[1];
+                    let three = tetromino.position[2];
 
                     if(board[one + direction] === undefined)
                     {
@@ -3328,12 +3328,16 @@ export class Game
                 //if its a vertical 2 block on top of each other
                 else if((tetromino.position[0] - tetromino.position[1]) === 10)
                 {
-                    let lastBlock  = tetromino.position[1];
+                    let lastBlock  = tetromino.position[0];
                     //check if the last one has anything below it
                     if(board[lastBlock + direction].classList.contains("tetromino") ||
                        board[lastBlock + direction] === undefined)
                     {
                         return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
                 //if its a horizontal 2 block on each others side
@@ -3352,6 +3356,10 @@ export class Game
                             board[two + direction] === undefined)
                     {
                         return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
             }
@@ -3468,11 +3476,6 @@ export class Game
                 //Check if the top square is missing
                 else if(!board[first].classList.contains("S"))
                 {
-                    return true;
-                }
-                //Check if the bottom square is present (logic)
-                else if(board[third].classList.contains("S"))
-                {
                     //Same logic as a for length four
                     //Check the bottom 3 indexes if they have anything below them
                     let second = tetromino.position[0];
@@ -3573,16 +3576,19 @@ export class Game
                 else{
                     //check the first cube if it landed or has something in the 
                     //way
-                    if(board[one + direction].classList.contains("tetromino") ||
-                       board[one + direction] === undefined)
+                    if(board[one + direction] === undefined ||
+                       board[two + direction] === undefined)
                     {
                         return true;
                     }
                     //check the second on the same way
                     else if(board[two + direction].classList.contains("tetromino") ||
-                            board[two + direction] === undefined)
+                            board[two + direction].classList.contains("tetromino"))
                     {
                         return true;
+                    }
+                    else{
+                        return false;
                     }
                 }
             }
@@ -3680,7 +3686,7 @@ export class Game
                 //if the fourth cube is missing
                 let second = tetromino.position[1];
                 let third = tetromino.position[2];
-                let fourth = tetromino.position[1] + 10;
+                let fourth = tetromino.position[2] + 10;
 
                 //if first cube is missing
                 let one = tetromino.position[0] - 10;
@@ -3688,19 +3694,13 @@ export class Game
                 let three = tetromino.position[2];
 
                 //fourth cube is missing check
-                if(!board[fourth].classList.contains("Z"))
-                {
-                    return false;
-                }
-                //first cube is missing check
-                else if(!board[one].classList.contains("Z"))
+                if(board[fourth] === undefined)
                 {
                     return true;
                 }
-                //if the 4th cube is indeed missing follow the falling logic below
-                else if(board[tetromino.position[0]].classList.contains("Z"))
+                if(!board[fourth].classList.contains("Z"))
                 {
-                    if(board[first + direction] === undefined)
+                    if(board[second + direction] === undefined)
                     {
                         return true;
                     }
@@ -3714,8 +3714,8 @@ export class Game
                         return false;
                     }
                 }
-                //if the 1st cube is indeed missing follow the falling logic below
-                else if(board[tetromino.position[2]].classList.contains("Z"))
+                //first cube is missing check
+                else if(!board[one].classList.contains("Z"))
                 {
                     //Have a different logic 
                     if(board[three + direction] === undefined)
@@ -3736,11 +3736,7 @@ export class Game
             {
                 //2nd and 3rd cubes are missing check variables
                 let second = tetromino.position[0] + 10;
-                let third = tetromino.position[0] + 9;
-
-                //1st and 4th cubes are missing check variables
-                let first = tetromino.position[0] - 10;
-                let fourth = tetromino.position[1] + 10;
+                let third = tetromino.position[1] - 10;
 
                 //General length 2 check vars
                 let one = tetromino.position[0];
@@ -3752,8 +3748,7 @@ export class Game
                     return true;
                 }
                 //2nd and 3rd cubes are missing check
-                if(!board[second].classList.contains("tetromino") &&
-                   !board[third].classList.contains("tetromino"))
+                if(tetromino.position[1] - tetromino.position[0] === 19)
                 {
                     //Remove old position styling 
                     this.removeStyles(tetromino, "new", board);
@@ -3767,8 +3762,7 @@ export class Game
                     return true;
                 }
                 //1st and 4th cubes are missing check
-                else if(!board[first].classList.contains("tetromino") &&
-                        !board[fourth].classList.contains("tetromino"))
+                else if(tetromino.position[0] - tetromino.position[1] === 1)
                 {
                     //Remove old position styling 
                     this.removeStyles(tetromino, "new", board);
@@ -3785,15 +3779,18 @@ export class Game
                 else 
                 {
                     //length 2 check
-                    if(board[one + direction].classList.contains("tetromino") || 
-                       board[one + direction] === undefined)
+                    if(board[one + direction] === undefined || 
+                       board[two + direction] === undefined)
                     {
                         return true;
                     }
-                    else if(board[two + direction].classList.contains("tetromino") || 
-                            board[two + direction] === undefined)
+                    else if(board[one + direction].classList.contains("tetromino") || 
+                            board[two + direction].classList.contains("tetromino"))
                     {
                         return true;
+                    }
+                    else{
+                        return false;
                     }
                 }
             }
@@ -4063,7 +4060,7 @@ export class Game
                 //Checking for the third and fourth cube missing
                 // fall needs to from the bottom most div (first)
                 let three = tetromino.position[1] - 10;
-                let four = tetromino.position[1] - 11;
+                let four = tetromino.position[1] - 9;
 
                 //Checking for the third and fourth cube missing
                 if(!board[three].classList.contains("tetromino") && 
@@ -4072,8 +4069,11 @@ export class Game
                     let bottomCube = tetromino.position[0];
 
                     //Check if it can fall
-                    if(board[bottomCube + direction].classList.contains("tetromino") ||
-                       board[third + direction] === undefined)
+                    if(board[bottomCube + direction] === undefined)
+                    {
+                        return true;
+                    }
+                    else if(board[bottomCube + direction].classList.contains("tetromino"))
                     {
                         return true;
                     }
@@ -4098,7 +4098,19 @@ export class Game
             }
             else if(tetromino.position.length === 1)
             {
-                return false;
+                let last = tetromino.position[0];
+
+                if(board[last + direction] === undefined)
+                {
+                    return true;
+                }
+                else if(board[last + direction].classList.contains("tetromino"))
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
             
         }
@@ -4443,10 +4455,16 @@ export class Game
                 if(!board[three].classList.contains("tetromino") && 
                    !board[four].classList.contains("tetromino"))
                 {
-                    if(board[lastCube + direction].classList.contains("tetromino") ||
-                       board[lastCube + direction] === undefined)
+                    if(board[lastCube + direction] === undefined)
                     {
                         return true;
+                    }
+                    else if(board[lastCube + direction].classList.contains("tetromino"))
+                    {
+                        return true;
+                    }
+                    else{
+                        return false;
                     }
                 }
                 else if(board[third + direction] === undefined ||
