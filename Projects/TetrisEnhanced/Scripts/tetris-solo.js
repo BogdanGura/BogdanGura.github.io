@@ -375,8 +375,7 @@ function moveOutcome()
                 clearedLinesF.innerText = rowsCleared;
                 pointsScoredF.innerText = pointScore;
                 
-                //Remove thouse cleared rows
-                game.clearCompleteRows(boardPieces, boardWidth, completedRows);
+                animateClearedRows(boardPieces, boardWidth, completedRows);
             }
             else{
                 console.log("No completed rows detected");
@@ -481,4 +480,34 @@ function control(event)
         }
     }
     
+}
+
+//Set cleared row animation to all 
+//cleared rows
+function animateClearedRows(boardPieces, boardWidth, completedRows) 
+{
+    clearInterval(interval);
+
+    completedRows.forEach(row => {
+        for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) {
+            //Remove other styling
+            boardPieces[item].classList = [];
+            // Add the flash class to initiate the animation
+            boardPieces[item].classList.add("flash");
+        }
+    });
+
+    // Force reflow to trigger the animation
+    void boardPieces[0].offsetWidth;
+
+    setTimeout(() => {
+        // Remove the flash class to stop the animation
+        completedRows.forEach(row => {
+            for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) {
+                boardPieces[item].classList = [];
+            }
+        });
+        // Remove thouse cleared rows
+        game.clearCompleteRows(boardPieces, boardWidth, completedRows);
+    }, 250);
 }

@@ -114,24 +114,15 @@ button{
 
 @keyframes flashColors {
     0% {
-        background-color: red;
-    }
-    25% {
-        background-color: yellow;
-    }
-    50% {
-        background-color: blue;
-    }
-    75% {
-        background-color: yellow;
+        background-color: rgb(255, 255, 255);
     }
     100% {
-        background-color: red;
+        background-color: rgb(0, 0, 0);
     }
 }
 
 .flash {
-    animation: flashColors 0.5s ease-in-out 2; 
+    animation: flashColors 0.5s infinite; 
 }
 
 /* 

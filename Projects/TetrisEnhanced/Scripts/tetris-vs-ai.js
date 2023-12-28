@@ -399,12 +399,12 @@ function startGame()
     quitBtn2.addEventListener("click", quit);
 
     //Starting the interval for player
-    /* intervalSpeed = level_1;
-    interval = setInterval(moveOutcome, intervalSpeed); */
+    intervalSpeed = level_1;
+    interval = setInterval(moveOutcome, intervalSpeed);
 
     //Starting the interval for AI
-    intervalSpeed_AI = level_1;
-    interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
+    //intervalSpeed_AI = level_1;
+    //interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
 }
 
 //Function that runs every second and checks if tetromino
@@ -489,19 +489,22 @@ function moveOutcome()
                     interval = setInterval(moveOutcome, intervalSpeed);
                 }
                 
-
                 //Then update the values in our points and cleared rows fields
                 //Remove any completed rows for points
                 clearedLinesF.innerText = rowsCleared;
                 pointsScoredF.innerText = pointScore;
                 
                 //Remove thouse cleared rows
-                game.clearCompleteRows(boardPieces, boardWidth, completedRows);
+                animateClearedRows(boardPieces, boardWidth, completedRows, "player");
             }
             else{
                 console.log("No completed rows detected");
-            }
 
+                //Reseting speed to level_1 from faster speed
+                clearInterval(interval);
+                intervalSpeed = level_1;
+                interval = setInterval(moveOutcome, intervalSpeed);
+            }
             console.log("Tetromino accounter for");
             game.generateTetromino(boardPieces, nextScreenPieces, tetrominoesArray_Player);
             clearInterval(interval);
@@ -527,7 +530,7 @@ function moveOutcome()
 function moveOutcome_AI()
 {
     //Check for imminent collision (down)
-    if(ai.collisionDetector(down, boardPieces_AI, boardWidth) === "landed")
+    if(ai.collisionDetector(down, boardPieces_AI) === "landed")
     {
         console.log("Tetromino landed");
         //if landed is returned then it means that 
@@ -552,7 +555,7 @@ function moveOutcome_AI()
         {
             //Registering landed tetromino
             ai.registerLandedTetromino(boardPieces_AI);
-            ai.log("Tetromino registered");
+            console.log("Tetromino registered");
 
             //Find completed rows
             let completedRows = ai.findCompleteRows(boardPieces_AI, boardHeight, boardWidth);
@@ -614,18 +617,14 @@ function moveOutcome_AI()
                 pointsScoredF_AI.innerText = pointScore_AI;
                 
                 //Remove thouse cleared rows
-                ai.clearCompleteRows(boardPieces_AI, boardWidth, completedRows);
+                animateClearedRows(boardPieces, boardWidth, completedRows, "ai");
             }
             else{
                 console.log("No completed rows detected");
             }
-
-            console.log("Tetromino accounter for");
-            ai.generateTetromino(boardPieces_AI, nextScreenPieces_AI, nextTetrominoScreen_AI);
-            clearInterval(interval_AI);
-
-            console.log("Tetromino generated");
-            interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
+            
+            //Generate a new tetromino
+            generateTetrominoWithDelay();
         }
     }
     else
@@ -634,7 +633,7 @@ function moveOutcome_AI()
         // intervals)
 
         console.log("Tetromino is still faling");
-        game.moveTetromino(down, boardPieces_AI)
+        ai.moveTetromino(down, boardPieces_AI)
         
     }
 
@@ -714,6 +713,69 @@ function control(event)
                 game.moveTetromino(down, boardPieces);
             }
         }
+    }
+    
+}
+
+//Generates a tetromino for AI with a delay of 3 seconds
+function generateTetrominoWithDelay()
+{
+    clearInterval(interval_AI);
+
+    //Generate the new tetromino with a delay of 3 seconds
+    setTimeout(()=>{
+        ai.generateTetromino(boardPieces_AI, nextScreenPieces_AI, tetrominoesArray_AI);
+
+        console.log("Tetromino generated");
+        
+        interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
+
+    }, 3000)
+}
+
+//Set cleared row animation to all 
+//cleared rows
+function animateClearedRows(boardPieces, boardWidth, completedRows, target) 
+{
+    clearInterval(interval);
+
+    completedRows.forEach(row => {
+        for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) {
+            //Remove other styling
+            boardPieces[item].classList = [];
+            // Add the flash class to initiate the animation
+            boardPieces[item].classList.add("flash");
+        }
+    });
+
+    // Force reflow to trigger the animation
+    void boardPieces[0].offsetWidth;
+
+    //checking the target of a row clear
+    if(target === "player")
+    {
+        setTimeout(() => {
+            // Remove the flash class to stop the animation
+            completedRows.forEach(row => {
+                for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) {
+                    boardPieces[item].classList = [];
+                }
+            });
+            // Remove thouse cleared rows
+            game.clearCompleteRows(boardPieces, boardWidth, completedRows);
+        }, 250);
+    }
+    else{
+        setTimeout(() => {
+            // Remove the flash class to stop the animation
+            completedRows.forEach(row => {
+                for (let item = row * boardWidth; item <= (row * boardWidth) + 9; item++) {
+                    boardPieces[item].classList = [];
+                }
+            });
+            // Remove thouse cleared rows
+            ai.clearCompleteRows(boardPieces, boardWidth, completedRows);
+        }, 250);
     }
     
 }
