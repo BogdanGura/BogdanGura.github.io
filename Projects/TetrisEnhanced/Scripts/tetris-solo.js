@@ -329,7 +329,7 @@ function moveOutcome()
                 if(completedRows.length === 1)
                 {
                     //if 1 line is cleared add 40 points to the score
-                    pointScore += 40;
+                    pointScore += 4000;
                 }
                 else if(completedRows.length === 2)
                 {
@@ -353,22 +353,23 @@ function moveOutcome()
                 //level 1: 0-1499 points
                 //level 2: 1500 points
                 //level 3 5000 points
-                if (pointScore >= 5000) 
-                {
+                // Update the interval speed based on the current level
+                clearInterval(interval);
+                if (pointScore >= 5000) {
                     // Level 3
                     levelIndicator.innerText = "3";
-                    clearInterval(interval);
                     intervalSpeed = level_3;
-                    interval = setInterval(moveOutcome, intervalSpeed);
-                } else if (pointScore >= 1500) 
-                {
+                } else if (pointScore >= 1500) {
                     // Level 2
                     levelIndicator.innerText = "2";
-                    clearInterval(interval);
                     intervalSpeed = level_2;
-                    interval = setInterval(moveOutcome, intervalSpeed);
+                } else {
+                    // Level 1
+                    levelIndicator.innerText = "1";
+                    intervalSpeed = level_1;
                 }
                 
+                interval = setInterval(moveOutcome, intervalSpeed);
 
                 //Then update the values in our points and cleared rows fields
                 //Remove any completed rows for points
