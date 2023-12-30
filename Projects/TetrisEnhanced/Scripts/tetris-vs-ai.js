@@ -71,8 +71,8 @@ let I = {
     name: "I",
     //Possible spawn position for the tetromino
     spawnPositions: [{
-        position: [2, 12, 22, 32],
-        tetrominoRotationIndex: 0, //First,Vertical
+        position: [1, 2, 3, 4],
+        tetrominoRotationIndex: 1, //Horizontal
         rotationIncrement: 11 
         //Value that will rotate a vertical I into a 
         //horizontal I
@@ -191,7 +191,7 @@ let I_AI = {
     name: "I",
     //Possible spawn position for the tetromino
     spawnPositions: [{
-        position: [0, 1, 2, 3],
+        position: [10, 11, 12, 13],
         tetrominoRotationIndex: 1 //Horizaontal starting position
     }],
     nextPosition: [4, 5, 6, 7]
@@ -257,9 +257,9 @@ let L_AI = {
     nextPosition: [1, 5, 9, 10]
 }
 
-let tetrominoesArray_Player = [I, O, T, S, Z, J, L];
+let tetrominoesArray_Player = [I, O, T, S, Z, J, L]; //I, O, T, S, Z, J, L
 
-let tetrominoesArray_AI = [I_AI, O_AI, T_AI, S_AI, Z_AI, J_AI, L_AI];
+let tetrominoesArray_AI = [I_AI];//I_AI, O_AI, T_AI, S_AI, Z_AI, J_AI, L_AI
 
 window.addEventListener("DOMContentLoaded", startGame);
 
@@ -307,7 +307,7 @@ function startGame()
     levelIndicator.innerText = "1";
 
     //Set A.I's level to 1
-    levelIndicator_AI.innerText = "69";
+    levelIndicator_AI.innerText = "1";
 
     //Create Event listeners for clicks
     window.addEventListener("keydown", control);
@@ -399,12 +399,12 @@ function startGame()
     quitBtn2.addEventListener("click", quit);
 
     //Starting the interval for player
-    intervalSpeed = level_1;
-    interval = setInterval(moveOutcome, intervalSpeed);
+    //intervalSpeed = level_1;
+    //interval = setInterval(moveOutcome, intervalSpeed);
 
     //Starting the interval for AI
-    //intervalSpeed_AI = level_1;
-    //interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
+    intervalSpeed_AI = level_1;
+    interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
 }
 
 //Function that runs every second and checks if tetromino
@@ -617,7 +617,7 @@ function moveOutcome_AI()
                 pointsScoredF_AI.innerText = pointScore_AI;
                 
                 //Remove thouse cleared rows
-                animateClearedRows(boardPieces, boardWidth, completedRows, "ai");
+                animateClearedRows(boardPieces_AI, boardWidth, completedRows, "ai");
             }
             else{
                 console.log("No completed rows detected");
@@ -633,7 +633,12 @@ function moveOutcome_AI()
         // intervals)
 
         console.log("Tetromino is still faling");
+
+        //Move tetromino down every interval
         ai.moveTetromino(down, boardPieces_AI)
+
+        //Decide where to put the tetromino
+        ai.findBestPlacement(left, right, boardPieces_AI);
         
     }
 
@@ -730,7 +735,7 @@ function generateTetrominoWithDelay()
         
         interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
 
-    }, 3000)
+    }, 2000)
 }
 
 //Set cleared row animation to all 
