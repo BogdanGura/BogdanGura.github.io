@@ -35,6 +35,9 @@ export class AI extends Game
         //any checks
         let reserveOption;
 
+        //records last coordinates of a tetromino shadow
+        let lastTetrominoShadow = [];
+
         //Check if its a I tetromino
         if(this.tetrominoColor === "I")
         {
@@ -51,7 +54,7 @@ export class AI extends Game
         {
             //Setting the numRotations
             numRotations = 1;
-            movementsToRight = 8;
+            movementsToRight = 9;
         }
 
         //For loop gather all possible positions
@@ -100,7 +103,7 @@ export class AI extends Game
                                         //then rotate the tetromino
                                         this.rotate(board);
                                         //move the tetromino back to the starting position
-                                        this.placeTetromino(vertical_I_starting_Position, board, "move");
+                                        this.placeTetromino(vertical_I_starting_Position, board, "move", lastTetrominoShadow);
 
                                         //set the new amount of movementsToRight
                                         movementsToRight = 9;
@@ -148,6 +151,9 @@ export class AI extends Game
                             //and don't move the tetromino
                             else
                             {
+                                //record the last shadow
+                                lastTetrominoShadow = this.shadowPosition.slice();
+                                
                                 this.registerOption(placementOptions);
                             }
                         }
@@ -245,7 +251,7 @@ export class AI extends Game
                                 else{
                                     //Since its the last movement of the last rotation
                                     //save the current shadow position as a reserveOption
-                                    reserveOption = this.shadowPosition.splice();
+                                    reserveOption = this.shadowPosition.slice();
                                     //if no checks matched for a position
                                     //move the tetromino to the right
                                     this.moveTetromino(right, board)
@@ -255,6 +261,9 @@ export class AI extends Game
                             //and don't move the tetromino
                             else
                             {
+                                //record the last shadow
+                                lastTetrominoShadow = this.shadowPosition.slice();
+
                                 this.registerOption(placementOptions);
                             }
                         }
@@ -265,11 +274,17 @@ export class AI extends Game
                         {
                             //if O has full suport of tetrominoes below it
                             //or is at the bottom already
-                            if(
-                                (board[this.shadowPosition[2] + 10].classList.contains("tetromino") && 
-                                 board[this.shadowPosition[2] + 10].classList.contains("tetromino"))
-                                ||
-                                (this.shadowPosition[2] + 10) === undefined
+                            if((board[this.shadowPosition[2] + 10]) === undefined)
+                            {
+                                //register option
+                                this.registerOption(placementOptions);
+
+                                //move to the right
+                                this.moveTetromino(right, board);
+                            }
+                            else if(
+                                 board[this.shadowPosition[2] + 10].classList.contains("tetromino") && 
+                                 board[this.shadowPosition[3] + 10].classList.contains("tetromino")
                               )
                             {
                                 //register option
@@ -279,11 +294,16 @@ export class AI extends Game
                                 this.moveTetromino(right, board);
                             }
                             else{
+                                reserveOption = this.shadowPosition.slice();
+
                                 this.moveTetromino(right, board)
                             }
                         }
                         else
                         {
+                            //record the last shadow
+                            lastTetrominoShadow = this.shadowPosition.slice();
+
                             this.registerOption(placementOptions);
                         }
                     }
@@ -318,7 +338,7 @@ export class AI extends Game
                 //place placeTetromino
                 let chosenOption = placementOptions[0];
 
-                this.placeTetromino(chosenOption.future_position, board, "place");
+                this.placeTetromino(chosenOption.future_position, board, "place", lastTetrominoShadow);
             }
             //if no position has been yet good enogh
             //if the tetromino still has rotations left
@@ -326,13 +346,13 @@ export class AI extends Game
             //if its the last rotation
             //place the teromino in the reserve position
             else{
-                this.placeTetromino(reserveOption, board, "place");
+                this.placeTetromino(reserveOption, board, "place", lastTetrominoShadow);
             }
         }
     }
 
     //function that places a the tetrominio into a selected option
-    placeTetromino(future_position, board, setting)
+    placeTetromino(future_position, board, setting, oldShadow)
     {
         
         //old position of your tetromino
@@ -352,6 +372,9 @@ export class AI extends Game
         {
             //Set the boolean value so the tetromino is placed
             this.tetrominoPlaced = true;
+
+            //Remove old shadow
+            this.removeShadows(oldShadow, board);
         }
         
     }
@@ -402,6 +425,14 @@ export class AI extends Game
         //Add styling back to the new position
         this.tetrominoPosition.forEach(element => {
             board[element].classList.add(`${this.tetrominoColor}`, `tetromino`);
+        });
+    }
+
+    removeShadows(oldShadow, board)
+    {
+        //Remove the old position styling
+        oldShadow.forEach(element => {
+            board[element].classList.remove(`${this.tetrominoColor}-shadow`);
         });
     }
 }
