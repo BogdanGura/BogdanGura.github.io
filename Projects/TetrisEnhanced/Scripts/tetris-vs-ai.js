@@ -259,7 +259,7 @@ let L_AI = {
 
 let tetrominoesArray_Player = [I, O, T, S, Z, J, L]; //I, O, T, S, Z, J, L
 
-let tetrominoesArray_AI = [L_AI];//I_AI, O_AI, T_AI, S_AI, Z_AI, J_AI, L_AI
+let tetrominoesArray_AI = [T_AI];//I_AI, O_AI, T_AI, S_AI, Z_AI, J_AI, L_AI
 
 window.addEventListener("DOMContentLoaded", startGame);
 

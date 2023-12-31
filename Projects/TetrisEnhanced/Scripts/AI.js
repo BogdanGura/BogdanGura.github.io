@@ -31,6 +31,7 @@ export class AI extends Game
         let vertical_I_starting_Position = [20, 30, 40, 50];
         let starting_position_for_J = [11, 21, 31, 30];
         let starting_position_for_L = [11, 21, 31, 32];
+        let starting_position_for_T = [10, 11, 12, 1];
 
         //an option for placing a tetromino
         //at this location if it didn't pass
@@ -66,6 +67,12 @@ export class AI extends Game
             //Setting the numRotations
             numRotations = 4;
             movementsToRight = 9;
+        }
+        else if(this.tetrominoColor === "T")
+        {
+            //Setting the numRotations
+            numRotations = 4;
+            movementsToRight = 8;
         }
 
         //For loop gather all possible positions
@@ -458,10 +465,10 @@ export class AI extends Game
                                     this.rotate(board);
 
                                     //Move tetromino to the left to align it properly
-                                    //this.moveTetromino(left, board)
+                                    this.moveTetromino(left, board)
 
                                     //set the new amount of movementsToRight
-                                    movementsToRight = 9;
+                                    movementsToRight = 10;
 
                                     //reset movements
                                     movement = 0;
@@ -479,7 +486,7 @@ export class AI extends Game
                         }
                         else if(this.tetrominoRotationIndex === 2)
                         {
-                            if(movement !== 8)
+                            if(movement !== 9)
                             {
                                 if(board[this.shadowPosition[3] + 10].classList.contains("tetromino") && 
                                    board[this.shadowPosition[3] + 20].classList.contains("tetromino"))
@@ -692,7 +699,7 @@ export class AI extends Game
                                     //this.moveTetromino(left, board)
 
                                     //set the new amount of movementsToRight
-                                    movementsToRight = 9;
+                                    movementsToRight = 10;
 
                                     //reset movements
                                     movement = 0;
@@ -710,24 +717,324 @@ export class AI extends Game
                         }
                         else if(this.tetrominoRotationIndex === 2)
                         {
-                            if(movement !== 8)
+                            if(movement !== 9)
                             {
+                                if(board[this.shadowPosition[3] + 10].classList.contains("tetromino") && 
+                                   board[this.shadowPosition[3] + 20].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
 
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else{
+                                    this.moveTetromino(right, board);
+                                }
                             }
                             else{
+                                if(board[this.shadowPosition[3] + 10].classList.contains("tetromino") && 
+                                   board[this.shadowPosition[3] + 20].classList.contains("tetromino"))
+                                  {
+                                    this.registerOption(placementOptions);
+                                  }
                                 
+                                //Check if placement options is empty then 
+                                //move tetromino back to the starting location
+                                //and rotate it
+                                if(placementOptions.length === 0)
+                                {
+                                    //move the tetromino back to the starting position
+                                    this.placeTetromino(starting_position_for_L, board, "move");
+
+                                    //reset tetromino index
+                                    this.tetrominoRotationIndex = 0;
+                                    
+                                    //Rotate it twice
+                                    this.rotate(board);
+                                    this.rotate(board);
+                                    this.rotate(board);
+
+                                    //set the new amount of movementsToRight
+                                    movementsToRight = 8;
+
+                                    //reset movements
+                                    movement = 0;
+
+                                    //Add 1 to rotation because it just used one rotation
+                                    rotation++
+
+                                    //Remove old varients from the previous rotation
+                                    placementOptions = [];
+
+                                    //then exit the inner loop
+                                    this.moveTetromino(10, board);
+                                }
                             }
                         }
                         else if(this.tetrominoRotationIndex === 3)
                         {
                             if(movement !== 8)
                             {
+                                if(board[this.shadowPosition[0] + 10].classList.contains("tetromino") &&
+                                   board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
 
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else{
+                                    this.moveTetromino(right, board);
+                                }
                             }
                             else{
+                                //save the reserve position
+                                reserveOption = this.shadowPosition.slice();
+
+                                if(board[this.shadowPosition[0] + 10].classList.contains("tetromino") &&
+                                   board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                {
+                                    this.registerOption(placementOptions);
+                                }
                                 
                             }
                         }
+                    }
+                    else if(this.tetrominoColor === "T")
+                    {
+                        if(this.tetrominoRotationIndex === 0)
+                        {
+                            if(movement !== 7)
+                            {
+                                //check if there is anything under T
+                                //border or tetrominos
+                                if(board[this.shadowPosition[0] + 10] === undefined &&
+                                board[this.shadowPosition[1] + 10] === undefined &&
+                                board[this.shadowPosition[2] + 10] === undefined)
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else if(board[this.shadowPosition[0] + 10].classList.contains("tetromino") &&
+                                        board[this.shadowPosition[1] + 10].classList.contains("tetromino") &&
+                                        board[this.shadowPosition[2] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                            }
+                            else{
+                                if(board[this.shadowPosition[0] + 10] === undefined &&
+                                    board[this.shadowPosition[1] + 10] === undefined &&
+                                    board[this.shadowPosition[2] + 10] === undefined)
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+                                }
+                                else if(board[this.shadowPosition[0] + 10].classList.contains("tetromino") &&
+                                        board[this.shadowPosition[1] + 10].classList.contains("tetromino") &&
+                                        board[this.shadowPosition[2] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+                                }
+
+                                //Check if possible placements is 0
+                                if(placementOptions.length === 0)
+                                    {
+                                        //move the tetromino back to the starting position
+                                        this.placeTetromino(starting_position_for_T, board, "move");
+
+                                        //Rotate it once
+                                        this.rotate(board);
+
+                                        //move to the left
+                                        this.moveTetromino(left, board)
+
+                                        //set the new amount of movementsToRight
+                                        movementsToRight = 9;
+
+                                        //reset movements
+                                        movement = 0;
+
+                                        //Add 1 to rotation because it just used one rotation
+                                        rotation++
+
+                                        //Remove old varients from the previous rotation
+                                        placementOptions = [];
+
+                                        //then exit the inner loop
+                                        this.moveTetromino(10, board)
+                                    } 
+                            }
+                        }
+                        else if(this.tetrominoRotationIndex === 1)
+                        {
+                            if(movement !== 8)
+                            {
+                                if(board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                    (
+                                    board[this.shadowPosition[2] + 10] === undefined ||
+                                    board[this.shadowPosition[2] + 10].classList.contains("tetromino")
+                                    )
+                                  )
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else{
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                            }
+                            else{
+                                if(board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                (
+                                 board[this.shadowPosition[2] + 10] === undefined ||
+                                 board[this.shadowPosition[2] + 10].classList.contains("tetromino")
+                                )
+                               )
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+                                }
+
+                                if(placementOptions.length === 0)
+                                    {
+                                        //move the tetromino back to the starting position
+                                        this.placeTetromino(starting_position_for_T, board, "move");
+
+                                        //reset the rotation index
+                                        this.tetrominoRotationIndex = 0;
+
+                                        //Rotate it twice
+                                        this.rotate(board);
+                                        this.rotate(board);
+
+                                        //set the new amount of movementsToRight
+                                        movementsToRight = 9;
+
+                                        //reset movements
+                                        movement = 0;
+
+                                        //Add 1 to rotation because it just used one rotation
+                                        rotation++
+
+                                        //Remove old varients from the previous rotation
+                                        placementOptions = [];
+
+                                        //then exit the inner loop
+                                        this.moveTetromino(10, board)
+                                    }
+                            }
+                        }
+                        else if(this.tetrominoRotationIndex === 2)
+                        {
+                            if(movement !== 8)
+                            {
+                                if(board[this.shadowPosition[2] + 10].classList.contains("tetromino") &&
+                                   board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else{
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                            }
+                            else
+                            {
+                                if(board[this.shadowPosition[2] + 10].classList.contains("tetromino") &&
+                                   board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+                                }
+                                
+                                if(placementOptions.length === 0)
+                                    {
+                                        //move the tetromino back to the starting position
+                                        this.placeTetromino(starting_position_for_T, board, "move");
+
+                                        //reset the rotation index
+                                        this.tetrominoRotationIndex = 0;
+
+                                        //Rotate it thrice
+                                        this.rotate(board);
+                                        this.rotate(board);
+                                        this.rotate(board);
+
+                                        //set the new amount of movementsToRight
+                                        movementsToRight = 9;
+
+                                        //reset movements
+                                        movement = 0;
+
+                                        //Add 1 to rotation because it just used one rotation
+                                        rotation++
+
+                                        //Remove old varients from the previous rotation
+                                        placementOptions = [];
+
+                                        //then exit the inner loop
+                                        this.moveTetromino(10, board)
+                                    }
+                            }
+                        }
+                        else if(this.tetrominoRotationIndex === 3)
+                        {
+                            if(movement !== 8)
+                            {
+                                if(board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                (
+                                 board[this.shadowPosition[0] + 10] === undefined ||
+                                 board[this.shadowPosition[0] + 10].classList.contains("tetromino")
+                                )
+                               )
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else{
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                            }
+                            else{
+                                //save the reserve position
+                                reserveOption = this.shadowPosition.slice();
+
+                                if(board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                   (
+                                    board[this.shadowPosition[0] + 10] === undefined ||
+                                    board[this.shadowPosition[0] + 10].classList.contains("tetromino")
+                                   )
+                                  )
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+                                }
+                            }
+                        }
+                        
                     }
                 }
             }
