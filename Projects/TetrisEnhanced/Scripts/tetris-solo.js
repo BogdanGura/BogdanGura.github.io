@@ -170,7 +170,7 @@ let L = {
     nextPosition: [1, 5, 9, 10]
 }
 
-let tetrominoesArray = [O];//I, O, T, J, L, S, Z
+let tetrominoesArray = [L];//I, O, T, J, L, S, Z
 
 window.addEventListener("DOMContentLoaded", startGame);
 
