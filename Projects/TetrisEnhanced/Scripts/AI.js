@@ -146,9 +146,32 @@ export class AI extends Game
                                         //Remove old varients from the previous rotation
                                         placementOptions = [];
 
+                                        //Check for collisions
+                                        if(this.collisionDetector(10, board) === "landed")
+                                        {
+                                            console.log("LANDED");
+                                        }
+                                        else
+                                        {
+                                            this.moveTetromino(10, board)
+                                        }
                                         //then exit the inner loop
-                                        this.moveTetromino(10, board)
+                                        
                                         //break;
+                                    }
+                                    else{
+                                        
+                                        //Check for collisions
+                                        if(this.collisionDetector(right, board) === "borderRight")
+                                        {
+                                            console.log("borderRight");
+                                        }
+                                        else
+                                        {
+                                            //if no checks matched for a position
+                                            //move the tetromino to the right
+                                            this.moveTetromino(right, board);
+                                        }
                                     }
                                 }
                                 //if its at the bottom already
@@ -157,8 +180,17 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 //Checks if the I horizontal has not empty spaces below it
                                 else if(board[this.shadowPosition[0] + 10].classList.contains("tetromino") &&
@@ -170,13 +202,30 @@ export class AI extends Game
                                     //by pushing it into the array as an object
                                     this.registerOption(placementOptions);
 
-                                    //and then move the to the right
-                                    this.moveTetromino(right, board)
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    //if no checks matched for a position
-                                    //move the tetromino to the right
-                                    this.moveTetromino(right, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                              //if its the final index just register the option
@@ -200,8 +249,15 @@ export class AI extends Game
                                     //Remove old varients from the previous rotation
                                     placementOptions = [];
 
-                                    //then exit the inner loop
-                                    this.moveTetromino(10, board)
+                                    //Check for collisions
+                                    if(this.collisionDetector(10, board) === "landed")
+                                    {
+                                        console.log("LANDED");
+                                    }
+                                    else
+                                    {
+                                        this.moveTetromino(10, board)
+                                    }
                                 }
 
                                 this.registerOption(placementOptions);
@@ -231,8 +287,17 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 //check if there 3 tetrominoes stack back to back 
                                 //on left or right
@@ -252,8 +317,17 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 //check if there 2 tetrominoes stack back to back 
                                 //on left or right
@@ -271,8 +345,17 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 //check if there 1 tetrominoes stack back to back 
                                 //on left or right
@@ -285,8 +368,17 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 //check if vertical I is either on the left or right border 
                                 else if(this.shadowPosition[0] % 10 === 0 ||
@@ -295,16 +387,34 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
                                     //Since its the last movement of the last rotation
                                     //save the current shadow position as a reserveOption
                                     reserveOption = this.shadowPosition.slice();
-                                    //if no checks matched for a position
-                                    //move the tetromino to the right
-                                    this.moveTetromino(right, board)
+
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                              //if its the final index just register the option
@@ -326,8 +436,17 @@ export class AI extends Game
                                 //register option
                                 this.registerOption(placementOptions);
 
-                                //move to the right
-                                this.moveTetromino(right, board);
+                                //Check for collisions
+                                if(this.collisionDetector(right, board) === "borderRight")
+                                {
+                                    console.log("borderRight");
+                                }
+                                else
+                                {
+                                    //if no checks matched for a position
+                                    //move the tetromino to the right
+                                    this.moveTetromino(right, board);
+                                }
                             }
                             else if(
                                  board[this.shadowPosition[2] + 10].classList.contains("tetromino") && 
@@ -337,13 +456,51 @@ export class AI extends Game
                                 //register option
                                 this.registerOption(placementOptions);
 
-                                //move to the right
-                                this.moveTetromino(right, board);
+                                //Check for collisions
+                                if(this.collisionDetector(right, board) === "borderRight")
+                                {
+                                    console.log("borderRight");
+                                }
+                                else
+                                {
+                                    //if no checks matched for a position
+                                    //move the tetromino to the right
+                                    this.moveTetromino(right, board);
+                                }
+                            }
+                            else if(board[this.shadowPosition[2] + 10].classList.contains("tetromino") || 
+                                    board[this.shadowPosition[3] + 10].classList.contains("tetromino")
+                                  )
+                            {
+                                //register option
+                                this.registerOption(placementOptions);
+
+                                //Check for collisions
+                                if(this.collisionDetector(right, board) === "borderRight")
+                                {
+                                    console.log("borderRight");
+                                }
+                                else
+                                {
+                                    //if no checks matched for a position
+                                    //move the tetromino to the right
+                                    this.moveTetromino(right, board);
+                                }
                             }
                             else{
                                 reserveOption = this.shadowPosition.slice();
 
-                                this.moveTetromino(right, board)
+                                //Check for collisions
+                                if(this.collisionDetector(right, board) === "borderRight")
+                                {
+                                    console.log("borderRight");
+                                }
+                                else
+                                {
+                                    //if no checks matched for a position
+                                    //move the tetromino to the right
+                                    this.moveTetromino(right, board);
+                                }
                             }
                         }
                         else
@@ -372,11 +529,30 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    this.moveTetromino(right, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -416,8 +592,15 @@ export class AI extends Game
                                     //Remove old varients from the previous rotation
                                     placementOptions = [];
 
-                                    //then exit the inner loop
-                                    this.moveTetromino(10, board)
+                                    //Check for collisions
+                                    if(this.collisionDetector(10, board) === "landed")
+                                    {
+                                        console.log("LANDED");
+                                    }
+                                    else
+                                    {
+                                        this.moveTetromino(10, board)
+                                    }
                                 }
                             }
                         }
@@ -440,11 +623,30 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    this.moveTetromino(right, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -479,7 +681,16 @@ export class AI extends Game
                                     this.rotate(board);
 
                                     //Move tetromino to the left to align it properly
-                                    this.moveTetromino(left, board)
+                                    if(this.collisionDetector(left, board) === "borderLeft")
+                                    {
+                                        console.log("borderLeft");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(left, board);
+                                    }
 
                                     //set the new amount of movementsToRight
                                     movementsToRight = 10;
@@ -493,8 +704,15 @@ export class AI extends Game
                                     //Remove old varients from the previous rotation
                                     placementOptions = [];
 
-                                    //then exit the inner loop
-                                    this.moveTetromino(10, board)
+                                    //Check for collisions
+                                    if(this.collisionDetector(10, board) === "landed")
+                                    {
+                                        console.log("LANDED");
+                                    }
+                                    else
+                                    {
+                                        this.moveTetromino(10, board)
+                                    }
                                 }
                             }
                         }
@@ -508,11 +726,28 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -547,8 +782,15 @@ export class AI extends Game
                                     //Remove old varients from the previous rotation
                                     placementOptions = [];
 
-                                    //then exit the inner loop
-                                    this.moveTetromino(10, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(10, board) === "landed")
+                                    {
+                                        console.log("LANDED");
+                                    }
+                                    else
+                                    {
+                                        this.moveTetromino(10, board)
+                                    }
                                 }
                             }
                         }
@@ -562,11 +804,28 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -603,11 +862,28 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -647,8 +923,15 @@ export class AI extends Game
                                     //Remove old varients from the previous rotation
                                     placementOptions = [];
 
-                                    //then exit the inner loop
-                                    this.moveTetromino(10, board)
+                                    //Check for collisions
+                                    if(this.collisionDetector(10, board) === "landed")
+                                    {
+                                        console.log("LANDED");
+                                    }
+                                    else
+                                    {
+                                        this.moveTetromino(10, board)
+                                    }
                                 }
                             }
                         }
@@ -671,11 +954,28 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -724,8 +1024,15 @@ export class AI extends Game
                                     //Remove old varients from the previous rotation
                                     placementOptions = [];
 
-                                    //then exit the inner loop
-                                    this.moveTetromino(10, board)
+                                    //Check for collisions
+                                    if(this.collisionDetector(10, board) === "landed")
+                                    {
+                                        console.log("LANDED");
+                                    }
+                                    else
+                                    {
+                                        this.moveTetromino(10, board)
+                                    }
                                 }
                             }
                         }
@@ -739,11 +1046,28 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -781,8 +1105,15 @@ export class AI extends Game
                                     //Remove old varients from the previous rotation
                                     placementOptions = [];
 
-                                    //then exit the inner loop
-                                    this.moveTetromino(10, board);
+                                    //Check for collisions
+                                    if(this.collisionDetector(10, board) === "landed")
+                                    {
+                                        console.log("LANDED");
+                                    }
+                                    else
+                                    {
+                                        this.moveTetromino(10, board)
+                                    }
                                 }
                             }
                         }
@@ -796,11 +1127,28 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -831,8 +1179,16 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else if(board[this.shadowPosition[0] + 10].classList.contains("tetromino") &&
                                         board[this.shadowPosition[1] + 10].classList.contains("tetromino") &&
@@ -841,8 +1197,16 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -870,8 +1234,17 @@ export class AI extends Game
                                         //Rotate it once
                                         this.rotate(board);
 
-                                        //move to the left
-                                        this.moveTetromino(left, board)
+                                        //Move tetromino to the left to align it properly
+                                        if(this.collisionDetector(left, board) === "borderLeft")
+                                        {
+                                            console.log("borderLeft");
+                                        }
+                                        else
+                                        {
+                                            //if no checks matched for a position
+                                            //move the tetromino to the right
+                                            this.moveTetromino(left, board);
+                                        }
 
                                         //set the new amount of movementsToRight
                                         movementsToRight = 9;
@@ -885,8 +1258,15 @@ export class AI extends Game
                                         //Remove old varients from the previous rotation
                                         placementOptions = [];
 
-                                        //then exit the inner loop
-                                        this.moveTetromino(10, board)
+                                        //Check for collisions
+                                        if(this.collisionDetector(10, board) === "landed")
+                                        {
+                                            console.log("LANDED");
+                                        }
+                                        else
+                                        {
+                                            this.moveTetromino(10, board)
+                                        }
                                     } 
                             }
                         }
@@ -904,12 +1284,28 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -948,8 +1344,15 @@ export class AI extends Game
                                         //Remove old varients from the previous rotation
                                         placementOptions = [];
 
-                                        //then exit the inner loop
-                                        this.moveTetromino(10, board)
+                                        //Check for collisions
+                                        if(this.collisionDetector(10, board) === "landed")
+                                        {
+                                            console.log("LANDED");
+                                        }
+                                        else
+                                        {
+                                            this.moveTetromino(10, board)
+                                        }
                                     }
                             }
                         }
@@ -963,12 +1366,28 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else
@@ -1005,8 +1424,15 @@ export class AI extends Game
                                         //Remove old varients from the previous rotation
                                         placementOptions = [];
 
-                                        //then exit the inner loop
-                                        this.moveTetromino(10, board)
+                                        //Check for collisions
+                                        if(this.collisionDetector(10, board) === "landed")
+                                        {
+                                            console.log("LANDED");
+                                        }
+                                        else
+                                        {
+                                            this.moveTetromino(10, board)
+                                        }
                                     }
                             }
                         }
@@ -1024,12 +1450,28 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -1064,8 +1506,16 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else if(board[this.shadowPosition[2] + 10] === undefined &&
                                         board[this.shadowPosition[3] + 10] === undefined &&
@@ -1074,8 +1524,16 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else if(board[this.shadowPosition[2] + 10].classList.contains("tetromino") &&
                                         board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
@@ -1088,8 +1546,16 @@ export class AI extends Game
                                 this.moveTetromino(right, board);
                                 }
                                 else{
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -1118,8 +1584,16 @@ export class AI extends Game
                                         this.registerOption(placementOptions);
                                  }
                                  else{
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                  }
                             }
                         }
@@ -1130,8 +1604,16 @@ export class AI extends Game
                                 if(board[this.shadowPosition[3] + 10] === undefined &&
                                   !board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
                                 {
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else if(board[this.shadowPosition[3] + 10] === undefined &&
                                         board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
@@ -1139,8 +1621,16 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else if(board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
                                         board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
@@ -1148,8 +1638,28 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
+                                }
+                                else{
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -1175,8 +1685,16 @@ export class AI extends Game
                                         //reset the rotation index
                                         this.tetrominoRotationIndex = 1;
 
-                                        //move to the right
-                                        this.moveTetromino(right, board);
+                                        if(this.collisionDetector(right, board) === "borderRight")
+                                        {
+                                            console.log("borderRight");
+                                        }
+                                        else
+                                        {
+                                            //if no checks matched for a position
+                                            //move the tetromino to the right
+                                            this.moveTetromino(right, board);
+                                        }
 
                                         //Rotate it once
                                         this.rotate(board);
@@ -1193,8 +1711,14 @@ export class AI extends Game
                                         //Remove old varients from the previous rotation
                                         placementOptions = [];
 
-                                        //then exit the inner loop
-                                        this.moveTetromino(10, board)
+                                        if(this.collisionDetector(10, board) === "landed")
+                                        {
+                                            console.log("LANDED");
+                                        }
+                                        else
+                                        {
+                                            this.moveTetromino(10, board)
+                                        }
                                     }
                             }
                         }
@@ -1213,8 +1737,16 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else if(board[this.shadowPosition[2] + 10] === undefined &&
                                         board[this.shadowPosition[3] + 10] === undefined &&
@@ -1223,8 +1755,16 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else if(board[this.shadowPosition[2] + 10].classList.contains("tetromino") &&
                                         board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
@@ -1233,12 +1773,28 @@ export class AI extends Game
                                 //register option
                                 this.registerOption(placementOptions);
 
-                                //move to the right
-                                this.moveTetromino(right, board);
+                                if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -1275,8 +1831,16 @@ export class AI extends Game
                                 if(board[this.shadowPosition[3] + 10] === undefined &&
                                   !board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
                                 {
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else if(board[this.shadowPosition[3] + 10] === undefined &&
                                         board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
@@ -1284,8 +1848,16 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else if(board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
                                         board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
@@ -1293,12 +1865,28 @@ export class AI extends Game
                                     //register option
                                     this.registerOption(placementOptions);
 
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                                 else{
-                                    //move to the right
-                                    this.moveTetromino(right, board);
+                                    if(this.collisionDetector(right, board) === "borderRight")
+                                    {
+                                        console.log("borderRight");
+                                    }
+                                    else
+                                    {
+                                        //if no checks matched for a position
+                                        //move the tetromino to the right
+                                        this.moveTetromino(right, board);
+                                    }
                                 }
                             }
                             else{
@@ -1324,8 +1912,16 @@ export class AI extends Game
                                         //reset the rotation index
                                         this.tetrominoRotationIndex = 1;
 
-                                        //move to the right
-                                        this.moveTetromino(right, board);
+                                        if(this.collisionDetector(right, board) === "borderRight")
+                                        {
+                                            console.log("borderRight");
+                                        }
+                                        else
+                                        {
+                                            //if no checks matched for a position
+                                            //move the tetromino to the right
+                                            this.moveTetromino(right, board);
+                                        }
 
                                         //Rotate it once
                                         this.rotate(board);
@@ -1342,8 +1938,14 @@ export class AI extends Game
                                         //Remove old varients from the previous rotation
                                         placementOptions = [];
 
-                                        //then exit the inner loop
-                                        this.moveTetromino(10, board)
+                                        if(this.collisionDetector(10, board) === "landed")
+                                        {
+                                            console.log("LANDED");
+                                        }
+                                        else
+                                        {
+                                            this.moveTetromino(10, board)
+                                        }
                                     }
                             }
                         }
@@ -1398,6 +2000,10 @@ export class AI extends Game
         
         //old position of your tetromino
         let oldPosition = this.tetrominoPosition.slice();
+
+        //Move the tetromino position up 2 times
+        //this.moveTetromino(-10, board)
+        //this.moveTetromino(-10, board)
 
         //replace tetromino current position with a  
         //parameter one

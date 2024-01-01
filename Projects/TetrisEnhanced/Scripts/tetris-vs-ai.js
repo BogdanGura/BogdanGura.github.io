@@ -735,7 +735,7 @@ function generateTetrominoWithDelay()
         
         interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
 
-    }, 3000)
+    }, 100)
 }
 
 //Set cleared row animation to all 
