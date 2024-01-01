@@ -32,6 +32,8 @@ export class AI extends Game
         let starting_position_for_J = [11, 21, 31, 30];
         let starting_position_for_L = [11, 21, 31, 32];
         let starting_position_for_T = [10, 11, 12, 1];
+        let starting_position_for_S = [10, 20, 21, 31];
+        let starting_position_for_Z = [1, 11, 10, 20];
 
         //an option for placing a tetromino
         //at this location if it didn't pass
@@ -73,6 +75,18 @@ export class AI extends Game
             //Setting the numRotations
             numRotations = 4;
             movementsToRight = 8;
+        }
+        else if(this.tetrominoColor === "S")
+        {
+            //Setting the numRotations
+            numRotations = 2;
+            movementsToRight = 9;
+        }
+        else if(this.tetrominoColor === "Z")
+        {
+            //Setting the numRotations
+            numRotations = 2;
+            movementsToRight = 9;
         }
 
         //For loop gather all possible positions
@@ -1036,6 +1050,304 @@ export class AI extends Game
                         }
                         
                     }
+                    else if(this.tetrominoColor === "S")
+                    {
+                        if(this.tetrominoRotationIndex === 0)
+                        {
+                            if(movement !== 8)
+                            {
+                                //at the bottom with no tetromino in between
+                                if(board[this.shadowPosition[2] + 10] === undefined &&
+                                   board[this.shadowPosition[3] + 10] === undefined &&
+                                   !board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else if(board[this.shadowPosition[2] + 10] === undefined &&
+                                        board[this.shadowPosition[3] + 10] === undefined &&
+                                        board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else if(board[this.shadowPosition[2] + 10].classList.contains("tetromino") &&
+                                        board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                        board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                            {
+                                //register option
+                                this.registerOption(placementOptions);
+
+                                //move to the right
+                                this.moveTetromino(right, board);
+                                }
+                                else{
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                            }
+                            else{
+                                //save the reserve position
+                                reserveOption = this.shadowPosition.slice();
+
+                                if(board[this.shadowPosition[2] + 10] === undefined &&
+                                    board[this.shadowPosition[3] + 10] === undefined &&
+                                    !board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                 {
+                                     //register option
+                                     this.registerOption(placementOptions);
+                                 }
+                                 else if(board[this.shadowPosition[2] + 10] === undefined &&
+                                         board[this.shadowPosition[3] + 10] === undefined &&
+                                         board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                 {
+                                     //register option
+                                     this.registerOption(placementOptions);
+                                 }
+                                 else if(board[this.shadowPosition[2] + 10].classList.contains("tetromino") &&
+                                         board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                         board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                 {
+                                        //register option
+                                        this.registerOption(placementOptions);
+                                 }
+                                 else{
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                 }
+                            }
+                        }
+                        else if(this.tetrominoRotationIndex === 1)
+                        {
+                            if(movement !== 8)
+                            {
+                                if(board[this.shadowPosition[3] + 10] === undefined &&
+                                  !board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                {
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else if(board[this.shadowPosition[3] + 10] === undefined &&
+                                        board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else if(board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                        board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                            }
+                            else{
+                                if(board[this.shadowPosition[3] + 10] === undefined &&
+                                    board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                 {
+                                     //register option
+                                     this.registerOption(placementOptions);
+                                 }
+                                 else if(!board[this.shadowPosition[3] + 10] === undefined &&
+                                         board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                         board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                 {
+                                     //register option
+                                     this.registerOption(placementOptions);
+                                 }
+
+                                 if(placementOptions.length === 0)
+                                    {
+                                        //move the tetromino back to the starting position
+                                        this.placeTetromino(starting_position_for_S, board, "move");
+
+                                        //reset the rotation index
+                                        this.tetrominoRotationIndex = 1;
+
+                                        //move to the right
+                                        this.moveTetromino(right, board);
+
+                                        //Rotate it once
+                                        this.rotate(board);
+
+                                        //set the new amount of movementsToRight
+                                        movementsToRight = 9;
+
+                                        //reset movements
+                                        movement = 0;
+
+                                        //Add 1 to rotation because it just used one rotation
+                                        rotation++
+
+                                        //Remove old varients from the previous rotation
+                                        placementOptions = [];
+
+                                        //then exit the inner loop
+                                        this.moveTetromino(10, board)
+                                    }
+                            }
+                        }
+                    }
+                    else if(this.tetrominoColor === "Z")
+                    {
+                        if(this.tetrominoRotationIndex === 0)
+                        {
+                            if(movement !== 8)
+                            {
+                                //at the bottom with no tetromino in between
+                                if(board[this.shadowPosition[2] + 10] === undefined &&
+                                   board[this.shadowPosition[3] + 10] === undefined &&
+                                   !board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else if(board[this.shadowPosition[2] + 10] === undefined &&
+                                        board[this.shadowPosition[3] + 10] === undefined &&
+                                        board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else if(board[this.shadowPosition[2] + 10].classList.contains("tetromino") &&
+                                        board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                        board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                            {
+                                //register option
+                                this.registerOption(placementOptions);
+
+                                //move to the right
+                                this.moveTetromino(right, board);
+                                }
+                                else{
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                            }
+                            else{
+                                //save the reserve position
+                                reserveOption = this.shadowPosition.slice();
+
+                                if(board[this.shadowPosition[2] + 10] === undefined &&
+                                    board[this.shadowPosition[3] + 10] === undefined &&
+                                    !board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                 {
+                                     //register option
+                                     this.registerOption(placementOptions);
+                                 }
+                                 else if(board[this.shadowPosition[2] + 10] === undefined &&
+                                         board[this.shadowPosition[3] + 10] === undefined &&
+                                         board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                 {
+                                     //register option
+                                     this.registerOption(placementOptions);
+                                 }
+                                 else if(board[this.shadowPosition[2] + 10].classList.contains("tetromino") &&
+                                         board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                         board[this.shadowPosition[0] + 10].classList.contains("tetromino"))
+                                 {
+                                        //register option
+                                        this.registerOption(placementOptions);
+                                 }
+                            }
+                        }
+                        else if(this.tetrominoRotationIndex === 1)
+                        {
+                            if(movement !== 8)
+                            {
+                                if(board[this.shadowPosition[3] + 10] === undefined &&
+                                  !board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                {
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else if(board[this.shadowPosition[3] + 10] === undefined &&
+                                        board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else if(board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                        board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                {
+                                    //register option
+                                    this.registerOption(placementOptions);
+
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                                else{
+                                    //move to the right
+                                    this.moveTetromino(right, board);
+                                }
+                            }
+                            else{
+                                if(board[this.shadowPosition[3] + 10] === undefined &&
+                                    board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                 {
+                                     //register option
+                                     this.registerOption(placementOptions);
+                                 }
+                                 else if(!board[this.shadowPosition[3] + 10] === undefined &&
+                                         board[this.shadowPosition[3] + 10].classList.contains("tetromino") &&
+                                         board[this.shadowPosition[1] + 10].classList.contains("tetromino"))
+                                 {
+                                     //register option
+                                     this.registerOption(placementOptions);
+                                 }
+
+                                 if(placementOptions.length === 0)
+                                    {
+                                        //move the tetromino back to the starting position
+                                        this.placeTetromino(starting_position_for_Z, board, "move");
+
+                                        //reset the rotation index
+                                        this.tetrominoRotationIndex = 1;
+
+                                        //move to the right
+                                        this.moveTetromino(right, board);
+
+                                        //Rotate it once
+                                        this.rotate(board);
+
+                                        //set the new amount of movementsToRight
+                                        movementsToRight = 9;
+
+                                        //reset movements
+                                        movement = 0;
+
+                                        //Add 1 to rotation because it just used one rotation
+                                        rotation++
+
+                                        //Remove old varients from the previous rotation
+                                        placementOptions = [];
+
+                                        //then exit the inner loop
+                                        this.moveTetromino(10, board)
+                                    }
+                            }
+                        }
+                    }
                 }
             }
             // if placed
@@ -1159,6 +1471,7 @@ export class AI extends Game
         });
     }
 
+    //Removes all shadows from the board
     removeShadows(board) 
     {
         // Remove the old position styling
