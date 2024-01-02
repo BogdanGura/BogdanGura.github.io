@@ -377,10 +377,13 @@ function startGame()
         gameStopped = true;
         //close the menu modal
         popupMenu.showModal();
-        //Stop games movement
+        //Stop player's game movement
         clearInterval(interval);
+        
+        //Stop AI's game movement
         clearInterval(interval_AI);
     });
+    
 
     //Close menu and resume the game when X is clicked
     closeMenu.addEventListener("click", () => {
@@ -389,6 +392,7 @@ function startGame()
         popupMenu.close();
         //Restore the games movement
         interval = setInterval(moveOutcome, intervalSpeed);
+        interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
 
         //Restore A.I's game movement
         //interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
@@ -399,8 +403,8 @@ function startGame()
     quitBtn2.addEventListener("click", quit);
 
     //Starting the interval for player
-    //intervalSpeed = level_1;
-    //interval = setInterval(moveOutcome, intervalSpeed);
+    intervalSpeed = level_1;
+    interval = setInterval(moveOutcome, intervalSpeed);
 
     //Starting the interval for AI
     intervalSpeed_AI = level_1;
@@ -529,120 +533,126 @@ function moveOutcome()
 //Same as moveOutcome function, just configured for AI
 function moveOutcome_AI()
 {
-    //Check for imminent collision (down)
-    if(ai.collisionDetector(down, boardPieces_AI) === "landed")
+    if(!gameStopped)
     {
-        console.log("Tetromino landed");
-        //if landed is returned then it means that 
-        //tetromino can't move down anymore and has to 
-        //stay and the bottom
-        //if so it will be added to the landedTetrominos array
-        //and a new tetromino will be generated
-
-        //Check if AI LOST
-        if(ai.checkForLose(boardPieces_AI))
+        //Check for imminent collision (down)
+        if(ai.collisionDetector(down, boardPieces_AI) === "landed")
         {
-            gameStopped = true;
-            //close the menu modal
-            popupWon.showModal();
-            //Stop games movement, player
-            clearInterval(interval);
+            console.log("Tetromino landed");
+            //if landed is returned then it means that 
+            //tetromino can't move down anymore and has to 
+            //stay and the bottom
+            //if so it will be added to the landedTetrominos array
+            //and a new tetromino will be generated
 
-            //Stop games movement, AI
-            clearInterval(interval_AI);
+            //Check if AI LOST
+            if(ai.checkForLose(boardPieces_AI))
+            {
+                gameStopped = true;
+                //close the menu modal
+                popupWon.showModal();
+                //Stop games movement, player
+                clearInterval(interval);
+
+                //Stop games movement, AI
+                clearInterval(interval_AI);
+            }
+            else
+            {
+                //Registering landed tetromino
+                ai.registerLandedTetromino(boardPieces_AI);
+                console.log("Tetromino registered");
+
+                //Find completed rows
+                let completedRows = ai.findCompleteRows(boardPieces_AI, boardHeight, boardWidth);
+
+                //Check if completedRows has any completed rows
+                if(completedRows.length > 0)
+                {
+                    //Increment cleared rows and points 
+                    rowsCleared_AI += completedRows.length;
+                    //Adding a certain amount of points depending on the amount of lines 
+                    //cleared
+                    if(completedRows.length === 1)
+                    {
+                        //if 1 line is cleared add 40 points to the score
+                        pointScore_AI += 40;
+                    }
+                    else if(completedRows.length === 2)
+                    {
+                        //if 2 lines were cleared add 100 points to the score
+                        pointScore_AI += 100;
+                    }
+                    else if(completedRows.length === 3)
+                    {
+                        //if 3 lines are cleared add 300 points to the score
+                        pointScore_AI += 300;
+                    }
+                    //TETRIS !!!
+                    else if(completedRows.length === 4)
+                    {
+                        //if tetris is achieved add 1200 points to the score
+                        pointScore_AI += 1200;
+                    }
+
+                    //Then check if the player has made enough 
+                    //points to go to the next level
+                    //level 1: 0-1499 points
+                    //level 2: 1500 points
+                    //level 3 5000 points
+                    if (pointScore_AI >= 5000) 
+                    {
+                        // Level 3
+                        levelIndicator_AI.innerText = "3";
+                        clearInterval(interval_AI);
+                        intervalSpeed_AI = level_3;
+                        interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
+                    } else if (pointScore_AI >= 1500) 
+                    {
+                        // Level 2
+                        levelIndicator_AI.innerText = "2";
+                        clearInterval(interval_AI);
+                        intervalSpeed_AI = level_2;
+                        interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
+                    }
+                    
+
+                    //Then update the values in our points and cleared rows fields
+                    //Remove any completed rows for points
+                    clearedLinesF_AI.innerText = rowsCleared_AI;
+                    pointsScoredF_AI.innerText = pointScore_AI;
+                    
+                    //Remove thouse cleared rows
+                    animateClearedRows(boardPieces_AI, boardWidth, completedRows, "ai");
+                }
+                else{
+                    console.log("No completed rows detected");
+                }
+                
+
+                //Generate a new tetromino
+                generateTetrominoWithDelay();
+
+            }
         }
         else
         {
-            //Registering landed tetromino
-            ai.registerLandedTetromino(boardPieces_AI);
-            console.log("Tetromino registered");
+            //Reset the interval back up (preventing accumilating 
+            // intervals)
 
-            //Find completed rows
-            let completedRows = ai.findCompleteRows(boardPieces_AI, boardHeight, boardWidth);
+            console.log("Tetromino is still faling");
 
-            //Check if completedRows has any completed rows
-            if(completedRows.length > 0)
-            {
-                //Increment cleared rows and points 
-                rowsCleared_AI += completedRows.length;
-                //Adding a certain amount of points depending on the amount of lines 
-                //cleared
-                if(completedRows.length === 1)
-                {
-                    //if 1 line is cleared add 40 points to the score
-                    pointScore_AI += 40;
-                }
-                else if(completedRows.length === 2)
-                {
-                    //if 2 lines were cleared add 100 points to the score
-                    pointScore_AI += 100;
-                }
-                else if(completedRows.length === 3)
-                {
-                    //if 3 lines are cleared add 300 points to the score
-                    pointScore_AI += 300;
-                }
-                //TETRIS !!!
-                else if(completedRows.length === 4)
-                {
-                    //if tetris is achieved add 1200 points to the score
-                    pointScore_AI += 1200;
-                }
+            //Move tetromino down every interval
+            ai.moveTetromino(down, boardPieces_AI)
 
-                //Then check if the player has made enough 
-                //points to go to the next level
-                //level 1: 0-1499 points
-                //level 2: 1500 points
-                //level 3 5000 points
-                if (pointScore_AI >= 5000) 
-                {
-                    // Level 3
-                    levelIndicator_AI.innerText = "3";
-                    clearInterval(interval_AI);
-                    intervalSpeed_AI = level_3;
-                    interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
-                } else if (pointScore_AI >= 1500) 
-                {
-                    // Level 2
-                    levelIndicator_AI.innerText = "2";
-                    clearInterval(interval_AI);
-                    intervalSpeed_AI = level_2;
-                    interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
-                }
-                
-
-                //Then update the values in our points and cleared rows fields
-                //Remove any completed rows for points
-                clearedLinesF_AI.innerText = rowsCleared_AI;
-                pointsScoredF_AI.innerText = pointScore_AI;
-                
-                //Remove thouse cleared rows
-                animateClearedRows(boardPieces_AI, boardWidth, completedRows, "ai");
-            }
-            else{
-                console.log("No completed rows detected");
-            }
+            //Decide where to put the tetromino
+            ai.findBestPlacement(left, right, boardPieces_AI);
             
-            //Generate a new tetromino
-            generateTetrominoWithDelay();
         }
     }
-    else
-    {
-        //Reset the interval back up (preventing accumilating 
-        // intervals)
-
-        console.log("Tetromino is still faling");
-
-        //Move tetromino down every interval
-        ai.moveTetromino(down, boardPieces_AI)
-
-        //Decide where to put the tetromino
-        ai.findBestPlacement(left, right, boardPieces_AI);
-        
+    else{
+        clearInterval(interval_AI);
     }
-
-    //clearInterval(interval)
 }
 
 //A function that runs when the quit button is pressed
@@ -735,7 +745,7 @@ function generateTetrominoWithDelay()
         
         interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
 
-    }, 100)
+    }, 3000)
 }
 
 //Set cleared row animation to all 
