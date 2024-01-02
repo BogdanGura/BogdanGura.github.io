@@ -385,18 +385,19 @@ function startGame()
     });
     
 
-    //Close menu and resume the game when X is clicked
+    // Close menu and resume the game when X is clicked
     closeMenu.addEventListener("click", () => {
         gameStopped = false;
-        //close the menu modal
+        // close the menu modal
         popupMenu.close();
-        //Restore the games movement
+        // Restore the games movement
         interval = setInterval(moveOutcome, intervalSpeed);
+        
+        // Clear existing AI interval before reassigning
+        clearInterval(interval_AI);
         interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
-
-        //Restore A.I's game movement
-        //interval_AI = setInterval(moveOutcome_AI, intervalSpeed_AI);
     });
+
 
     //Event Listener for quit button on both modals
     quitBtn1.addEventListener("click", quit);
