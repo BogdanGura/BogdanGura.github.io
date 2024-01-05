@@ -24,6 +24,7 @@ let quitBtn2 = document.getElementById("quitGameBtn2");
 let popupMenu = document.getElementById("popup-menu");
 let popupLost = document.getElementById("popup-lost");
 let levelIndicator = document.getElementById("level-indicator");
+let achievementField = document.getElementById("achievement-field");
 let btn_down = document.getElementById("btn-down");
 let btn_up = document.getElementById("btn-up");
 let btn_left = document.getElementById("btn-left");
@@ -33,6 +34,7 @@ let nextScreenPieces;
 //Actual variables that store the games score
 let pointScore = 0;
 let rowsCleared = 0;
+let pointsEarned = 0;
 const game = new Game();
 const boardWidth = 10;
 const boardHeight = 20;
@@ -48,6 +50,24 @@ const level_1 = 450;
 const level_2 = 400;
 const level_3 = 305;
 const fasterSpeed = 200;
+
+//Achievement names array
+//just general achievements for tetris
+
+//Blocks placed, lines cleared and points earned are all saved in 
+//local storage
+let achievementNames = ["'Welcome to Blockville'", "'Novice Blockhead'",
+                        "'Certified Blockhead'", "'Champion Blockhead'",
+                        "'God like Blockhead'", "'First Line cleared'",
+                        "'15 lines cleared'", "'30 lines cleared'",
+                        "'45 lines cleared'", "'60 lines cleared'",
+                        "'1,000 points'", "'10,000 points'", 
+                        "'50,000 points'", "'100,000 points'",
+                        "'250,000 points'", "'Double Clear'", 
+                        "'Triple Clear'", "'TETRIS'"];
+
+//Array where achievement objects will be stored
+let achievementsGeneralArray = [];
 
 //Tetrominoes
 //Tetrominoes for Player
@@ -283,14 +303,80 @@ function startGame()
     quitBtn1.addEventListener("click", quit);
     quitBtn2.addEventListener("click", quit);
 
+    //Check if achievements already exist or not
+
+    //if it doesnt exist create achevements then
+    if(localStorage.getItem("achievements-general") === null)
+    {
+        //Creates brand new achievements
+        createAchievements(achievementNames, achievementsGeneralArray);
+
+        //Instantly set the first achievement "Welcome to blockville to true"
+        achievementsGeneralArray[0].earned = true;
+    }
+    //if it does parse it to the acheivements array from JSON
+    else{
+        //Get the JSON string for achievements
+        let achievementsJSON = localStorage.getItem("achievements-general");
+
+        //Parse it and set it to the achievements array
+        achievementsGeneralArray = JSON.parse(achievementsJSON);
+    }
+
+    //Check if linesCleared, placedTetrominoes and pointsEarned
+    //are present in the localStorage
+    if(localStorage.getItem("linesCleared") === null &&
+       localStorage.getItem("placedTetrominoes") === null &&
+       localStorage.getItem("pointsEarned") === null)
+    {
+        //if the don't exist set them all to 0
+        localStorage.setItem("linesCleared", "0");
+        localStorage.setItem("placedTetrominoes", "0");
+        localStorage.setItem("pointsEarned", "0");
+    }
+
     intervalSpeed = level_1;
     interval = setInterval(moveOutcome, intervalSpeed);
+}
+
+//Achievement Functions
+// Functions
+function createAchievements(achievementNamesArray, targetArray) 
+{
+    for (let i = 0; i < achievementNamesArray.length; i++) {
+        let messageOnCompletion = `${achievementNamesArray[i]} Achievement Earned`;
+        // Creating the Achievement Object
+        let achievement = new Achievement(achievementNamesArray[i], false, messageOnCompletion);
+        // Then push the achievement object into the array
+        targetArray.push(achievement);
+    }
+}
+
+//Uses a forloop to check which 
+//achivemets were earned and display them 
+function displayEarnedAchievements(achievementsArray) {
+    for (let i = 0; i < achievementsArray.length; i++) {
+        if (achievementsArray[i].earned && achievementsArray[i].repeat) {
+            achievementField.innerText = achievementsArray[i].messageOnUnlock;
+            // Making sure the completed achievement won't log a message
+            // When it was completed once
+            achievementsArray[i].repeat = false; 
+
+            // Start a setTimeout that will clear the field after 5 seconds
+            setTimeout(() => {
+                achievementField.innerText = "";
+            }, 5000);
+        }
+    }
 }
 
 //Function that runs every second and checks if tetromino
 //can move down or side ways
 function moveOutcome()
 {
+    //Check for any achievements
+    displayEarnedAchievements(achievementsGeneralArray);
+
     //Check for imminent collision (down)
     if(game.collisionDetector(down, boardPieces, boardWidth) === "landed")
     {
@@ -300,6 +386,15 @@ function moveOutcome()
         //stay and the bottom
         //if so it will be added to the landedTetrominos array
         //and a new tetromino will be generated
+
+        //Record that a tetromino have landed and add it to the 
+        //landed tetrominoes record in local storage
+        let currentPlacesTetrominoes = localStorage.getItem("placedTetrominoes");
+
+        let placedTetrominoesIncremented = parseInt(currentPlacesTetrominoes) + 1;
+
+        //Setting the new number of placed tetrominoes
+        localStorage.setItem("placedTetrominoes", placedTetrominoesIncremented.toString());
 
         //Check if player LOST
         if(game.checkForLose(boardPieces))
@@ -322,30 +417,61 @@ function moveOutcome()
             //Check if completedRows has any completed rows
             if(completedRows.length > 0)
             {
+                //Adds the number of cleared rows to 
+                //cleared rows in localStorage
+                let currentClearedRows = localStorage.getItem("linesCleared");
+
+                let clearedRowsUpdated = parseInt(currentClearedRows) + completedRows.length;
+
+                //Setting the new number of placed tetrominoes
+                localStorage.setItem("linesCleared", clearedRowsUpdated.toString());
+
+
                 //Increment cleared rows and points 
                 rowsCleared += completedRows.length;
                 //Adding a certain amount of points depending on the amount of lines 
                 //cleared
                 if(completedRows.length === 1)
                 {
+                    //number of points earned is saved
+                    //to conviniently add it to the 
+                    //localStorage field "pointsEarned"
+                    pointsEarned = 40;
+
                     //if 1 line is cleared add 40 points to the score
-                    pointScore += 4000;
+                    pointScore += 40;
                 }
                 else if(completedRows.length === 2)
                 {
+                    pointsEarned = 100;
+
                     //if 2 lines were cleared add 100 points to the score
                     pointScore += 100;
                 }
                 else if(completedRows.length === 3)
                 {
+                    pointsEarned = 300;
+
                     //if 3 lines are cleared add 300 points to the score
                     pointScore += 300;
                 }
                 //TETRIS !!!
                 else if(completedRows.length === 4)
                 {
+                    pointsEarned = 1200;
                     //if tetris is achieved add 1200 points to the score
                     pointScore += 1200;
+                }
+
+                //Add pointsEarned if it is greater than zero
+                if(pointsEarned > 0)
+                {
+                    let currentPointsEarned = localStorage.getItem("pointsEarned");
+
+                    let pointsEarnedUpdated = parseInt(currentPointsEarned) + pointsEarned;
+
+                    //Setting the new number of placed tetrominoes
+                    localStorage.setItem("pointsEarned", pointsEarnedUpdated.toString());
                 }
 
                 //Then check if the player has made enough 

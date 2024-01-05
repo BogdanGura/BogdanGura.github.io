@@ -83,8 +83,6 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 // Functions
-
-
 function createAchievements() {
     for (let i = 0; i < achievementNames.length; i++) {
         let messageOnCompletion = `Congratulations, you earned ${achievementNames[i]}`;
