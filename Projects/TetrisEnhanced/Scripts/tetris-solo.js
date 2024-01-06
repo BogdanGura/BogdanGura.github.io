@@ -190,7 +190,7 @@ let L = {
     nextPosition: [1, 5, 9, 10]
 }
 
-let tetrominoesArray = [I];//I, O, T, J, L, S, Z
+let tetrominoesArray = [I, O, T, J, L, S, Z];//I, O, T, J, L, S, Z
 
 window.addEventListener("DOMContentLoaded", startGame);
 
@@ -215,9 +215,6 @@ function generateNextTetrominoScreen(nextTetrominoScreen)
 
 function startGame()
 {
-    //clear storage for testing 
-    localStorage.clear();
-
     generateBoard(gameBoard);
     generateNextTetrominoScreen(nextTetrominoScreen);
     boardPieces = document.querySelectorAll("#game-board div");
@@ -610,7 +607,6 @@ function moveOutcome()
         
     }
 
-    //clearInterval(interval)
 }
 
 //A function that runs when the quit button is pressed
