@@ -334,6 +334,9 @@ function startGame()
         localStorage.setItem("placedTetrominoes", "0");
         localStorage.setItem("pointsEarned", "0");
     }
+    else{
+        console.log(localStorage);
+    }
 
     intervalSpeed = level_1;
     interval = setInterval(moveOutcome, intervalSpeed);
