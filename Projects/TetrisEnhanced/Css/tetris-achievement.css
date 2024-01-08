@@ -1,0 +1,49 @@
+body{
+    background-color: rgb(174, 109, 235);
+}
+
+h1{
+    font-family: 'Actor';
+    color: black;
+    font-weight: bold;
+    margin-left: 38%;
+    margin-top: 13%;
+}
+
+button{
+    padding: 10px;
+    width: 100px;
+    color: rgb(0, 0, 0);
+    background-color: aqua;
+    border: 8px black ridge;
+    font-size: 15px;
+    font-weight: bolder;
+    margin-left: 47%;
+}
+
+button:hover{
+    background-color: rgb(9, 81, 153);
+    color: purple;
+}
+
+img{
+    width: 120px;
+    height: 120px;
+    margin: 10px;
+    border: 15px #42A362 ridge;
+    filter: grayscale(1);
+}
+
+.achievement-container{
+    position:absolute;
+    top: 35%;
+    left: 15%;
+    width: 1300px;
+    height: 900px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border: 40px #654321 ridge;
+    background-color: rgb(150, 25, 150);
+    text-align: center;
+}
