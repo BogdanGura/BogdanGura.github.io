@@ -6,6 +6,7 @@ import { Achievement } from "/Projects/TetrisEnhanced/Scripts/achievement.js";
 let inputName  = document.getElementById("input-username");
 let playSingle = document.getElementById("playSingle");
 let playAI = document.getElementById("playAI");
+let achievementBtn = document.getElementById("achievementBtn");
 let clearSaveBtn = document.getElementById("clearBtn")
 let errorDiv = document.getElementById("error-div");
 
@@ -16,17 +17,17 @@ let recordTetrominoes = document.getElementById("recordTetrominoes");
 
 
 //Achievement names for menu 
-achievementNamesMenu = ["'Oh holera, czy Freddy Fazbear ?'", "'Dictator'",
+let achievementNamesMenu = ["'Oh holera, czy Freddy Fazbear ?'", "'Dictator'",
                         "'Polar Bear'", "'The Creator'","'Pain'",
                         "'My Bread and Butter'", "'Data Analyst who is a Snake'"];
 //Achievement names for clearing a save
-achievementsNamesClear = ["'A Clean Slate at last'", "'An even clearer slate'",
+let achievementsNamesClear = ["'A Clean Slate at last'", "'An even clearer slate'",
                           "'An even even clearer slate'"];
 
 //Achievement arrays
-achievementNamesArray = [];
+let achievementNamesArray = [];
 
-achievementsClearArray = [];
+let achievementsClearArray = [];
 
 //Create Listeners && and load saved info
 window.onload = loadSave;
@@ -36,6 +37,7 @@ function createListeners()
 {
     playSingle.addEventListener("click", saveAndCheckUserSolo);
     playAI.addEventListener("click", saveAndCheckUserAI);
+    achievementBtn.addEventListener("click", saveAchievements);
     clearSaveBtn.addEventListener("click", clearSave);
 }
 
@@ -67,7 +69,7 @@ function saveAndCheckUserSolo() {
                 case "Bogdan": 
                     achievementNamesArray[3].earned = true;
                     break
-                case "Access": 
+                case "Back End": 
                     achievementNamesArray[4].earned = true;
                     break
                 case "Java Script": 
@@ -77,6 +79,7 @@ function saveAndCheckUserSolo() {
                     achievementNamesArray[6].earned = true;
                     break
             }
+            updateLocalStorage(achievementNamesArray, "name-achievements");
 
             //if username field doesn't correspond to username in 
             // local Storage, orride the previous username 
@@ -94,6 +97,31 @@ function saveAndCheckUserSolo() {
             //if the username in localStorage doesn't exists
             //set it to the fields value and start the game
             localStorage.setItem("username", inputName.value);
+            switch(inputName.value)
+            {
+                case "HarHarHar": 
+                    achievementNamesArray[0].earned = true;
+                    break
+                case "Lucas": 
+                    achievementNamesArray[1].earned = true;
+                    break
+                case "Aaron": 
+                    achievementNamesArray[2].earned = true;
+                    break
+                case "Bogdan": 
+                    achievementNamesArray[3].earned = true;
+                    break
+                case "Back End": 
+                    achievementNamesArray[4].earned = true;
+                    break
+                case "Java Script": 
+                    achievementNamesArray[5].earned = true;
+                    break
+                case "Python": 
+                    achievementNamesArray[6].earned = true;
+                    break
+            }
+            updateLocalStorage(achievementNamesArray, "name-achievements");
             window.location.replace("tetris-solo.html");
         }    
     }
@@ -129,12 +157,40 @@ function saveAndCheckUserAI() {
         && inputName.value.length <= 20)
     {
         //if username exists
-        if (localStorage.getItem("username") !== null) {
+        if (localStorage.getItem("username") !== null) 
+        {
+            switch(inputName.value)
+            {
+                case "HarHarHar": 
+                    achievementNamesArray[0].earned = true;
+                    break
+                case "Lucas": 
+                    achievementNamesArray[1].earned = true;
+                    break
+                case "Aaron": 
+                    achievementNamesArray[2].earned = true;
+                    break
+                case "Bogdan": 
+                    achievementNamesArray[3].earned = true;
+                    break
+                case "Back End": 
+                    achievementNamesArray[4].earned = true;
+                    break
+                case "Java Script": 
+                    achievementNamesArray[5].earned = true;
+                    break
+                case "Python": 
+                    achievementNamesArray[6].earned = true;
+                    break
+            }
+            updateLocalStorage(achievementNamesArray, "name-achievements");
             //if username field doesn't correspond to username in 
             // local Storage, orride the previous username 
             //with a new one and start the game
             if (inputName.value !== localStorage.getItem("username")) {
                 localStorage.setItem("username", inputName.value);
+
+                //updating the localStorage
                 window.location.replace("tetris-vs-ai.html");
             }
             else{
@@ -146,6 +202,31 @@ function saveAndCheckUserAI() {
             //if the username in localStorage doesn't exists
             //set it to the fields value and start the game
             localStorage.setItem("username", inputName.value);
+            switch(inputName.value)
+            {
+                case "HarHarHar": 
+                    achievementNamesArray[0].earned = true;
+                    break
+                case "Lucas": 
+                    achievementNamesArray[1].earned = true;
+                    break
+                case "Aaron": 
+                    achievementNamesArray[2].earned = true;
+                    break
+                case "Bogdan": 
+                    achievementNamesArray[3].earned = true;
+                    break
+                case "Back End": 
+                    achievementNamesArray[4].earned = true;
+                    break
+                case "Java Script": 
+                    achievementNamesArray[5].earned = true;
+                    break
+                case "Python": 
+                    achievementNamesArray[6].earned = true;
+                    break
+            }
+            updateLocalStorage(achievementNamesArray, "name-achievements");
             window.location.replace("tetris-vs-ai.html");
         }    
     }
@@ -174,29 +255,50 @@ function saveAndCheckUserAI() {
     }
 }
 
+//Loads name achievements and 
+//clear history achievements
+//into local storage
+function saveAchievements()
+{
+    let nameAchievementsJSON = JSON.stringify(JSON.parse(localStorage.getItem("name-achievements")));
+    let clearAchievementsJSON = JSON.stringify(JSON.parse(localStorage.getItem("clear-save-achievements")));
+
+    localStorage.setItem("name-achievements", nameAchievementsJSON);
+    localStorage.setItem("clear-save-achievements", clearAchievementsJSON);
+}
+
 //loads info from locale storage to the 
 //main page
 //loads info from local storage to the main page
 function loadSave() 
 {
+    console.log(localStorage);
     //Check if achievements exist, if not make them
     //and put them in local storage
-    if(localStorage.getItem("name-achievements") === null &&
-       localStorage.getItem("clear-save-achievements") === null &&
-       localStorage.getItem("cleared-save-num"))
+    if(localStorage.getItem("name-achievements") === "null" ||
+       localStorage.getItem("clear-save-achievements") === "null" ||
+       localStorage.getItem("cleared-save-num") === "null" ||
+       localStorage.getItem("cleared-save-num") === null)
     {
-        //if achivements doen't exist, make them
+        // if achievements don't exist, make them
         createAchievements(achievementNamesMenu, achievementNamesArray);
         createAchievements(achievementsNamesClear, achievementsClearArray);
 
-        //Set the cleared-save-num to 0
+        // Set the cleared-save-num to 0
         localStorage.setItem("cleared-save-num", "0");
     }
-    else{
-        //if they already exsit, parse them from the JSON format
+    else {
+        // Load existing cleared-save-num value
+        let existingClearedNum = localStorage.getItem("cleared-save-num");
+
+        // You can log the existing value if needed
+        console.log("Existing cleared-save-num:", existingClearedNum);
+
+        //Setting existing array to those
         achievementNamesArray = JSON.parse(localStorage.getItem("name-achievements"));
         achievementsClearArray = JSON.parse(localStorage.getItem("clear-save-achievements"));
     }
+
 
     // Load the saved username
     inputName.value = localStorage.getItem("username");
@@ -232,11 +334,13 @@ function clearSave()
 {
     //Incremet the number in the clearedSaveNum
     //in local storage 
-    let incrementedClearedNumber = (localStorage.getItem("cleared-save-num")) + 1;
-    localStorage.setItem("cleared-save-num", toString(incrementedClearedNumber))
+    let incrementedClearedNumber = parseInt(localStorage.getItem("cleared-save-num")) + 1;
+    localStorage.setItem("cleared-save-num", incrementedClearedNumber.toString())
 
     //Check for clear save achievements
-    switch (localStorage.getItem("cleared-save-num")) 
+    if(localStorage.getItem("cleared-save-num") !== null)
+    {
+        switch (localStorage.getItem("cleared-save-num")) 
     {
         case "1":
             achievementsClearArray[0].earned = true;  
@@ -250,8 +354,16 @@ function clearSave()
             achievementsClearArray[2].earned = true;
             break;
     }
+    }
+    
     //Clearing save
-    localStorage.clear();
+    localStorage.removeItem("achievements-ai");
+    localStorage.removeItem("achievements-general");
+    localStorage.removeItem("linesCleared");
+    localStorage.removeItem("placedTetrominoes");
+    localStorage.removeItem("pointsEarned");
+    localStorage.removeItem("name-achievements");
+    localStorage.removeItem("username");
     //Removing previous username from the field
     inputName.value = "";
     //Setting stats fiels to zero
@@ -269,6 +381,15 @@ function clearSave()
     setTimeout(() => {
         errorDiv.innerText = "";
     }, 3000);
+}
+
+function updateLocalStorage(newArray, itemName)
+{
+    //new array is stringified
+    let newAr = JSON.stringify(newArray);
+
+    //the new array is set under itemName
+    localStorage.setItem(itemName, newAr);
 }
 
 function createAchievements(achievementNamesArray, targetArray) 

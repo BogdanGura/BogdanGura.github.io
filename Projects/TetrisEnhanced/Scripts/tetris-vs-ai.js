@@ -28,6 +28,7 @@ let openMenu = document.getElementById("openMenu");
 let closeMenu = document.getElementById("closeMenuBtn");
 let quitBtn1 = document.getElementById("quitGameBtn1");
 let quitBtn2 = document.getElementById("quitGameBtn2");
+let quitBtn3 = document.getElementById("quitGameBtn3");
 let popupMenu = document.getElementById("popup-menu");
 let popupLost = document.getElementById("popup-lost");
 let popupWon = document.getElementById("popup-won");
@@ -425,6 +426,7 @@ function startGame()
     //Event Listener for quit button on both modals
     quitBtn1.addEventListener("click", quit);
     quitBtn2.addEventListener("click", quit);
+    quitBtn3.addEventListener("click", quit);
 
     //Check if general achievements already exist or not
 
@@ -891,9 +893,14 @@ function moveOutcome_AI()
 //it send the user to the main menu of tetris enhanced
 function quit(){
     //Making achievementsArray into a JSON String
-    /* const achievementArrayJSON = JSON.stringify(achievementsArray);
-    The setting it recordScore name and value of achievementArrayJSON
-    localStorage.setItem("achievements", achievementArrayJSON); */
+    let achievementGeneralJSON = JSON.stringify(achievementsGeneralArray);
+    let achievementsAIJSON = JSON.stringify(achievementsAI);
+
+    //The setting it recordScore name and value of achievementArrayJSON
+    localStorage.setItem("achievements-general", achievementGeneralJSON);
+
+    //The setting it recordScore name and value of achievementArrayJSON
+    localStorage.setItem("achievements-ai", achievementsAIJSON); 
 
     //Send the user back to the menu
     window.location.replace("menu.html");

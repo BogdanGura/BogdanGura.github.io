@@ -400,14 +400,14 @@ function moveOutcome()
         localStorage.setItem("placedTetrominoes", placedTetrominoesIncremented.toString());
 
         //!Then check for block Head achievements
-        if(localStorage.getItem("placedTetrominoes") === "10")
+        if(localStorage.getItem("placedTetrominoes") === "100")
         {
             //Set the first achievement in the blockhead series to
             // true
             achievementsGeneralArray[1].earned = true;
         }
         //same for the other achievements in this series
-        else if(localStorage.getItem("placedTetrominoes") === "250")
+        else if(localStorage.getItem("placedTetrominoes") === "200")
         {
             achievementsGeneralArray[2].earned = true;
         }
@@ -509,50 +509,50 @@ function moveOutcome()
 
                     //!After some points were added perform a check and see if 
                     //!any achievements were triggered
+                    if(parseInt(localStorage.getItem("pointsEarned")) >= 250000)
+                    {
+                        achievementsGeneralArray[14].earned = true;
+                    }
+                    if(parseInt(localStorage.getItem("pointsEarned")) >= 100000)
+                    {
+                        achievementsGeneralArray[13].earned = true;
+                    }
+                    if(parseInt(localStorage.getItem("pointsEarned")) >= 50000)
+                    {
+                        achievementsGeneralArray[12].earned = true;
+                    }
+                    if(parseInt(localStorage.getItem("pointsEarned")) >= 10000)
+                    {
+                        achievementsGeneralArray[11].earned = true;
+                    }
                     if(parseInt(localStorage.getItem("pointsEarned")) >= 1000)
                     {
                         //Setting an achievements in the line clear series
                         achievementsGeneralArray[10].earned = true;
                     }
-                    else if(parseInt(localStorage.getItem("pointsEarned")) >= 10000)
-                    {
-                        achievementsGeneralArray[11].earned = true;
-                    }
-                    else if(parseInt(localStorage.getItem("pointsEarned")) >= 50000)
-                    {
-                        achievementsGeneralArray[12].earned = true;
-                    }
-                    else if(parseInt(localStorage.getItem("pointsEarned")) >= 100000)
-                    {
-                        achievementsGeneralArray[13].earned = true;
-                    }
-                    else if(parseInt(localStorage.getItem("pointsEarned")) >= 250000)
-                    {
-                        achievementsGeneralArray[14].earned = true;
-                    }
                 }
 
                 //!Check for lines cleared (achievements)
+                if(parseInt(localStorage.getItem("linesCleared")) >= 60)
+                {
+                    achievementsGeneralArray[9].earned = true;
+                }
+                if(parseInt(localStorage.getItem("linesCleared")) >= 45)
+                {
+                    achievementsGeneralArray[8].earned = true;
+                }
+                if(parseInt(localStorage.getItem("linesCleared")) >= 30)
+                {
+                    achievementsGeneralArray[7].earned = true;
+                }              
+                if(parseInt(localStorage.getItem("linesCleared")) >= 15)
+                {
+                    achievementsGeneralArray[6].earned = true;
+                }
                 if(parseInt(localStorage.getItem("linesCleared")) >= 1)
                 {
                     //Setting an achievements in the line clear series
                     achievementsGeneralArray[5].earned = true;
-                }
-                else if(parseInt(localStorage.getItem("linesCleared")) >= 15)
-                {
-                    achievementsGeneralArray[6].earned = true;
-                }
-                else if(parseInt(localStorage.getItem("linesCleared")) >= 30)
-                {
-                    achievementsGeneralArray[7].earned = true;
-                }
-                else if(parseInt(localStorage.getItem("linesCleared")) >= 45)
-                {
-                    achievementsGeneralArray[8].earned = true;
-                }
-                else if(parseInt(localStorage.getItem("linesCleared")) >= 60)
-                {
-                    achievementsGeneralArray[9].earned = true;
                 }
 
                 //Then check if the player has made enough 
@@ -616,9 +616,10 @@ function moveOutcome()
 //it send the user to the main menu of tetris enhanced
 function quit(){
     //Making achievementsArray into a JSON String
-    /* const achievementArrayJSON = JSON.stringify(achievementsArray);
-    The setting it recordScore name and value of achievementArrayJSON
-    localStorage.setItem("achievements", achievementArrayJSON); */
+    let achievementGeneralJSON = JSON.stringify(achievementsGeneralArray);
+
+    //The setting it recordScore name and value of achievementArrayJSON
+    localStorage.setItem("achievements-general", achievementGeneralJSON);
 
     //Send the user back to the menu
     window.location.replace("menu.html");
