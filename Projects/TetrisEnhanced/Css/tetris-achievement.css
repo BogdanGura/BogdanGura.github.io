@@ -1,13 +1,24 @@
 body{
-    background-color: rgb(174, 109, 235);
+    background-color: rgba(178, 73, 38, 0.878);
 }
 
 h1{
     font-family: 'Actor';
-    color: black;
+    color: rgb(255, 255, 255);
     font-weight: bold;
     margin-left: 38%;
-    margin-top: 13%;
+    margin-top: 9%;
+}
+
+h3{
+    margin-left: 150px;
+    color:rgb(255, 255, 255);
+}
+
+#contributor
+{
+    color: gold;
+    font-weight: bolder;
 }
 
 button{
@@ -23,7 +34,7 @@ button{
 
 button:hover{
     background-color: rgb(9, 81, 153);
-    color: purple;
+    color: rgb(255, 0, 0);
 }
 
 img{
@@ -36,7 +47,7 @@ img{
 
 .achievement-container{
     position:absolute;
-    top: 35%;
+    top: 30%;
     left: 15%;
     width: 1300px;
     height: 900px;

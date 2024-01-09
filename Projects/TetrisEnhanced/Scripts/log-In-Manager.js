@@ -260,11 +260,8 @@ function saveAndCheckUserAI() {
 //into local storage
 function saveAchievements()
 {
-    let nameAchievementsJSON = JSON.stringify(JSON.parse(localStorage.getItem("name-achievements")));
-    let clearAchievementsJSON = JSON.stringify(JSON.parse(localStorage.getItem("clear-save-achievements")));
-
-    localStorage.setItem("name-achievements", nameAchievementsJSON);
-    localStorage.setItem("clear-save-achievements", clearAchievementsJSON);
+    localStorage.setItem("name-achievements", localStorage.getItem("name-achievements"));
+    localStorage.setItem("clear-save-achievements", localStorage.getItem("clear-save-achievements"));
 }
 
 //loads info from locale storage to the 
@@ -275,28 +272,36 @@ function loadSave()
     console.log(localStorage);
     //Check if achievements exist, if not make them
     //and put them in local storage
-    if(localStorage.getItem("name-achievements") === "null" ||
-       localStorage.getItem("clear-save-achievements") === "null" ||
-       localStorage.getItem("cleared-save-num") === "null" ||
-       localStorage.getItem("cleared-save-num") === null)
-    {
-        // if achievements don't exist, make them
+    if (localStorage.getItem("name-achievements") === null ||
+        localStorage.getItem("name-achievements") === "null") {
+        // If not, create achievements and set them in local storage
         createAchievements(achievementNamesMenu, achievementNamesArray);
-        createAchievements(achievementsNamesClear, achievementsClearArray);
+        updateLocalStorage(achievementNamesArray, "name-achievements");
+    } else {
+        // If it exists, directly set the achievements
+        achievementNamesArray = JSON.parse(localStorage.getItem("name-achievements"));
+        updateLocalStorage(achievementNamesArray, "name-achievements");
+    }
 
+    if (localStorage.getItem("clear-save-achievements") === "null" ||
+        localStorage.getItem("clear-save-achievements") === null) {
+        createAchievements(achievementsNamesClear, achievementsClearArray);
+        updateLocalStorage(achievementsClearArray, "clear-save-achievements");
+    } else {
+        achievementsClearArray = JSON.parse(localStorage.getItem("clear-save-achievements"));
+        updateLocalStorage(achievementsClearArray, "clear-save-achievements");
+    }
+
+    if (localStorage.getItem("cleared-save-num") === "null" ||
+        localStorage.getItem("cleared-save-num") === null) {
         // Set the cleared-save-num to 0
         localStorage.setItem("cleared-save-num", "0");
-    }
-    else {
+    } else {
         // Load existing cleared-save-num value
         let existingClearedNum = localStorage.getItem("cleared-save-num");
 
         // You can log the existing value if needed
         console.log("Existing cleared-save-num:", existingClearedNum);
-
-        //Setting existing array to those
-        achievementNamesArray = JSON.parse(localStorage.getItem("name-achievements"));
-        achievementsClearArray = JSON.parse(localStorage.getItem("clear-save-achievements"));
     }
 
 
@@ -338,23 +343,26 @@ function clearSave()
     localStorage.setItem("cleared-save-num", incrementedClearedNumber.toString())
 
     //Check for clear save achievements
-    if(localStorage.getItem("cleared-save-num") !== null)
+    if(localStorage.getItem("cleared-save-num") !== null &&
+       localStorage.getItem("cleared-save-num") !== "null")
     {
         switch (localStorage.getItem("cleared-save-num")) 
-    {
-        case "1":
-            achievementsClearArray[0].earned = true;  
-            break;
-        
-        case "2":
-            achievementsClearArray[1].earned = true;
-            break;
+        {
+            case "1":
+                achievementsClearArray[0].earned = true;  
+                break;
+            
+            case "2":
+                achievementsClearArray[1].earned = true;
+                break;
 
-        case "3":
-            achievementsClearArray[2].earned = true;
-            break;
+            case "3":
+                achievementsClearArray[2].earned = true;
+                break;
+        }
     }
-    }
+
+    updateLocalStorage(achievementsClearArray, "clear-save-achievements");
     
     //Clearing save
     localStorage.removeItem("achievements-ai");
@@ -364,6 +372,8 @@ function clearSave()
     localStorage.removeItem("pointsEarned");
     localStorage.removeItem("name-achievements");
     localStorage.removeItem("username");
+
+    console.log(localStorage);
     //Removing previous username from the field
     inputName.value = "";
     //Setting stats fiels to zero

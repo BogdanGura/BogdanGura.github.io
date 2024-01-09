@@ -24,6 +24,7 @@ let clearedLinesF_AI = document.getElementById("rows-cleared-AI");
 let pointsScoredF_AI = document.getElementById("points-AI");
 let nextTetrominoScreen = document.getElementById("next-tetromino-screen");
 let nextTetrominoScreen_AI = document.getElementById("next-tetromino-screen-ai");
+let usernameField = document.getElementById("username");
 let openMenu = document.getElementById("openMenu");
 let closeMenu = document.getElementById("closeMenuBtn");
 let quitBtn1 = document.getElementById("quitGameBtn1");
@@ -308,6 +309,9 @@ function generateNextTetrominoScreen(nextTetrominoScreen)
 
 function startGame()
 {
+    //Set player's username on the board
+    usernameField.innerText = localStorage.getItem("username");
+    
     // Generate Player's Board
     generateBoard(gameBoard);
 
