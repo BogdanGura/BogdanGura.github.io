@@ -1,0 +1,54 @@
+.container
+{
+    width: 97%;
+    height: 850px;
+    border: 5px black solid;
+    position: relative;
+}
+
+.money-img-container
+{
+    width: 352px;
+    height: 98.5%;
+    border: 5px rgb(0, 255, 55) solid;
+    display: inline-block;
+}
+
+.xp-img-container
+{
+    width: 350px;
+    height: 98.5%;
+    border: 5px rgb(0, 166, 255) solid;
+    display: inline-block;
+}
+
+.store-container
+{
+    width: 1120px;
+    height: 20%;
+    border: 5px rgb(179, 0, 255) solid;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+}
+
+.actions-menu-container
+{
+    width: 559px;
+    height: 78%;
+    border: 5px rgb(255, 0, 51) solid;
+    display: inline-block;
+    position: absolute;
+    top: 21%;
+}
+
+.view-assets-container
+{
+    width: 547px;
+    height: 78%;
+    border: 5px rgb(255, 153, 0) solid;
+    display: inline-block;
+    position: absolute;
+    top: 21%;
+    left: 70%
+}
