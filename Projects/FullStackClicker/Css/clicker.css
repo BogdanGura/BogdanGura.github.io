@@ -1,3 +1,4 @@
+/* Bogdan Gura */
 body
 {
     background-color: rgb(146, 146, 146);
@@ -52,6 +53,23 @@ body
     display: inline-block;
     position: absolute;
     top: 0;
+    justify-content: space-between;
+}
+
+/* Store Items Styling */
+.store-container div
+{
+    width: 65px;
+    height: 65px;
+    border: 4px green ridge;
+    display: inline-block;
+    margin-left: 40px;
+    margin-top: 10px;
+}
+
+.store-container div:hover
+{
+    border: 4px rgb(4, 205, 4) ridge;
 }
 
 .timer-container
