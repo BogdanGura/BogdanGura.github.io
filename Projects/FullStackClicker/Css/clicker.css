@@ -1,3 +1,8 @@
+body
+{
+    background-color: rgb(146, 146, 146);
+}
+
 .container
 {
     width: 97%;
@@ -12,6 +17,7 @@
     height: 98.5%;
     border: 5px rgb(0, 255, 55) solid;
     display: inline-block;
+    vertical-align: top;
 }
 
 .xp-img-container
@@ -20,16 +26,43 @@
     height: 98.5%;
     border: 5px rgb(0, 166, 255) solid;
     display: inline-block;
+    vertical-align: top;
+}
+
+/* Stylign images inside of the containers */
+.money-img-container img,
+.xp-img-container img
+{
+    width: 85%;
+    margin-top: 50%;
+}
+
+.money-img-container img:hover,
+.xp-img-container img:hover
+{
+    width: 100%;
+    cursor: pointer;
 }
 
 .store-container
 {
-    width: 1120px;
+    width: 560px;
     height: 20%;
     border: 5px rgb(179, 0, 255) solid;
     display: inline-block;
     position: absolute;
     top: 0;
+}
+
+.timer-container
+{
+    width: 545px;
+    height: 20%;
+    border: 5px rgb(234, 255, 0) solid;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .actions-menu-container
@@ -51,4 +84,26 @@
     position: absolute;
     top: 21%;
     left: 70%
+}
+
+/* Scores styling */
+
+.money
+{
+    color: #00ff00;
+}
+
+.xp
+{
+    color:aqua
+}
+
+/* Timer styling */
+#countdown
+{
+    font-family: 'Digital-7', Arial, sans-serif;;
+    color: red;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
 }
