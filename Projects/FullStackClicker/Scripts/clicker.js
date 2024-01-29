@@ -7,10 +7,12 @@ let moneyScoreElement = document.getElementById("moneyScoreElement");
 let xpScoreElement = document.getElementById("xpScoreElement");
 let storeContainer = document.querySelector(".store-container");
 let storeUpgradesList;
+let toolTipDiv;
 
 //Sound Elements
 let xpClickSound = document.getElementById("clickSoundXP");
 let moneyClickSound = document.getElementById("clickSoundMoney");
+let clickSoundPurchase = document.getElementById("clickSoundPurchase");
 
 //Timer settings
 let minutes = 20;
@@ -32,23 +34,54 @@ let upgradeImgNames = ["CSS/HTML Book", "JS Book Lvl 1"];
 //Upgrade objects
 let cssHTMLBook = {
     name: "CSS/HTML Book",
+    description: "A begginer's guide into the world of web development.",
     moneyPrice: 60,
     xpPrice: 0,
     bought: false,
     xpBonus: 5,
     effects: () =>{
         //Subtract the bying cost first
-        moneyScore=-cssHTMLBook.moneyPrice;
-        xpScore=-cssHTMLBook.xpPrice;
+        moneyScore-=cssHTMLBook.moneyPrice;
+        xpScore-=cssHTMLBook.xpPrice;
 
         //Set the bought to true
         cssHTMLBook.bought = true;
 
         //Update the xpEarningRate
-        xpEarningRate += xpBonus;
+        xpEarningRate += cssHTMLBook.xpBonus;
 
-        //alert of a succesful buy
-        alert("CSS/HTML Book bought succesfully");
+        //Update the counters information
+        moneyScoreElement.innerText = moneyScore;
+        xpScoreElement.innerText = xpScore;
+
+        //Play the purchase sound
+        clickSoundPurchase.play();
+    }
+}
+
+let jsBookLvl1 = {
+    name: "JS Book Lvl 1",
+    moneyPrice: 100,
+    xpPrice: 0,
+    bought: false,
+    xpBonus: 10,
+    effects: () =>{
+        //Subtract the bying cost first
+        moneyScore-=jsBookLvl1.moneyPrice;
+        xpScore-=jsBookLvl1.xpPrice;
+
+        //Set the bought to true
+        jsBookLvl1.bought = true;
+
+        //Update the xpEarningRate
+        xpEarningRate += jsBookLvl1.xpBonus;
+
+        //Update the counters information
+        moneyScoreElement.innerText = moneyScore;
+        xpScoreElement.innerText = xpScore;
+
+        //Play the purchase sound
+        clickSoundPurchase.play();
     }
 }
 
@@ -81,11 +114,26 @@ function createListeners()
 
     storeUpgradesList = document.querySelectorAll(".store-container div");
 
+    console.log(storeUpgradesList);
+
     //Set listeners for upgrades in the shop
 
     //CSS/HTML Book
     storeUpgradesList[0].addEventListener("click", () => {
         buyUpgrade("CSS/HTML Book", storeUpgradesList[0])
+    });
+
+    storeUpgradesList[1].addEventListener("click", () => {
+        buyUpgrade("JS Book Lvl 1", storeUpgradesList[1])
+    });
+
+    //Listeners for upgrade's tooltips
+    storeUpgradesList.forEach(element =>{
+        element.addEventListener("mouseenter", generateToolTip);
+    });
+
+    storeUpgradesList.forEach(element =>{
+        element.addEventListener("mouseleave", removeToolTip);
     });
 
 }
@@ -150,6 +198,7 @@ function generateStoreItems()
         //Put the img inside the div and set its alt to the arrays
         //index value
         storeItemImg.alt = upgradeImgNames[i];
+        storeItem.name = upgradeImgNames[i];
         storeItem.appendChild(storeItemImg);
 
         //Attach the div to the container
@@ -166,13 +215,16 @@ function buyUpgrade(itemName, itemElement)
     //check if player can afford to buy the item
     if(canAfford(itemName))
     {
-        //Depending on what it is the effects are applied
-        if(itemName === "CSS/HTML Book")
-        {
-            cssHTMLBook.effects;
+        switch (itemName) {
+            case "CSS/HTML Book":
+                cssHTMLBook.effects();
+                itemElement.remove();
+                break;
 
-            //itemElement removed
-            itemElement.remove();
+            case "JS Book Lvl 1":
+                jsBookLvl1.effects();
+                itemElement.remove();
+                break;
         }
     }
 }
@@ -191,13 +243,105 @@ function canAfford(itemName)
         }
         else if(xpScore < cssHTMLBook.xpPrice)
         {
-            alert(`Not enogh XP to purchase ${itemName}`);
+            // alert(`Not enogh XP to purchase ${itemName}`);
             return false;
         }
         else if(moneyScore < cssHTMLBook.moneyPrice)
         {
-            alert(`Not enogh funds to purchase ${itemName}`);
+            // alert(`Not enogh funds to purchase ${itemName}`);
             return false;
         }
     }
+    else if(itemName === "JS Book Lvl 1")
+    {
+            //check for sufficient funds and xp
+        if(moneyScore >= jsBookLvl1.moneyPrice && 
+            xpScore >= jsBookLvl1.xpPrice)
+         {
+             return true;
+         }
+         else if(xpScore < jsBookLvl1.xpPrice)
+         {
+            //  alert(`Not enogh XP to purchase ${itemName}`);
+             return false;
+         }
+         else if(moneyScore < jsBookLvl1.moneyPrice)
+         {
+            //  alert(`Not enogh funds to purchase ${itemName}`);
+             return false;
+         }
+    }
+}
+
+//canAffordVIndicator what will switch styling 
+//for can-afford class to green for true
+//and red for false
+function canAffordColorIndicator(boolean)
+{
+    //if true set styling text to green
+    if(boolean)
+    {
+        return "green";
+    }
+    //else to red
+    else{
+        return "red";
+    }
+}
+
+//Generates a tool tip with relevent info inside
+//like name, upgrade description
+//money price, xp price and can afford
+//with a boolean expression and a color 
+function generateToolTip(event)
+{
+    //let upgrade selected
+    let upgradeSelected;
+
+    //Tool tip elements
+    toolTipDiv = document.createElement("div");
+    let tooltipSpan = document.createElement("span");
+
+    //Setting toolTipDiv class to class='tooltip'
+    toolTipDiv.classList.add("tooltip-toggler");
+
+    //Cheking what upgrade triggered the mouseenter event
+    if(event.target.name === "CSS/HTML Book")
+    {
+        upgradeSelected = cssHTMLBook;
+    }
+
+    //Using upgrade selected generate inner html and 
+    //pack it inside of the div
+    tooltipSpan.innerHTML = generateInnerHTMLToolTip(upgradeSelected);
+
+    tooltipSpan.classList.add("tooltip");
+
+    toolTipDiv.appendChild(tooltipSpan);
+
+    event.target.appendChild(toolTipDiv);
+
+    //Make the tooltip apear
+    toolTipDiv.display = 'block';
+
+}
+
+//Generates inner HTML for tool tip
+function generateInnerHTMLToolTip(upgrade)
+{
+    let innerHTML = `<h2>${upgrade.name}</h2>
+        <p>${upgrade.description}</p>
+        <p>Money price: ${upgrade.moneyPrice}</p>
+        <p>XP price: ${upgrade.xpPrice}</p>
+        <p>Effects: Allows to earn ${upgrade.xpBonus} per click</p>
+        <p>Can afford: <span style='color:${canAffordColorIndicator(canAfford(upgrade.name))}'>${canAfford(upgrade.name)}</span></p>`;
+
+        return innerHTML;
+}
+
+//Set's upgrades tooltip inner html to ""
+function removeToolTip()
+{
+    console.log(toolTipDiv);
+    // toolTipDiv.display = 'none';
 }

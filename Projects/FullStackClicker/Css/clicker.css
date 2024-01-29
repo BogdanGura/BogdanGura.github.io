@@ -125,3 +125,17 @@ body
     font-weight: bold;
     text-align: center;
 }
+
+/* Styling for tooltips */
+.tooltip-toggler .tooltip
+{
+    border: 2px black solid;
+    width: 500px;
+    background-color: rgb(255, 106, 0);
+    display: none;
+}
+
+.can-afford
+{
+    color: red;
+}
