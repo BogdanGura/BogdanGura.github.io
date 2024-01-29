@@ -6,8 +6,7 @@ let workImg = document.getElementById("job");
 let moneyScoreElement = document.getElementById("moneyScoreElement");
 let xpScoreElement = document.getElementById("xpScoreElement");
 let storeContainer = document.querySelector(".store-container");
-let storeUpgradesList;
-let toolTipDiv;
+let infoContainer = document.querySelector(".info-container");
 
 //Sound Elements
 let xpClickSound = document.getElementById("clickSoundXP");
@@ -34,7 +33,7 @@ let upgradeImgNames = ["CSS/HTML Book", "JS Book Lvl 1"];
 //Upgrade objects
 let cssHTMLBook = {
     name: "CSS/HTML Book",
-    description: "A begginer's guide into the world of web development.",
+    description: "A begginer's guide into the world of web development. (Allows to Earn XP)",
     moneyPrice: 60,
     xpPrice: 0,
     bought: false,
@@ -61,6 +60,7 @@ let cssHTMLBook = {
 
 let jsBookLvl1 = {
     name: "JS Book Lvl 1",
+    description: "A begginer's guide to Java Script. (Allows to Earn XP)",
     moneyPrice: 100,
     xpPrice: 0,
     bought: false,
@@ -129,11 +129,11 @@ function createListeners()
 
     //Listeners for upgrade's tooltips
     storeUpgradesList.forEach(element =>{
-        element.addEventListener("mouseenter", generateToolTip);
+        element.addEventListener("mouseenter", generateInfo);
     });
 
     storeUpgradesList.forEach(element =>{
-        element.addEventListener("mouseleave", removeToolTip);
+        element.addEventListener("mouseleave", removeInfo);
     });
 
 }
@@ -281,7 +281,7 @@ function canAffordColorIndicator(boolean)
     //if true set styling text to green
     if(boolean)
     {
-        return "green";
+        return "#00ff00;";
     }
     //else to red
     else{
@@ -293,55 +293,42 @@ function canAffordColorIndicator(boolean)
 //like name, upgrade description
 //money price, xp price and can afford
 //with a boolean expression and a color 
-function generateToolTip(event)
+function generateInfo(event)
 {
+    console.log(event);
+
     //let upgrade selected
     let upgradeSelected;
-
-    //Tool tip elements
-    toolTipDiv = document.createElement("div");
-    let tooltipSpan = document.createElement("span");
-
-    //Setting toolTipDiv class to class='tooltip'
-    toolTipDiv.classList.add("tooltip-toggler");
 
     //Cheking what upgrade triggered the mouseenter event
     if(event.target.name === "CSS/HTML Book")
     {
         upgradeSelected = cssHTMLBook;
     }
+    else if(event.target.name === "JS Book Lvl 1")
+    {
+        upgradeSelected = jsBookLvl1;
+    }
 
     //Using upgrade selected generate inner html and 
     //pack it inside of the div
-    tooltipSpan.innerHTML = generateInnerHTMLToolTip(upgradeSelected);
-
-    tooltipSpan.classList.add("tooltip");
-
-    toolTipDiv.appendChild(tooltipSpan);
-
-    event.target.appendChild(toolTipDiv);
-
-    //Make the tooltip apear
-    toolTipDiv.display = 'block';
-
+    infoContainer.innerHTML = generateInnerHTMLToolTip(upgradeSelected);
 }
 
 //Generates inner HTML for tool tip
 function generateInnerHTMLToolTip(upgrade)
 {
-    let innerHTML = `<h2>${upgrade.name}</h2>
-        <p>${upgrade.description}</p>
-        <p>Money price: ${upgrade.moneyPrice}</p>
-        <p>XP price: ${upgrade.xpPrice}</p>
-        <p>Effects: Allows to earn ${upgrade.xpBonus} per click</p>
+    let innerHTML = `<p>${upgrade.description}</p>
+        <p>Money price: <span class='money'>${upgrade.moneyPrice}</span></p>
+        <p>XP price: <span class='xp'>${upgrade.xpPrice}</span></p>
+        <p>Effects: Allows to earn ${upgrade.xpBonus} experience more per click</p>
         <p>Can afford: <span style='color:${canAffordColorIndicator(canAfford(upgrade.name))}'>${canAfford(upgrade.name)}</span></p>`;
 
         return innerHTML;
 }
 
 //Set's upgrades tooltip inner html to ""
-function removeToolTip()
+function removeInfo()
 {
-    console.log(toolTipDiv);
-    // toolTipDiv.display = 'none';
+    infoContainer.innerHTML = "";
 }

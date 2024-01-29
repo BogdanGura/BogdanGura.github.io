@@ -4,6 +4,12 @@ body
     background-color: rgb(146, 146, 146);
 }
 
+p{
+    margin: 2px;
+    font-weight: bold;
+    font-size: large;
+}
+
 .container
 {
     width: 100%;
@@ -130,6 +136,7 @@ body
     font-family: 'Digital-7', Arial, sans-serif;;
     color: red;
     font-size: 50px;
+    margin-top: 50px;
     font-weight: bold;
     text-align: center;
 }
@@ -146,4 +153,5 @@ body
 .can-afford
 {
     color: red;
+    font-weight: bold;
 }
