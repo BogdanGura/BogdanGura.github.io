@@ -289,9 +289,6 @@ function updateCountDown()
 //that will update the cooldown number until it is zero then the 
 //interval is cleared and styling 
 function startCooldown(projectElement, projectName, cooldownTime) {
-    // Interval for interval clear
-    let interval;
-
     // Swap styling
     projectElement.classList.remove("project");
     projectElement.classList.add("project-cooldown");
