@@ -7,7 +7,7 @@ body
 p{
     margin: 2px;
     font-weight: bold;
-    font-size: large;
+    font-size:medium;
 }
 
 .container
@@ -91,7 +91,7 @@ p{
 {
     width: 559px;
     height: 78%;
-    border: 5px rgb(255, 0, 51) solid;
+    /* border: 5px rgb(255, 0, 51) solid; */
     display: inline-block;
     position: absolute;
     top: 21%;
@@ -155,3 +155,36 @@ p{
     color: red;
     font-weight: bold;
 }
+
+/* Projects Styling */
+.project{
+    border: 3px solid black;
+    height: 100px;
+}
+
+.project:hover{
+    border: 5px solid rgb(15, 180, 6); 
+    cursor: pointer;
+}
+
+.project h1{
+    margin-left: 10px;
+}
+
+.project-cooldown{
+    border: 3px solid black;
+    border: 5px solid rgb(255, 0, 0); 
+    background-color: grey;
+    pointer-events: none;
+}
+
+.project-cooldown h1{
+    margin-left: 10px;
+}
+
+
+.coolDownDigits{
+    color: red;
+    font-size: 20px;
+}
+
