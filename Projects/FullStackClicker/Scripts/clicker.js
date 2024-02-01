@@ -19,7 +19,7 @@ let minutes = 20;
 let minutesInSeconds = minutes * 60;
 
 //Cooldown times for projects (seconds)
-const pizzaFormCooldownOriginal = 30;
+const pizzaFormCooldownOriginal = 2;
 const toDoListCooldownOriginal = 60;
 const frogPuzzleCooldownOriginal = 120;
 let pizzaFormCooldown = pizzaFormCooldownOriginal;
@@ -45,7 +45,7 @@ let xpEarningRate = 200;
 let upgradeImgNames = ["CSS/HTML Book", "JS Book Lvl 1"];
 
 //Practice projects names
-let projectNames = ["Pizza-Order-Form", "Dynamic-Todo-list", "Frog-Puzzle"];
+let projectNames = ["Pizza-Order-Form", "To-Do-List", "Frog-Puzzle"];
 
 //Upgrade objects
 let cssHTMLBook = {
@@ -154,6 +154,86 @@ let pizzaForm = {
     }
 }
 
+let toDoList = {
+    name: "To-Do-List",
+    description: "A dynamic to do list powered by Java Script",
+    moneyPrice: 0,
+    xpPrice: 500,
+    specialRequirments: "CSS/HTML Book, JS Book Lvl 1",
+    bought: false,
+    xpBonus: 1500,
+    gives: "Gives 1000 xp for invested 500",
+    numPurchased: 0,
+    effects: () =>{
+        let quantityField = document.querySelector(".To-Do-List h1");
+
+        //Subtract the bying cost first
+        moneyScore-=toDoList.moneyPrice;
+        xpScore-=toDoList.xpPrice;
+
+        //Set the bought to true
+        toDoList.bought = true;
+
+        //Update the xpEarningRate
+        xpScore += toDoList.xpBonus;
+
+        //increment the numPurchased
+        toDoList.numPurchased++;
+
+        //Update the counters information
+        moneyScoreElement.innerText = moneyScore;
+        xpScoreElement.innerText = xpScore;
+        quantityField.innerText = toDoList.numPurchased;
+
+        //Play the purchase sound
+        //clickSoundPurchase.play();
+
+        //Pass the project element to the function that will
+        //give a different styling and start the cooldown timer
+        startCooldown(projects[1], toDoList.name, toDoListCooldown);
+    }
+}
+
+let frogPuzzle = {
+    name: "Frog-Puzzle",
+    description: "A cool frog puzzle with dragable pieces",
+    moneyPrice: 0,
+    xpPrice: 1000,
+    specialRequirments: "CSS/HTML Book, JS Book Lvl 1",
+    bought: false,
+    xpBonus: 3000,
+    gives: "Gives 2k XP back for 1k investment",
+    numPurchased: 0,
+    effects: () =>{
+        let quantityField = document.querySelector(".Frog-Puzzle h1");
+
+        //Subtract the bying cost first
+        moneyScore-=frogPuzzle.moneyPrice;
+        xpScore-=frogPuzzle.xpPrice;
+
+        //Set the bought to true
+        frogPuzzle.bought = true;
+
+        //Update the xpEarningRate
+        xpScore += frogPuzzle.xpBonus;
+
+        //increment the numPurchased
+        frogPuzzle.numPurchased++;
+
+        //Update the counters information
+        moneyScoreElement.innerText = moneyScore;
+        xpScoreElement.innerText = xpScore;
+        quantityField.innerText = frogPuzzle.numPurchased;
+
+        //Play the purchase sound
+        //clickSoundPurchase.play();
+
+        //Pass the project element to the function that will
+        //give a different styling and start the cooldown timer
+        startCooldown(projects[2], frogPuzzle.name, frogPuzzleCooldown);
+    }
+}
+
 window.onload = startGame;
 
 function createListeners()
@@ -209,8 +289,20 @@ function createListeners()
     });
 
     //Listeners for projects
+
+    //Pizza Form
     projectsList[0].addEventListener("click", () => {
-        buyUpgrade("Pizza-Order-Form", projectsList[0])
+        buyUpgrade(pizzaForm.name, projectsList[0])
+    });
+
+    //To do list
+    projectsList[1].addEventListener("click", () => {
+        buyUpgrade(toDoList.name, projectsList[1])
+    });
+
+    //Frog puzzle
+    projectsList[2].addEventListener("click", () => {
+        buyUpgrade(frogPuzzle.name, projectsList[2])
     });
 
     // projectsList[1].addEventListener("click", () => {
@@ -245,6 +337,49 @@ function startGame()
     //Start an interval that runs every second
     setInterval(updateCountDown, 1000);
 }
+//Generates upgardes in the store container
+//and practice projects
+function generateStoreItems()
+{
+    //Generate Upgrades
+    for (let i = 0; i < upgradeImgNames.length; i++) 
+    {
+        //Apends generated divs to the store container
+        let storeItem = document.createElement("div");
+        let storeItemImg = document.createElement("img");
+
+        //Put the img inside the div and set its alt to the arrays
+        //index value
+        storeItemImg.alt = upgradeImgNames[i];
+        storeItem.name = upgradeImgNames[i];
+        storeItem.appendChild(storeItemImg);
+
+        //Attach the div to the container
+        storeContainer.appendChild(storeItem);
+    }
+
+    //Generate Projects
+    for (let i = 0; i < projectNames.length; i++) 
+    {
+        //Apends generated divs to the store container
+        let projectItem = document.createElement("div");
+        let projectItemImg = document.createElement("img");
+        let quantity = document.createElement("h1");
+        quantity.innerText = "0";
+        projectItem.classList.add("project", projectNames[i]);
+
+        //Put the img inside the div and set its alt to the arrays
+        //index value
+        projectItemImg.alt = projectNames[i];
+        projectItem.name = projectNames[i];
+        projectItem.appendChild(projectItemImg);
+        projectItem.appendChild(quantity);
+
+        //Attach the div to the container
+        actionContainer.appendChild(projectItem);
+    }
+}
+
 //Function that will increment clicker counters
 //for both jobImg and jsBook
 
@@ -303,8 +438,16 @@ function startCooldown(projectElement, projectName, cooldownTime) {
     //which interval (variable)
     switch (projectName) 
         {
-            case "Pizza-Order-Form":
+            case pizzaForm.name:
                 pizzaFormInterval = setInterval(() => manageCooldown(coolDownTimer, projectName, projectElement), 1000);
+                break;
+
+            case toDoList.name:
+                toDoListInterval = setInterval(() => manageCooldown(coolDownTimer, projectName, projectElement), 1000);
+                break;
+
+            case frogPuzzle.name:
+                frogPuzzleInterval = setInterval(() => manageCooldown(coolDownTimer, projectName, projectElement), 1000);
                 break;
         }
 }
@@ -314,84 +457,78 @@ function startCooldown(projectElement, projectName, cooldownTime) {
 function manageCooldown(coolDownElement, projectName, projectElement)
 {
     //check if the cooldown is over or not
-    if(pizzaFormCooldown === 0)
-    {
-        //reset the cooldown timer (depending on the name)
-        switch (projectName) 
-        {
-            case "Pizza-Order-Form":
-                pizzaFormCooldown = pizzaFormCooldownOriginal;
-                break;
-        }
+    
 
-        //Using switch structure determine what interval to clear
-        switch (projectName) 
-        {
-            case "Pizza-Order-Form":
-                clearInterval(pizzaFormInterval);
-                //The remove the project-cooldown class
-                //and apply project instead
-                //and remove the coolDownElement 'p' tag
-                projectElement.classList.remove("project-cooldown");
-                projectElement.classList.add("project");
-                coolDownElement.remove();
-                break;
-        }
+    if(pizzaFormCooldown === 0 &&
+       projectName === pizzaForm.name)
+    {
+        //Reset the timer
+        pizzaFormCooldown = pizzaFormCooldownOriginal;
+        //then clear interval
+        //and remove cooldown
+        clearInterval(pizzaFormInterval);
+        //The remove the project-cooldown class
+        //and apply project instead
+        //and remove the coolDownElement 'p' tag
+        projectElement.classList.remove("project-cooldown");
+        projectElement.classList.add("project");
+        coolDownElement.remove();
+    }
+    else if(toDoListCooldown === 0 &&
+            projectName === toDoList.name)
+    {
+        //Reset the timer
+        toDoListCooldown = toDoListCooldownOriginal;
+        //then clear interval
+        //and remove cooldown
+        clearInterval(toDoListInterval);
+        //The remove the project-cooldown class
+        //and apply project instead
+        //and remove the coolDownElement 'p' tag
+        projectElement.classList.remove("project-cooldown");
+        projectElement.classList.add("project");
+        coolDownElement.remove();
+    }
+    else if(frogPuzzleCooldown === 0 &&
+            projectName === frogPuzzle.name)
+    {
+        //Reset the timer
+        frogPuzzleCooldown = frogPuzzleCooldownOriginal;
+        //then clear interval
+        //and remove cooldown
+        clearInterval(frogPuzzleInterval);
+        //The remove the project-cooldown class
+        //and apply project instead
+        //and remove the coolDownElement 'p' tag
+        projectElement.classList.remove("project-cooldown");
+        projectElement.classList.add("project");
+        coolDownElement.remove();
     }
     //if not over, reduce the coldownTime
     //Then update the value of the coolDownElement
     else{
         switch (projectName) 
         {
-            case "Pizza-Order-Form":
+            case pizzaForm.name:
+                //Reduce the right cooldown for the 
+                //right project
                 pizzaFormCooldown--;
                 coolDownElement.innerText = "";
                 coolDownElement.innerText = `${pizzaFormCooldown} seconds`;
                 break;
+
+            case toDoList.name:
+                toDoListCooldown--;
+                coolDownElement.innerText = "";
+                coolDownElement.innerText = `${toDoListCooldown} seconds`;
+                break;
+
+            case frogPuzzle.name:
+                frogPuzzleCooldown--;
+                coolDownElement.innerText = "";
+                coolDownElement.innerText = `${frogPuzzleCooldown} seconds`;
+                break;
         }
-    }
-}
-
-//Generates upgardes in the store container
-//and practice projects
-function generateStoreItems()
-{
-    //Generate Upgrades
-    for (let i = 0; i < upgradeImgNames.length; i++) 
-    {
-        //Apends generated divs to the store container
-        let storeItem = document.createElement("div");
-        let storeItemImg = document.createElement("img");
-
-        //Put the img inside the div and set its alt to the arrays
-        //index value
-        storeItemImg.alt = upgradeImgNames[i];
-        storeItem.name = upgradeImgNames[i];
-        storeItem.appendChild(storeItemImg);
-
-        //Attach the div to the container
-        storeContainer.appendChild(storeItem);
-    }
-
-    //Generate Projects
-    for (let i = 0; i < 1; i++) 
-    {
-        //Apends generated divs to the store container
-        let projectItem = document.createElement("div");
-        let projectItemImg = document.createElement("img");
-        let quantity = document.createElement("h1");
-        quantity.innerText = "0";
-        projectItem.classList.add("project", projectNames[i]);
-
-        //Put the img inside the div and set its alt to the arrays
-        //index value
-        projectItemImg.alt = projectNames[i];
-        projectItem.name = projectNames[i];
-        projectItem.appendChild(projectItemImg);
-        projectItem.appendChild(quantity);
-
-        //Attach the div to the container
-        actionContainer.appendChild(projectItem);
     }
 }
 
@@ -405,19 +542,29 @@ function buyUpgrade(itemName, itemElement)
     if(canAfford(itemName))
     {
         switch (itemName) {
-            case "CSS/HTML Book":
+            case cssHTMLBook.name:
                 cssHTMLBook.effects();
                 itemElement.remove();
                 break;
 
-            case "JS Book Lvl 1":
+            case jsBookLvl1.name:
                 jsBookLvl1.effects();
                 itemElement.remove();
                 break;
 
-            case "Pizza-Order-Form":
+            // Projects
+            case pizzaForm.name:
                 pizzaForm.effects();
                 break;
+            
+            case toDoList.name:
+                toDoList.effects();
+                break;
+            
+            case frogPuzzle.name:
+                frogPuzzle.effects();
+                break;
+
         }
     }
 }
@@ -465,6 +612,32 @@ function canAfford(itemName)
             return false;
         }
     }
+    else if(itemName === "To-Do-List")
+    {
+        if(moneyScore >= toDoList.moneyPrice && 
+           xpScore >= toDoList.xpPrice &&
+           cssHTMLBook.bought === true &&
+           jsBookLvl1.bought === true)
+         {
+             return true;
+         }
+         else{
+            return false;
+        }
+    }
+    else if(itemName === "Frog-Puzzle")
+    {
+        if(moneyScore >= frogPuzzle.moneyPrice && 
+           xpScore >= frogPuzzle.xpPrice &&
+           cssHTMLBook.bought === true &&
+           jsBookLvl1.bought === true)
+         {
+             return true;
+         }
+         else{
+            return false;
+        }
+    }
 
 }
 
@@ -496,20 +669,27 @@ function generateInfo(event)
     //Cheking what upgrade triggered the mouseenter event
 
     //Upgrades
-    if(event.target.name === "CSS/HTML Book")
+    if(event.target.name === cssHTMLBook.name)
     {
         upgradeSelected = cssHTMLBook;
     }
-    else if(event.target.name === "JS Book Lvl 1")
+    else if(event.target.name === jsBookLvl1.name)
     {
         upgradeSelected = jsBookLvl1;
     }
 
     //Projects
-    if(event.target.name === "Pizza-Order-Form")
+    if(event.target.name === pizzaForm.name)
     {
         upgradeSelected = pizzaForm;
-        console.log("Pizza form selected");
+    }
+    else if(event.target.name === toDoList.name)
+    {
+        upgradeSelected = toDoList;
+    }
+    else if(event.target.name === frogPuzzle.name)
+    {
+        upgradeSelected = frogPuzzle;
     }
 
 
