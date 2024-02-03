@@ -95,7 +95,8 @@ p{
     display: inline-block;
     position: absolute;
     top: 21%;
-    left: 70%
+    left: 70%;
+    overflow: auto;
 }
 
 .view-assets-container
