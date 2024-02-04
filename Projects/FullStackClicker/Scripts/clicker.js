@@ -9,11 +9,20 @@ let storeContainer = document.querySelector(".store-container");
 let infoContainer = document.querySelector(".info-container");
 let actionContainer = document.querySelector(".actions-menu-container");
 let moneyPerSecondField = document.getElementById("money-per-second-field");
+let assetViewContainer = document.querySelector(".view-assets-container");
+let openMenuBtn = document.getElementById("openMenuBtn");
+let menuModal = document.getElementById("popup-menu");
+let closeMenuBtn = document.getElementById("popup-menu");
 
 //Sound Elements
 let xpClickSound = document.getElementById("clickSoundXP");
 let moneyClickSound = document.getElementById("clickSoundMoney");
 let clickSoundPurchase = document.getElementById("clickSoundPurchase");
+
+//Element lists
+let storeUpgradesList;
+//The whole list
+let projectsList;
 
 //Timer settings
 let minutes = 20;
@@ -26,12 +35,14 @@ const frogPuzzleCooldownOriginal = 120;
 const clickerGameCooldownOriginal = 180;
 const snakeEnhancedCooldownOriginal = 240;
 const tetrisEnhancedCooldownOriginal = 360;
+const fakeECommerceCooldownOriginal = 600;
 let pizzaFormCooldown = pizzaFormCooldownOriginal;
 let toDoListCooldown = toDoListCooldownOriginal;
 let frogPuzzleCooldown = frogPuzzleCooldownOriginal;
 let clickerGameCooldown = clickerGameCooldownOriginal;
 let snakeEnhancedCooldown = snakeEnhancedCooldownOriginal;
 let tetrisEnhancedCooldown = tetrisEnhancedCooldownOriginal;
+let fakeECommerceCooldown = fakeECommerceCooldownOriginal;
 
 //Intervals for each upgrade
 
@@ -45,8 +56,14 @@ let clickerGameInterval;
 let snakeEnhancedInterval;
 let tetrisEnhancedInterval;
 
+//lvl 3 intervals
+let fakeECommerceInterval;
+
 //Interval for money per second 
 let mpsInterval;
+
+//Interval for clock
+let timeInterval;
 
 //Score elements
 let moneyScore = 0;
@@ -61,13 +78,19 @@ let xpEarningRate = 10000;
 
 //Upgrade names array 
 let upgradeImgNames = ["CSS/HTML Book", "JS Book Lvl 1",
-                       "JS Book Lvl 2", "SQL Book", "PHP Book"];
+                       "JS Book Lvl 2", "SQL Book", "PHP Book",
+                        "JS Book Lvl 3", "React JS Book", "Ajax Book"];
 
 //Practice projects names
 let projectNames = ["Pizza-Order-Form", "To-Do-List", "Frog-Puzzle",
-                    "Clicker-Game", "Snake-Enhanced", "Tetris-Enhanced"];
+                    "Clicker-Game", "Snake-Enhanced", "Tetris-Enhanced",
+                    "Fake-E-Commerce-Store"];
 
-let assetNames = ["Website-with-Games"];
+let assetNames = ["Website-with-Games", "E-Commerce-Store",
+                  "Neural-Net", "Crypto-Trading-Platform"];
+
+let assetContainerNames = ["Website-with-Games-Container", "E-Commerce-Store-Container",
+                            "Neural-Net-Container", "Crypto-Trading-Platform-Container"];
 
 //Upgrade upgrades
 let cssHTMLBook = {
@@ -126,6 +149,9 @@ let jsBookLvl1 = {
         moneyScoreElement.innerText = moneyScore;
         xpScoreElement.innerText = xpScore;
 
+        //Show lvl 2 items
+        showLvl2();
+
         //Play the purchase sound
         clickSoundPurchase.play();
 
@@ -140,7 +166,7 @@ let jsBookLvl2 = {
     description: "Intermediate guide to Java Script",
     moneyPrice: 250,
     xpPrice: 0,
-    specialRequirments: "NONE",
+    specialRequirments: "JS Book Lvl 1",
     bought: false,
     xpBonus: 20,
     gives: "Additional 20 XP per click",
@@ -223,6 +249,106 @@ let phpTextBook = {
         moneyScoreElement.innerText = moneyScore;
         xpScoreElement.innerText = xpScore;
 
+        //Show lvl 3 items
+        showLvl3();
+
+        //Play the purchase sound
+        clickSoundPurchase.play();
+
+        //Clear the infoContainer of old info
+        removeInfo();
+    }
+}
+
+//lvl 3
+let jsBookLvl3 = {
+    name: "JS Book Lvl 3",
+    description: "Advanced guide to Java Script",
+    moneyPrice: 750,
+    xpPrice: 0,
+    specialRequirments: "JS Book Lvl 2",
+    bought: false,
+    xpBonus: 60,
+    gives: "Additional 60 XP per click",
+    effects: () =>{
+        //Subtract the bying cost first
+        moneyScore-=jsBookLvl3.moneyPrice;
+        xpScore-=jsBookLvl3.xpPrice;
+
+        //Set the bought to true
+        jsBookLvl3.bought = true;
+
+        //Update the xpEarningRate
+        xpEarningRate += jsBookLvl3.xpBonus;
+
+        //Update the counters information
+        moneyScoreElement.innerText = moneyScore;
+        xpScoreElement.innerText = xpScore;
+
+        //Play the purchase sound
+        clickSoundPurchase.play();
+
+        //Clear the infoContainer of old info
+        removeInfo();
+    }
+}
+
+let reactJSBook = {
+    name: "React JS Book",
+    description: "A begginer's guide to a popular JS library",
+    moneyPrice: 950,
+    xpPrice: 0,
+    specialRequirments: "NONE",
+    bought: false,
+    xpBonus: 70,
+    gives: "Additional 70 XP per click",
+    effects: () =>{
+        //Subtract the bying cost first
+        moneyScore-=reactJSBook.moneyPrice;
+        xpScore-=reactJSBook.xpPrice;
+
+        //Set the bought to true
+        reactJSBook.bought = true;
+
+        //Update the xpEarningRate
+        xpEarningRate += reactJSBook.xpBonus;
+
+        //Update the counters information
+        moneyScoreElement.innerText = moneyScore;
+        xpScoreElement.innerText = xpScore;
+
+        //Play the purchase sound
+        clickSoundPurchase.play();
+
+        //Clear the infoContainer of old info
+        removeInfo();
+    }
+}
+
+let ajaxBook = {
+    name: "Ajax Book",
+    description: "Ajax is a framework for JS",
+    moneyPrice: 1200,
+    xpPrice: 0,
+    specialRequirments: "NONE",
+    bought: false,
+    xpBonus: 100,
+    gives: "Additional 100 XP per click",
+    effects: () =>{
+        //Subtract the bying cost first
+        moneyScore-=ajaxBook.moneyPrice;
+        xpScore-=ajaxBook.xpPrice;
+
+        //Set the bought to true
+        ajaxBook.bought = true;
+
+        //Update the xpEarningRate
+        xpEarningRate += ajaxBook.xpBonus;
+
+        //Update the counters information
+        moneyScoreElement.innerText = moneyScore;
+        xpScoreElement.innerText = xpScore;
+
         //Play the purchase sound
         clickSoundPurchase.play();
 
@@ -240,7 +366,7 @@ let pizzaForm = {
     xpPrice: 100,
     specialRequirments: "CSS/HTML Book",
     bought: false,
-    xpBonus: 600,
+    xpBonus: 500,
     gives: "5x players XP investment",
     numPurchased: 0,
     effects: () =>{
@@ -320,7 +446,7 @@ let frogPuzzle = {
     xpPrice: 1000,
     specialRequirments: "CSS/HTML Book, JS Book Lvl 1",
     bought: false,
-    xpBonus: 3000,
+    xpBonus: 2000,
     gives: "Gives 2k XP back for 1k investment",
     numPurchased: 0,
     effects: () =>{
@@ -474,18 +600,65 @@ let tetrisEnhanced = {
     }
 }
 
+//Lvl 3 
+let fakeECommerce = {
+    name: "Fake-E-Commerce-Store",
+    description: "A non functional e commerce store",
+    moneyPrice: 0,
+    xpPrice: 45000,
+    specialRequirments: "JS Book Lvl 3",
+    bought: false,
+    xpBonus: 80000,
+    gives: "Player gets 80k XP when 45k XP is invested",
+    numPurchased: 0,
+    effects: () =>{
+        let quantityField = document.querySelector(".Fake-E-Commerce-Store h1");
+
+        //Subtract the bying cost first
+        moneyScore-=fakeECommerce.moneyPrice;
+        xpScore-=fakeECommerce.xpPrice;
+
+        //Set the bought to true
+        fakeECommerce.bought = true;
+
+        //Update the xpEarningRate
+        xpScore += fakeECommerce.xpBonus;
+
+        //increment the numPurchased
+        fakeECommerce.numPurchased++;
+
+        //Update the counters information
+        moneyScoreElement.innerText = moneyScore;
+        xpScoreElement.innerText = xpScore;
+        quantityField.innerText = fakeECommerce.numPurchased;
+
+        //Play the purchase sound
+        //clickSoundPurchase.play();
+
+        //Pass the project element to the function that will
+        //give a different styling and start the cooldown timer
+        startCooldown(projects[6], fakeECommerce.name, fakeECommerceCooldown);
+    }
+}
+
 //Asset objects
+
+//lvl 2
 let gamesWebsite = {
     name: "Website-with-Games",
     description: "A website with games that has adds",
     moneyPrice: 500,
     xpPrice: 5000,
-    specialRequirments: "Lvl 1 and Lvl 2 items",
+    specialRequirments: "JS book lvl 2",
     mps: 10,
     gives: "Earns 10 dollars passively",
     numPurchased: 0,
     effects: () =>{
         let quantityField = document.querySelector(".Website-with-Games h1");
+        let viewContainer = document.querySelector(".Website-with-Games-Container");
+
+        //Add an indicator to the assets viewContainer
+        addDivToAssetViewContainer(viewContainer);
 
         //Subtract the bying cost first
         moneyScore-=gamesWebsite.moneyPrice;
@@ -512,10 +685,156 @@ let gamesWebsite = {
     }
 }
 
+//lvl 3
+let eCommerceStore = {
+    name: "E-Commerce-Store",
+    description: "A real E Commerce bussiness that makes real money",
+    moneyPrice: 5000,
+    xpPrice: 25000,
+    specialRequirments: "JS Book Lvl 3",
+    mps: 250,
+    gives: "Earns 250 dollars passively",
+    numPurchased: 0,
+    effects: () =>{
+        let quantityField = document.querySelector(".E-Commerce-Store h1");
+        let viewContainer = document.querySelector(".E-Commerce-Store-Container");
+
+        //Add an indicator to the assets viewContainer
+        addDivToAssetViewContainer(viewContainer);
+
+        //Subtract the bying cost first
+        moneyScore-=eCommerceStore.moneyPrice;
+        xpScore-=eCommerceStore.xpPrice;
+
+        //Update the xpEarningRate
+        moneyPerSecond += eCommerceStore.mps;
+
+        //increment the numPurchased
+        eCommerceStore.numPurchased++;
+
+        //Update the counters information
+        moneyScoreElement.innerText = moneyScore;
+        xpScoreElement.innerText = xpScore;
+        quantityField.innerText = eCommerceStore.numPurchased;
+
+        mpsTracking();
+
+        //Play the purchase sound
+        clickSoundPurchase.play();
+
+        //Clear the infoContainer of old info
+        removeInfo();
+    }
+}
+
+let neuralNet = {
+    name: "Neural-Net",
+    description: "Neural Net that will generate income from the internet",
+    moneyPrice: 15000,
+    xpPrice: 50000,
+    specialRequirments: "Js book lvl 3 and Ajax",
+    mps: 500,
+    gives: "Earns 500 dollars passively",
+    numPurchased: 0,
+    effects: () =>{
+        let quantityField = document.querySelector(".Neural-Net h1");
+        let viewContainer = document.querySelector(".Neural-Net-Container");
+
+        //Add an indicator to the assets viewContainer
+        addDivToAssetViewContainer(viewContainer);
+
+        //Subtract the bying cost first
+        moneyScore-=neuralNet.moneyPrice;
+        xpScore-=neuralNet.xpPrice;
+
+        //Update the xpEarningRate
+        moneyPerSecond += neuralNet.mps;
+
+        //increment the numPurchased
+        neuralNet.numPurchased++;
+
+        //Update the counters information
+        moneyScoreElement.innerText = moneyScore;
+        xpScoreElement.innerText = xpScore;
+        quantityField.innerText = neuralNet.numPurchased;
+
+        mpsTracking();
+
+        //Play the purchase sound
+        clickSoundPurchase.play();
+
+        //Clear the infoContainer of old info
+        removeInfo();
+    }
+}
+
+let cryptoTradingPlatform = {
+    name: "Crypto-Trading-Platform",
+    description: "A website with games that has adds",
+    moneyPrice: 250000,
+    xpPrice: 100000,
+    specialRequirments: "JS lvl 3, Ajax, React JS",
+    mps: 25000,
+    gives: "Earns 25k dollars passively",
+    numPurchased: 0,
+    effects: () =>{
+        let quantityField = document.querySelector(".Crypto-Trading-Platform h1");
+        let viewContainer = document.querySelector(".Crypto-Trading-Platform-Container");
+
+        //Add an indicator to the assets viewContainer
+        addDivToAssetViewContainer(viewContainer);
+        //Subtract the bying cost first
+        moneyScore-=cryptoTradingPlatform.moneyPrice;
+        xpScore-=cryptoTradingPlatform.xpPrice;
+
+        //Update the xpEarningRate
+        moneyPerSecond += cryptoTradingPlatform.mps;
+
+        //increment the numPurchased
+        cryptoTradingPlatform.numPurchased++;
+
+        //Update the counters information
+        moneyScoreElement.innerText = moneyScore;
+        xpScoreElement.innerText = xpScore;
+        quantityField.innerText = cryptoTradingPlatform.numPurchased;
+
+        mpsTracking();
+
+        //Play the purchase sound
+        clickSoundPurchase.play();
+
+        //Clear the infoContainer of old info
+        removeInfo();
+    }
+}
+
 window.onload = startGame;
 
 function createListeners()
 {
+    //Menu listeners
+    openMenuBtn.addEventListener("click", ()=>{
+        //clear mpsInterval
+        clearInterval(mpsInterval);
+
+        //Clear time interval too
+        clearInterval(timeInterval);
+
+        //Open Modal
+        menuModal.showModal();
+    });
+
+    closeMenuBtn.addEventListener("click", ()=>{
+        //restart mpsInterval
+        mpsInterval = setInterval(mpsTracking, 1000);
+
+        //Restart clock interval
+        timeInterval = setInterval(updateCountDown, 1000);
+
+        //Open Modal
+        menuModal.close();
+    });
+
     //Creates listener for the js book
     //to play a sound when it is clicked
     jsBookImg.addEventListener("click", () => {
@@ -541,8 +860,8 @@ function createListeners()
 
     //List for all the items needing in an
     //event listener
-    let storeUpgradesList = document.querySelectorAll(".store-container div");
-    let projectsList = document.querySelectorAll(".actions-menu-container div");
+    storeUpgradesList = document.querySelectorAll(".store-container div");
+    projectsList = document.querySelectorAll(".actions-menu-container div");
 
     console.log(storeUpgradesList);
 
@@ -567,6 +886,18 @@ function createListeners()
 
     storeUpgradesList[4].addEventListener("click", () => {
         buyUpgrade("PHP Book", storeUpgradesList[4])
+    });
+
+    storeUpgradesList[5].addEventListener("click", () => {
+        buyUpgrade(jsBookLvl3.name, storeUpgradesList[5])
+    });
+
+    storeUpgradesList[6].addEventListener("click", () => {
+        buyUpgrade(reactJSBook.name, storeUpgradesList[6])
+    });
+
+    storeUpgradesList[7].addEventListener("click", () => {
+        buyUpgrade(ajaxBook.name, storeUpgradesList[7])
     });
 
     //Listeners for upgrade's tooltips
@@ -610,9 +941,31 @@ function createListeners()
         buyUpgrade(tetrisEnhanced.name, projectsList[5])
     });
 
-    //!Assets change index when adding more upgrades
+    //Fake Ecoomerce Website
     projectsList[6].addEventListener("click", () => {
-        buyUpgrade(gamesWebsite.name, projectsList[6])
+        buyUpgrade(fakeECommerce.name, projectsList[6])
+    });
+
+    //Asset listeners
+
+    //Games website
+    projectsList[7].addEventListener("click", () => {
+        buyUpgrade(gamesWebsite.name, projectsList[7])
+    });
+
+    //Ecommerce website
+    projectsList[8].addEventListener("click", () => {
+        buyUpgrade(eCommerceStore.name, projectsList[8])
+    });
+
+    //
+    projectsList[9].addEventListener("click", () => {
+        buyUpgrade(neuralNet.name, projectsList[9])
+    });
+
+    //
+    projectsList[10].addEventListener("click", () => {
+        buyUpgrade(cryptoTradingPlatform.name, projectsList[10])
     });
 
     //Tooltip listeners
@@ -634,13 +987,16 @@ function startGame()
     //Fill the projects variable
     projects = document.querySelectorAll(".project");
 
-    createListeners();
-
     //Set the mps tracking interval
-    setInterval(mpsTracking, 1000);
+    mpsInterval = setInterval(mpsTracking, 1000);
 
     //Start an interval that runs every second
-    setInterval(updateCountDown, 1000);
+    timeInterval = setInterval(updateCountDown, 1000);
+
+    createListeners();
+
+    //Show lvl 1 items
+    showLvl1();
 }
 //Generates upgardes in the store container
 //and practice projects
@@ -693,6 +1049,7 @@ function generateStoreItems()
         let quantity = document.createElement("h1");
         quantity.innerText = "0";
         projectItem.classList.add("project", assetNames[i]);
+        projectItem.classList.add("asset", assetNames[i]);
 
         //Put the img inside the div and set its alt to the arrays
         //index value
@@ -704,6 +1061,70 @@ function generateStoreItems()
         //Attach the div to the container
         actionContainer.appendChild(projectItem);
     }
+
+    //Generate view asset windows for every asset
+    for (let i = 0; i < assetContainerNames.length; i++) 
+    {
+        //create div element
+        let viewWindow = document.createElement("div");
+
+        //give it a assetName class name on index
+        viewWindow.classList.add(assetContainerNames[i]);
+
+        //append it to the assetView Container
+        assetViewContainer.appendChild(viewWindow);
+
+        console.log("View Container created");
+    }
+}
+
+//Shows lvl 1 items on screen
+function showLvl1()
+{
+    //Show upgrades
+    storeUpgradesList[0].style.display = "inline-block";
+    storeUpgradesList[1].style.display = "inline-block";
+
+    //Show projects
+    projectsList[0].style.display = "block";
+    projectsList[1].style.display = "block";
+    projectsList[2].style.display = "block";
+}
+
+//Shows lvl 2 items on screen
+function showLvl2()
+{
+    //Show upgrades
+    storeUpgradesList[2].style.display = "inline-block";
+    storeUpgradesList[3].style.display = "inline-block";
+    storeUpgradesList[4].style.display = "inline-block";
+
+    //Show projects
+    projectsList[3].style.display = "block";
+    projectsList[4].style.display = "block";
+    projectsList[5].style.display = "block";
+    projectsList[7].style.display = "block";
+}
+
+//Shows lvl 3 items on screen
+function showLvl3()
+{
+    //Show upgrades
+    storeUpgradesList[5].style.display = "inline-block";
+    storeUpgradesList[6].style.display = "inline-block";
+    storeUpgradesList[7].style.display = "inline-block";
+
+    //Show projects
+    projectsList[6].style.display = "block";
+    projectsList[8].style.display = "block";
+    projectsList[9].style.display = "block";
+    projectsList[10].style.display = "block";
+}
+
+function addDivToAssetViewContainer(container)
+{
+    let indicator = document.createElement("div");
+    container.appendChild(indicator);
 }
 
 //Function that will increment clicker counters
@@ -788,6 +1209,11 @@ function startCooldown(projectElement, projectName, cooldownTime) {
 
             case tetrisEnhanced.name:
                 tetrisEnhancedInterval = setInterval(() => manageCooldown(coolDownTimer, projectName, projectElement), 1000);
+                break;
+
+            //lvl 3
+            case fakeECommerce.name:
+                fakeECommerceInterval = setInterval(() => manageCooldown(coolDownTimer, projectName, projectElement), 1000);
                 break;
         }
 }
@@ -890,6 +1316,22 @@ function manageCooldown(coolDownElement, projectName, projectElement)
         projectElement.classList.add("project");
         coolDownElement.remove();
     }
+    //lvl 3 projects
+    else if(fakeECommerceCooldown === 0 &&
+        projectName === fakeECommerce.name)
+    {
+        //Reset the timer
+        fakeECommerceCooldown = fakeECommerceCooldownOriginal;
+        //then clear interval
+        //and remove cooldown
+        clearInterval(fakeECommerceInterval);
+        //The remove the project-cooldown class
+        //and apply project instead
+        //and remove the coolDownElement 'p' tag
+        projectElement.classList.remove("project-cooldown");
+        projectElement.classList.add("project");
+        coolDownElement.remove();
+    }
     //if not over, reduce the coldownTime
     //Then update the value of the coolDownElement
     else{
@@ -936,6 +1378,13 @@ function manageCooldown(coolDownElement, projectName, projectElement)
                 coolDownElement.innerText = "";
                 coolDownElement.innerText = `${tetrisEnhancedCooldown} seconds`;
                 break;
+            
+            //Lvl 3 
+            case fakeECommerce.name:
+                fakeECommerceCooldown--;
+                coolDownElement.innerText = "";
+                coolDownElement.innerText = `${fakeECommerceCooldown} seconds`;
+                break;
         }
     }
 }
@@ -977,6 +1426,22 @@ function buyUpgrade(itemName, itemElement)
                 itemElement.remove();
                 break;
 
+            //Lvl 3 upgrades
+            case jsBookLvl3.name:
+                jsBookLvl3.effects();
+                itemElement.remove();
+                break;
+
+            case ajaxBook.name:
+                ajaxBook.effects();
+                itemElement.remove();
+                break;
+
+            case reactJSBook.name:
+                reactJSBook.effects();
+                itemElement.remove();
+                break;
+
             // Projects
             case pizzaForm.name:
                 pizzaForm.effects();
@@ -1003,9 +1468,29 @@ function buyUpgrade(itemName, itemElement)
                 tetrisEnhanced.effects();
                 break;
 
+            //lvl 3 projects
+            case fakeECommerce.name:
+                fakeECommerce.effects();
+                break;
+
             //Assets
+
+            //lvl 2
             case gamesWebsite.name:
                 gamesWebsite.effects();
+                break;
+
+            //lvl 3
+            case eCommerceStore.name:
+                eCommerceStore.effects();
+                break;
+
+            case neuralNet.name:
+                neuralNet.effects();
+                break;
+
+            case cryptoTradingPlatform.name:
+                cryptoTradingPlatform.effects();
                 break;
         }
     }
@@ -1044,7 +1529,8 @@ function canAfford(itemName)
     {
         //check for sufficient funds and xp
         if(moneyScore >= jsBookLvl2.moneyPrice && 
-            xpScore >= jsBookLvl2.xpPrice)
+            xpScore >= jsBookLvl2.xpPrice && 
+            jsBookLvl1.bought === true)
          {
              return true;
          }
@@ -1069,6 +1555,43 @@ function canAfford(itemName)
         //check for sufficient funds and xp
         if(moneyScore >= phpTextBook.moneyPrice && 
             xpScore >= phpTextBook.xpPrice)
+         {
+             return true;
+         }
+         else{
+            return false;
+        }
+    }
+    else if(itemName === jsBookLvl3.name)
+    {
+        //check for sufficient funds and xp
+        if(moneyScore >= jsBookLvl3.moneyPrice && 
+            xpScore >= jsBookLvl3.xpPrice &&
+            jsBookLvl2.bought === true)
+         {
+             return true;
+         }
+         else{
+            return false;
+        }
+    }
+    else if(itemName === reactJSBook.name)
+    {
+        //check for sufficient funds and xp
+        if(moneyScore >= reactJSBook.moneyPrice && 
+            xpScore >= reactJSBook.xpPrice)
+         {
+             return true;
+         }
+         else{
+            return false;
+        }
+    }
+    else if(itemName === ajaxBook.name)
+    {
+        //check for sufficient funds and xp
+        if(moneyScore >= ajaxBook.moneyPrice && 
+            xpScore >= ajaxBook.xpPrice)
          {
              return true;
          }
@@ -1144,7 +1667,19 @@ function canAfford(itemName)
     {
         if(moneyScore >= tetrisEnhanced.moneyPrice && 
            xpScore >= tetrisEnhanced.xpPrice &&
-           cssHTMLBook.bought === true)
+           jsBookLvl2.bought === true)
+         {
+             return true;
+         }
+         else{
+            return false;
+        }
+    }
+    else if(itemName === fakeECommerce.name)
+    {
+        if(moneyScore >= fakeECommerce.moneyPrice && 
+           xpScore >= fakeECommerce.xpPrice &&
+           jsBookLvl3.bought === true)
          {
              return true;
          }
@@ -1158,11 +1693,46 @@ function canAfford(itemName)
     {
         if(moneyScore >= gamesWebsite.moneyPrice && 
             xpScore >= gamesWebsite.xpPrice &&
-            cssHTMLBook.bought === true &&
-            jsBookLvl1.bought === true &&
-            jsBookLvl2.bought === true &&
-            sqlTextBook.bought === true &&
-            phpTextBook.bought === true)
+            jsBookLvl2.bought === true)
+            {
+                return true;
+            }
+            else{
+                return false;
+            }
+    }
+    else if(itemName === eCommerceStore.name)
+    {
+        if(moneyScore >= eCommerceStore.moneyPrice && 
+            xpScore >= eCommerceStore.xpPrice &&
+            jsBookLvl3.bought === true)
+            {
+                return true;
+            }
+            else{
+                return false;
+            }
+    }
+    else if(itemName === neuralNet.name)
+    {
+        if(moneyScore >= neuralNet.moneyPrice && 
+            xpScore >= neuralNet.xpPrice &&
+            jsBookLvl3.bought === true &&
+            ajaxBook.bought === true)
+            {
+                return true;
+            }
+            else{
+                return false;
+            }
+    }
+    else if(itemName === cryptoTradingPlatform.name)
+    {
+        if(moneyScore >= cryptoTradingPlatform.moneyPrice && 
+            xpScore >= cryptoTradingPlatform.xpPrice &&
+            jsBookLvl3.bought === true &&
+            ajaxBook.bought === true &&
+            reactJSBook.bought === true)
             {
                 return true;
             }
@@ -1221,6 +1791,18 @@ function generateInfo(event)
     {
         upgradeSelected = phpTextBook;
     }
+    else if(event.target.name === jsBookLvl3.name)
+    {
+        upgradeSelected = jsBookLvl3;
+    }
+    else if(event.target.name === ajaxBook.name)
+    {
+        upgradeSelected = ajaxBook;
+    }
+    else if(event.target.name === reactJSBook.name)
+    {
+        upgradeSelected = reactJSBook;
+    }
 
     //Projects
     if(event.target.name === pizzaForm.name)
@@ -1247,11 +1829,27 @@ function generateInfo(event)
     {
         upgradeSelected = tetrisEnhanced;
     }
+    else if(event.target.name === fakeECommerce.name)
+    {
+        upgradeSelected = fakeECommerce;
+    }
 
     //Assets
     if(event.target.name === gamesWebsite.name)
     {
         upgradeSelected = gamesWebsite;
+    }
+    else if(event.target.name === eCommerceStore.name)
+    {
+        upgradeSelected = eCommerceStore;
+    }
+    else if(event.target.name === neuralNet.name)
+    {
+        upgradeSelected = neuralNet;
+    }
+    else if(event.target.name === cryptoTradingPlatform.name)
+    {
+        upgradeSelected = cryptoTradingPlatform;
     }
 
 

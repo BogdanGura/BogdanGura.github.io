@@ -15,6 +15,7 @@
             <img alt="spatula" id="job" src="/Projects/FullStackClicker/images/spatula.jpg">
             <h1>Money: <span id="moneyScoreElement" class="money">0</span></h1>
             <h2>MPS: <span id="money-per-second-field" class="money">0</span></h2>
+            <button id="openMenuBtn">Menu</button>
         </div>
 
         <div class="xp-img-container">
@@ -36,6 +37,25 @@
         
     </div>
 
+    <!-- Pop up modals -->
+
+    <!-- Pop up menu -->
+    <dialog id="popup-menu">
+    <!-- Heading -->
+    <h1>Menu <button id="closeMenuBtn"><span id="X">X</span></button></h1> 
+
+        <button id="quitGameBtn1">Quit</button>
+    
+    </dialog>
+
+    <!-- Pop up lost -->
+    <dialog id="popup-lost">
+        <h1>You Lost</h1> 
+        <!-- When Quit button is clicked it send the 
+        player to the menu -->
+        <button id="quitGameBtn2">Quit</button>
+    </dialog>
+
     <!-- Audio elements -->
     <audio id="clickSoundXP">
         <source src="/Projects/FullStackClicker/Sound Effects/mixkit-cool-interface-click-tone-2568.wav" type="audio/mp3">
@@ -49,6 +69,7 @@
         <source src="/Projects/FullStackClicker/Sound Effects/cash-register-purchase-87313.mp3" type="audio/mp3">
     </audio>
 
+<!-- Personal JS -->
 <script src="/Projects/FullStackClicker/Scripts/clicker.js"></script>
 </body>
 </html>

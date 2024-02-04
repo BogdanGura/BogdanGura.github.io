@@ -70,6 +70,10 @@ p{
     display: inline-block;
     margin-left: 40px;
     margin-top: 10px;
+
+    /* Invisible styling */
+    display: none;
+    transition: display 1s ease;
 }
 
 .store-container div:hover
@@ -161,6 +165,8 @@ p{
 .project{
     border: 3px solid black;
     height: 100px;
+    background-color: rgb(0, 173, 173);
+    display: none;
 }
 
 .project:hover{
@@ -189,3 +195,35 @@ p{
     font-size: 20px;
 }
 
+.asset{
+    background-color: rgb(255, 132, 0);
+}
+
+/* view-assets-container styling */
+.view-assets-container {
+    width: 595px;
+    height: 78%;
+    border: 5px rgb(255, 136, 0) solid;
+    display: inline-block;
+    position: absolute;
+    top: 21%;
+    white-space: nowrap; 
+}
+
+.view-assets-container div{
+    width: 100%;
+    background-color: rgb(229, 250, 215);
+    height: 24.3%;
+    border: 1px solid black;
+    overflow-y: auto;
+}
+
+.view-assets-container div div{
+    width: 65px;
+    height: 65px;
+    border: 4px orangered ridge;
+    display: inline-block;
+    margin-left: 40px;
+    margin-top: 40px;
+    overflow-y: auto;
+}
