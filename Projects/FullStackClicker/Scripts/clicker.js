@@ -13,6 +13,8 @@ let assetViewContainer = document.querySelector(".view-assets-container");
 let openMenuBtn = document.getElementById("openMenuBtn");
 let menuModal = document.getElementById("popup-menu");
 let closeMenuBtn = document.getElementById("popup-menu");
+let savedBtn = document.getElementById("saved-btn");
+let savedText = document.getElementById("saved-text");
 
 //Sound Elements
 let xpClickSound = document.getElementById("clickSoundXP");
@@ -75,6 +77,8 @@ let moneyPerSecond = 0;
 
 //Earning rates for xp
 let xpEarningRate = 10000;
+
+//Difficulty setting
 
 //Upgrade names array 
 let upgradeImgNames = ["CSS/HTML Book", "JS Book Lvl 1",
@@ -808,6 +812,29 @@ let cryptoTradingPlatform = {
     }
 }
 
+//Array of all objects in the game
+let allObjects = [
+    cssHTMLBook,
+    jsBookLvl1,
+    jsBookLvl2,
+    sqlTextBook,
+    phpTextBook,
+    jsBookLvl3,
+    reactJSBook,
+    ajaxBook,
+    pizzaForm,
+    toDoList,
+    frogPuzzle,
+    clickerGame,
+    snakeEnhanced,
+    tetrisEnhanced,
+    fakeECommerce,
+    gamesWebsite,
+    eCommerceStore,
+    neuralNet,
+    cryptoTradingPlatform
+];
+
 window.onload = startGame;
 
 function createListeners()
@@ -857,6 +884,11 @@ function createListeners()
 
         console.log(`XP Score: ${moneyScore}`);
     });
+
+    //Event listener for save button
+    savedBtn.addEventListener("click", saveProgress);
+
+    //! put all of these in a separate function
 
     //List for all the items needing in an
     //event listener
@@ -995,6 +1027,17 @@ function startGame()
 
     createListeners();
 
+    //Get the difficulty setting
+    let urlString = window.location.href;
+    let url = new URL(urlString);
+
+    // Access individual parameters
+    let difficulty = url.searchParams.get('difficulty');
+
+    //Set the prices and time of the session
+    //according to difficulty
+    setDifficulty(difficulty);
+
     //Show lvl 1 items
     showLvl1();
 }
@@ -1002,8 +1045,8 @@ function startGame()
 //and practice projects
 function generateStoreItems()
 {
-    //Generate Upgrades
-    for (let i = 0; i < upgradeImgNames.length; i++) 
+    //Generate Upgrades lvl1
+    for (let i = 0; i < 2; i++) 
     {
         //Apends generated divs to the store container
         let storeItem = document.createElement("div");
@@ -1014,13 +1057,53 @@ function generateStoreItems()
         storeItemImg.alt = upgradeImgNames[i];
         storeItem.name = upgradeImgNames[i];
         storeItem.appendChild(storeItemImg);
+        storeItem.classList.add("lvl1");
+        storeItem.classList.add("upgrade");
 
         //Attach the div to the container
         storeContainer.appendChild(storeItem);
     }
 
-    //Generate Projects
-    for (let i = 0; i < projectNames.length; i++) 
+    //Generate Upgrades lvl2
+    for (let i = 2; i < 5; i++) 
+    {
+        //Apends generated divs to the store container
+        let storeItem = document.createElement("div");
+        let storeItemImg = document.createElement("img");
+
+        //Put the img inside the div and set its alt to the arrays
+        //index value
+        storeItemImg.alt = upgradeImgNames[i];
+        storeItem.name = upgradeImgNames[i];
+        storeItem.appendChild(storeItemImg);
+        storeItem.classList.add("lvl2");
+        storeItem.classList.add("upgrade");
+
+        //Attach the div to the container
+        storeContainer.appendChild(storeItem);
+    }
+
+    //Generate Upgrades lvl3
+    for (let i = 5; i < upgradeImgNames.length; i++) 
+    {
+        //Apends generated divs to the store container
+        let storeItem = document.createElement("div");
+        let storeItemImg = document.createElement("img");
+
+        //Put the img inside the div and set its alt to the arrays
+        //index value
+        storeItemImg.alt = upgradeImgNames[i];
+        storeItem.name = upgradeImgNames[i];
+        storeItem.appendChild(storeItemImg);
+        storeItem.classList.add("lvl3");
+        storeItem.classList.add("upgrade");
+
+        //Attach the div to the container
+        storeContainer.appendChild(storeItem);
+    }
+
+    //Generate Projects lvl 1
+    for (let i = 0; i < 2; i++) 
     {
         //Apends generated divs to the store container
         let projectItem = document.createElement("div");
@@ -1035,13 +1118,77 @@ function generateStoreItems()
         projectItem.name = projectNames[i];
         projectItem.appendChild(projectItemImg);
         projectItem.appendChild(quantity);
+        projectItem.classList.add("lvl1");
 
         //Attach the div to the container
         actionContainer.appendChild(projectItem);
     }
 
+    //Generate Projects lvl 2
+    for (let i = 2; i < 5; i++) 
+    {
+        //Apends generated divs to the store container
+        let projectItem = document.createElement("div");
+        let projectItemImg = document.createElement("img");
+        let quantity = document.createElement("h1");
+        quantity.innerText = "0";
+        projectItem.classList.add("project", projectNames[i]);
+
+        //Put the img inside the div and set its alt to the arrays
+        //index value
+        projectItemImg.alt = projectNames[i];
+        projectItem.name = projectNames[i];
+        projectItem.appendChild(projectItemImg);
+        projectItem.appendChild(quantity);
+        projectItem.classList.add("lvl2");
+
+        //Attach the div to the container
+        actionContainer.appendChild(projectItem);
+    }
+
+    //Generate Projects lvl 3
+    for (let i = 5; i < projectNames.length; i++) 
+    {
+        //Apends generated divs to the store container
+        let projectItem = document.createElement("div");
+        let projectItemImg = document.createElement("img");
+        let quantity = document.createElement("h1");
+        quantity.innerText = "0";
+        projectItem.classList.add("project", projectNames[i]);
+
+        //Put the img inside the div and set its alt to the arrays
+        //index value
+        projectItemImg.alt = projectNames[i];
+        projectItem.name = projectNames[i];
+        projectItem.appendChild(projectItemImg);
+        projectItem.appendChild(quantity);
+        projectItem.classList.add("lvl3");
+
+        //Attach the div to the container
+        actionContainer.appendChild(projectItem);
+    }
+
+    //lvl 2 asset
+    let projectItem = document.createElement("div");
+    let projectItemImg = document.createElement("img");
+    let quantity = document.createElement("h1");
+    quantity.innerText = "0";
+    projectItem.classList.add("project", assetNames[0]);
+    projectItem.classList.add("asset", assetNames[0]);
+
+    //Put the img inside the div and set its alt to the arrays
+    //index value
+    projectItemImg.alt = assetNames[0];
+    projectItem.name = assetNames[0];
+    projectItem.appendChild(projectItemImg);
+    projectItem.appendChild(quantity);
+    projectItem.classList.add("lvl2");
+
+    //Attach the div to the container
+    actionContainer.appendChild(projectItem);
+
     //Generate Assets
-    for (let i = 0; i < assetNames.length; i++) 
+    for (let i = 1; i < assetNames.length; i++) 
     {
         //Apends generated divs to the store container
         let projectItem = document.createElement("div");
@@ -1057,19 +1204,33 @@ function generateStoreItems()
         projectItem.name = assetNames[i];
         projectItem.appendChild(projectItemImg);
         projectItem.appendChild(quantity);
+        projectItem.classList.add("lvl3");
 
         //Attach the div to the container
         actionContainer.appendChild(projectItem);
     }
 
+    //Generate asset icon lvl2
+    //create div element
+    let viewWindow = document.createElement("div");
+
+    //give it a assetName class name on index
+    viewWindow.classList.add(assetContainerNames[0]);
+    viewWindow.classList.add("lvl2");
+
+    //append it to the assetView Container
+    assetViewContainer.appendChild(viewWindow);
+
+    console.log("View Container created");
+
     //Generate view asset windows for every asset
-    for (let i = 0; i < assetContainerNames.length; i++) 
+    for (let i = 1; i < assetContainerNames.length; i++) 
     {
-        //create div element
         let viewWindow = document.createElement("div");
 
         //give it a assetName class name on index
         viewWindow.classList.add(assetContainerNames[i]);
+        viewWindow.classList.add("lvl3");
 
         //append it to the assetView Container
         assetViewContainer.appendChild(viewWindow);
@@ -1081,44 +1242,86 @@ function generateStoreItems()
 //Shows lvl 1 items on screen
 function showLvl1()
 {
-    //Show upgrades
-    storeUpgradesList[0].style.display = "inline-block";
-    storeUpgradesList[1].style.display = "inline-block";
+    let lvl1Objects = document.querySelectorAll(".lvl1");
 
-    //Show projects
-    projectsList[0].style.display = "block";
-    projectsList[1].style.display = "block";
-    projectsList[2].style.display = "block";
+    for (let i = 0; i < lvl1Objects.length; i++) {
+
+        if(lvl1Objects[i].classList.contains("upgrade"))
+        {
+            lvl1Objects[i].style.display = "inline-block";
+        }
+        else{
+            lvl1Objects[i].style.display = "block";
+        }
+        
+    }
 }
 
 //Shows lvl 2 items on screen
 function showLvl2()
 {
-    //Show upgrades
-    storeUpgradesList[2].style.display = "inline-block";
-    storeUpgradesList[3].style.display = "inline-block";
-    storeUpgradesList[4].style.display = "inline-block";
+    let lvl2Objects = document.querySelectorAll(".lvl2");
 
-    //Show projects
-    projectsList[3].style.display = "block";
-    projectsList[4].style.display = "block";
-    projectsList[5].style.display = "block";
-    projectsList[7].style.display = "block";
+    for (let i = 0; i < lvl2Objects.length; i++) {
+
+        if(lvl2Objects[i].classList.contains("upgrade"))
+        {
+            lvl2Objects[i].style.display = "inline-block";
+        }
+        else{
+            lvl2Objects[i].style.display = "block";
+        }
+    }
 }
 
 //Shows lvl 3 items on screen
 function showLvl3()
 {
-    //Show upgrades
-    storeUpgradesList[5].style.display = "inline-block";
-    storeUpgradesList[6].style.display = "inline-block";
-    storeUpgradesList[7].style.display = "inline-block";
+    let lvl3Objects = document.querySelectorAll(".lvl3");
 
-    //Show projects
-    projectsList[6].style.display = "block";
-    projectsList[8].style.display = "block";
-    projectsList[9].style.display = "block";
-    projectsList[10].style.display = "block";
+    for (let i = 0; i < lvl3Objects.length; i++) {
+
+        if(lvl3Objects[i].classList.contains("upgrade"))
+        {
+            lvl3Objects[i].style.display = "inline-block";
+        }
+        else{
+            lvl3Objects[i].style.display = "block";
+        }
+    }
+}
+
+//Sets the prices of items and time remaining 
+//according to past difficulty
+function setDifficulty(difficulty)
+{
+    //divide prices of items by two
+    //and multiply time by two
+    if(difficulty === "easy")
+    {
+        //Multiply time by two
+        minutesInSeconds *= 2;
+
+        for (let i = 0; i < allObjects.length; i++) 
+        {
+            allObjects[i].moneyPrice /= 2;
+            allObjects[i].xpPrice /= 2;
+        }
+    }
+
+    //multiply price of items by two
+    //
+    if(difficulty === "hard")
+    {
+        //Dividing time by two
+        minutesInSeconds /= 2;
+
+        for (let i = 0; i < allObjects.length; i++) 
+        {
+            allObjects[i].moneyPrice *= 2;
+            allObjects[i].xpPrice *= 2;
+        }
+    }
 }
 
 function addDivToAssetViewContainer(container)
@@ -1890,5 +2093,18 @@ function mpsTracking()
 function removeInfo()
 {
     infoContainer.innerHTML = "";
+}
+
+//Show save text for 3 seconds
+function saveProgress()
+{
+    //display block on the text 
+    savedText.style.display = "block";
+
+    //start a setTimeout that will hide it in
+    //3 seconds
+    setTimeout(() =>{
+        savedText.style.display = "none";
+    }, 3000);
 }
 

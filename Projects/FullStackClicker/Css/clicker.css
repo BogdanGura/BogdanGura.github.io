@@ -216,6 +216,7 @@ p{
     height: 24.3%;
     border: 1px solid black;
     overflow-y: auto;
+    display: none;
 }
 
 .view-assets-container div div{
@@ -227,3 +228,18 @@ p{
     margin-top: 40px;
     overflow-y: auto;
 }
+
+/* Lvls of items styling */
+.lvl1,
+.lvl2,
+.lvl3{
+    display: none;
+}
+
+/* Styling for saved button */
+#saved-text{
+    font-size: 25px;
+    display: none;
+    color:#00ff00;
+}
+

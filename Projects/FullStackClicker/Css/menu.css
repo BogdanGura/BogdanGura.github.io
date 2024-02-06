@@ -1,0 +1,15 @@
+.main-container{
+    margin: auto;
+    width: 500px;
+    margin-top: 10%;
+    font-size: 30px;
+}
+
+.main-container button{
+    display: block;
+    padding: 20px;
+    font-size: 20px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
