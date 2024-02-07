@@ -27,7 +27,7 @@ let storeUpgradesList;
 let projectsList;
 
 //Timer settings
-let minutes = 20;
+let minutes = 30;
 let minutesInSeconds = minutes * 60;
 
 //Cooldown times for projects (seconds)
@@ -38,13 +38,24 @@ const clickerGameCooldownOriginal = 180;
 const snakeEnhancedCooldownOriginal = 240;
 const tetrisEnhancedCooldownOriginal = 360;
 const fakeECommerceCooldownOriginal = 600;
-let pizzaFormCooldown = pizzaFormCooldownOriginal;
-let toDoListCooldown = toDoListCooldownOriginal;
-let frogPuzzleCooldown = frogPuzzleCooldownOriginal;
-let clickerGameCooldown = clickerGameCooldownOriginal;
-let snakeEnhancedCooldown = snakeEnhancedCooldownOriginal;
-let tetrisEnhancedCooldown = tetrisEnhancedCooldownOriginal;
-let fakeECommerceCooldown = fakeECommerceCooldownOriginal;
+let pizzaFormCooldown;
+let toDoListCooldown;
+let frogPuzzleCooldown;
+let clickerGameCooldown; 
+let snakeEnhancedCooldown; 
+let tetrisEnhancedCooldown;
+let fakeECommerceCooldown;
+
+//array with all the cooldowns
+let cooldownsArray = [
+    pizzaFormCooldownOriginal,
+    toDoListCooldownOriginal,
+    frogPuzzleCooldownOriginal,
+    clickerGameCooldownOriginal,
+    snakeEnhancedCooldownOriginal,
+    tetrisEnhancedCooldownOriginal,
+    fakeECommerceCooldownOriginal
+];
 
 //Intervals for each upgrade
 
@@ -105,6 +116,8 @@ let cssHTMLBook = {
     specialRequirments: "NONE",
     bought: false,
     xpBonus: 5,
+    lvl: "lvl1",
+    class: "upgrade",
     gives: "Allows player to earn xp and adds 5 xp per click to the players xp rate",
     effects: () =>{
         //Subtract the bying cost first
@@ -137,6 +150,8 @@ let jsBookLvl1 = {
     specialRequirments: "NONE",
     bought: false,
     xpBonus: 10,
+    lvl: "lvl1",
+    class: "upgrade",
     gives: "Allows player to earn xp and adds 10 xp per click to the players xp rate",
     effects: () =>{
         //Subtract the bying cost first
@@ -173,6 +188,8 @@ let jsBookLvl2 = {
     specialRequirments: "JS Book Lvl 1",
     bought: false,
     xpBonus: 20,
+    lvl: "lvl2",
+    class: "upgrade",
     gives: "Additional 20 XP per click",
     effects: () =>{
         //Subtract the bying cost first
@@ -205,6 +222,8 @@ let sqlTextBook = {
     specialRequirments: "NONE",
     bought: false,
     xpBonus: 20,
+    lvl: "lvl2",
+    class: "upgrade",
     gives: "Additional 20 XP per click",
     effects: () =>{
         //Subtract the bying cost first
@@ -237,6 +256,8 @@ let phpTextBook = {
     specialRequirments: "NONE",
     bought: false,
     xpBonus: 25,
+    lvl: "lvl2",
+    class: "upgrade",
     gives: "Additional 25 XP per click",
     effects: () =>{
         //Subtract the bying cost first
@@ -273,6 +294,8 @@ let jsBookLvl3 = {
     specialRequirments: "JS Book Lvl 2",
     bought: false,
     xpBonus: 60,
+    lvl: "lvl3",
+    class: "upgrade",
     gives: "Additional 60 XP per click",
     effects: () =>{
         //Subtract the bying cost first
@@ -305,6 +328,8 @@ let reactJSBook = {
     specialRequirments: "NONE",
     bought: false,
     xpBonus: 70,
+    lvl: "lvl3",
+    class: "upgrade",
     gives: "Additional 70 XP per click",
     effects: () =>{
         //Subtract the bying cost first
@@ -337,6 +362,8 @@ let ajaxBook = {
     specialRequirments: "NONE",
     bought: false,
     xpBonus: 100,
+    lvl: "lvl3",
+    class: "upgrade",
     gives: "Additional 100 XP per click",
     effects: () =>{
         //Subtract the bying cost first
@@ -371,6 +398,8 @@ let pizzaForm = {
     specialRequirments: "CSS/HTML Book",
     bought: false,
     xpBonus: 500,
+    lvl: "lvl1",
+    class: "project",
     gives: "5x players XP investment",
     numPurchased: 0,
     effects: () =>{
@@ -411,6 +440,8 @@ let toDoList = {
     specialRequirments: "CSS/HTML Book, JS Book Lvl 1",
     bought: false,
     xpBonus: 1500,
+    lvl: "lvl1",
+    class: "project",
     gives: "Gives 1000 xp for invested 500",
     numPurchased: 0,
     effects: () =>{
@@ -451,6 +482,8 @@ let frogPuzzle = {
     specialRequirments: "CSS/HTML Book, JS Book Lvl 1",
     bought: false,
     xpBonus: 2000,
+    lvl: "lvl1",
+    class: "project",
     gives: "Gives 2k XP back for 1k investment",
     numPurchased: 0,
     effects: () =>{
@@ -492,6 +525,8 @@ let clickerGame = {
     specialRequirments: "JS Book Lvl 2",
     bought: false,
     xpBonus: 10000,
+    lvl: "lvl2",
+    class: "project",
     gives: "Player gets 10k XP when 5k XP is invested",
     numPurchased: 0,
     effects: () =>{
@@ -532,6 +567,8 @@ let snakeEnhanced = {
     specialRequirments: "JS Book Lvl 2",
     bought: false,
     xpBonus: 20000,
+    lvl: "lvl2",
+    class: "project",
     gives: "Player gets 20k XP when 10k XP is invested",
     numPurchased: 0,
     effects: () =>{
@@ -572,6 +609,8 @@ let tetrisEnhanced = {
     specialRequirments: "JS Book Lvl 2",
     bought: false,
     xpBonus: 40000,
+    lvl: "lvl2",
+    class: "project",
     gives: "Player gets 40k XP when 20k XP is invested",
     numPurchased: 0,
     effects: () =>{
@@ -613,6 +652,8 @@ let fakeECommerce = {
     specialRequirments: "JS Book Lvl 3",
     bought: false,
     xpBonus: 80000,
+    lvl: "lvl3",
+    class: "project",
     gives: "Player gets 80k XP when 45k XP is invested",
     numPurchased: 0,
     effects: () =>{
@@ -655,6 +696,8 @@ let gamesWebsite = {
     xpPrice: 5000,
     specialRequirments: "JS book lvl 2",
     mps: 10,
+    lvl: "lvl2",
+    class: "asset",
     gives: "Earns 10 dollars passively",
     numPurchased: 0,
     effects: () =>{
@@ -697,6 +740,8 @@ let eCommerceStore = {
     xpPrice: 25000,
     specialRequirments: "JS Book Lvl 3",
     mps: 250,
+    lvl: "lvl3",
+    class: "asset",
     gives: "Earns 250 dollars passively",
     numPurchased: 0,
     effects: () =>{
@@ -738,6 +783,8 @@ let neuralNet = {
     xpPrice: 50000,
     specialRequirments: "Js book lvl 3 and Ajax",
     mps: 500,
+    lvl: "lvl3",
+    class: "asset",
     gives: "Earns 500 dollars passively",
     numPurchased: 0,
     effects: () =>{
@@ -779,6 +826,8 @@ let cryptoTradingPlatform = {
     xpPrice: 100000,
     specialRequirments: "JS lvl 3, Ajax, React JS",
     mps: 25000,
+    lvl: "lvl3",
+    class: "asset",
     gives: "Earns 25k dollars passively",
     numPurchased: 0,
     effects: () =>{
@@ -1038,6 +1087,17 @@ function startGame()
     //according to difficulty
     setDifficulty(difficulty);
 
+    //set the cooldowns to their new values according to difficulty
+    pizzaFormCooldown = cooldownsArray[0];
+    toDoListCooldown = cooldownsArray[1];
+    frogPuzzleCooldown = cooldownsArray[2];
+    clickerGameCooldown = cooldownsArray[3];
+    snakeEnhancedCooldown = cooldownsArray[4];
+    tetrisEnhancedCooldown = cooldownsArray[5];
+    fakeECommerceCooldown = cooldownsArray[6];
+
+    //!Load save here
+
     //Show lvl 1 items
     showLvl1();
 }
@@ -1103,7 +1163,7 @@ function generateStoreItems()
     }
 
     //Generate Projects lvl 1
-    for (let i = 0; i < 2; i++) 
+    for (let i = 0; i < 3; i++) 
     {
         //Apends generated divs to the store container
         let projectItem = document.createElement("div");
@@ -1125,7 +1185,7 @@ function generateStoreItems()
     }
 
     //Generate Projects lvl 2
-    for (let i = 2; i < 5; i++) 
+    for (let i = 3; i < 6; i++) 
     {
         //Apends generated divs to the store container
         let projectItem = document.createElement("div");
@@ -1147,7 +1207,7 @@ function generateStoreItems()
     }
 
     //Generate Projects lvl 3
-    for (let i = 5; i < projectNames.length; i++) 
+    for (let i = 6; i < projectNames.length; i++) 
     {
         //Apends generated divs to the store container
         let projectItem = document.createElement("div");
@@ -1307,6 +1367,12 @@ function setDifficulty(difficulty)
             allObjects[i].moneyPrice /= 2;
             allObjects[i].xpPrice /= 2;
         }
+
+        //divide all cooldowns by 2
+        for (let i = 0; i < cooldownsArray.length; i++) 
+        {
+            cooldownsArray[i] /= 2;
+        }
     }
 
     //multiply price of items by two
@@ -1320,6 +1386,12 @@ function setDifficulty(difficulty)
         {
             allObjects[i].moneyPrice *= 2;
             allObjects[i].xpPrice *= 2;
+        }
+
+        //multiply all cooldowns by 2
+        for (let i = 0; i < cooldownsArray.length; i++) 
+        {
+            cooldownsArray[i] *= 2;
         }
     }
 }
@@ -2095,9 +2167,218 @@ function removeInfo()
     infoContainer.innerHTML = "";
 }
 
+//Loads save from the localStorage
+//localStorage names and what they save
+
+//'data' saves all in game objects
+
+//'money' saved the amount of money player earned
+//in moneyScore
+
+//'xp' saved xpScore variable xp earned
+
+//mps is saved too as for money per second
+
+//time-left which is number of seconds saved
+
+function loadSave()
+{
+    //First unpack everithing from the 
+    //localStorage
+
+    //data
+    let dataJSON = localStorage.getItem("data");
+    let data = JSON.parse(dataJSON);
+
+    //money
+    let money = parseInt(localStorage.getItem("money"));
+
+    //xp
+    let xp = parseInt(localStorage.getItem("xp"));
+
+    //mps
+    let mps = parseInt(localStorage.getItem("mps"));
+
+    //time-left in seconds
+    let timeLeft = parseInt(localStorage.getItem("time-left"));
+
+    //Booleans for checking which level is unlocked on not
+    let lvl2Unlocked = false;
+    let lvl3Unlocked = false;
+
+    //Now set all the non objects to the info fields
+
+    //money set
+    moneyScore = money;
+    moneyScoreElement.innerText = moneyScore;
+
+    //xp setting
+    xpScore = xp;
+    xpScoreElement.innerText = xp;
+
+    //set mps
+    moneyPerSecond = mps;
+    moneyPerSecondField.innerText = moneyPerSecond;
+
+    //timeLeft
+    minutesInSeconds = timeLeft;
+
+    //Check if they are unlocked or not
+
+    //Chekc if lvl 2 is unlocked (JS book level 1)
+    if(data[1].bought === true)
+    {
+        lvl2Unlocked = true;
+    }
+
+    //level 3 unlocked
+    if(data[4].bought === true)
+    {
+        lvl3Unlocked = true;
+    }
+
+    //Generate all the saved
+    //items from data and give them listeners
+
+    //Generate all the upgrades
+    for(let i = 0; i < data.indexOf(pizzaForm); i++)
+    {
+        //check if upgrade is not yet bought
+        //if it isn't generate it
+        if(data[i].bought === false)
+        {
+            //Apends generated divs to the store container
+            let storeItem = document.createElement("div");
+            let storeItemImg = document.createElement("img");
+
+            //Put the img inside the div and set its alt to the arrays
+            //index value
+            storeItemImg.alt = data[i].name;
+            storeItem.name = data[i].name;
+            storeItem.appendChild(storeItemImg);
+            storeItem.classList.add(data[i].lvl);
+            storeItem.classList.add(data[i].class);
+
+            //Give storeItem a listener for buying
+            //The hover listener will be given in create listeners
+            //after the save is loaded
+            storeItem.addEventListener("click", () => {
+                buyUpgrade(data[i].name, storeItem)
+            });
+
+            //Attach the div to the container
+            storeContainer.appendChild(storeItem);
+        }
+    }
+
+    //Generate all projects
+    for(let i = data.indexOf(pizzaForm); i < data.indexOf(gamesWebsite); i++)
+    {
+        //Apends generated divs to the store container
+        let projectItem = document.createElement("div");
+        let projectItemImg = document.createElement("img");
+        let quantity = document.createElement("h1");
+        quantity.innerText = data[i].numPurchased;
+        projectItem.classList.add(data[i].class, data[i].name);
+
+        //Put the img inside the div and set its alt to the arrays
+        //index value
+        projectItemImg.alt = data[i].name;
+        projectItem.name = data[i].name;
+        projectItem.appendChild(projectItemImg);
+        projectItem.appendChild(quantity);
+        projectItem.classList.add(data[i].lvl);
+
+        projectItem.addEventListener("click", () => {
+            buyUpgrade(data[i].name, projectItem)
+        });
+
+        //Attach the div to the container
+        actionContainer.appendChild(projectItem);
+    }
+
+    //Generate all assets with their inner icons
+    for(let i = data.indexOf(gamesWebsite), containerIndex = 0; i < data.length; i++, containerIndex++)
+    {      
+        //Generate The asset itself first and then
+        //Apends generated divs to the store container
+        let projectItem = document.createElement("div");
+        let projectItemImg = document.createElement("img");
+        let quantity = document.createElement("h1");
+        quantity.innerText = data[i].numPurchased;
+        projectItem.classList.add("project", data[i].name);
+        projectItem.classList.add(data[i].class, data[i].name);
+
+        //Put the img inside the div and set its alt to the arrays
+        //index value
+        projectItemImg.alt = data[i].name;
+        projectItem.name = data[i].name;
+        projectItem.appendChild(projectItemImg);
+        projectItem.appendChild(quantity);
+        projectItem.classList.add(data[i].lvl);
+
+        projectItem.addEventListener("click", () => {
+            buyUpgrade(data[i].name, projectItem)
+        });
+
+        //Attach the div to the container
+        actionContainer.appendChild(projectItem);
+
+        //Create icon container
+        let viewWindow = document.createElement("div");
+
+        //give it a assetName class name on index
+        viewWindow.classList.add(assetContainerNames[containerIndex]);
+        viewWindow.classList.add(data[i].lvl);
+
+        //append it to the assetView Container
+        assetViewContainer.appendChild(viewWindow);
+        
+        //Generate the number of icons according to the numPurchased
+        //Find the right container
+        let container = document.querySelector(`.${assetContainerNames[containerIndex]}`);
+
+        for (let j = 0; j < data[i].numPurchased; j++) 
+        {
+            addDivToAssetViewContainer(container);
+        }
+        
+    }
+
+    //Unlock items that were unlocked before
+    if(lvl2Unlocked)
+    {
+        showLvl2();
+    }
+
+    if(lvl3Unlocked)
+    {
+        showLvl3();
+    }
+
+}
+
 //Show save text for 3 seconds
 function saveProgress()
 {
+    //Save everithing to the localStorage
+
+    //In game objects
+    let dataJSON = JSON.stringify(allObjects);
+    localStorage.setItem("data", dataJSON);
+
+    //money setting
+    localStorage.setItem("money", moneyScore);
+
+    //xp setting
+    localStorage.setItem("xp", xpScore);
+
+    //mps setting
+    localStorage.setItem("mps", moneyPerSecond);
+
+    //time-left setting
+    localStorage.setItem("time-left", minutesInSeconds);
+
     //display block on the text 
     savedText.style.display = "block";
 
