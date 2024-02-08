@@ -13,6 +13,8 @@ let assetViewContainer = document.querySelector(".view-assets-container");
 let openMenuBtn = document.getElementById("openMenuBtn");
 let menuModal = document.getElementById("popup-menu");
 let closeMenuBtn = document.getElementById("popup-menu");
+let lostModal = document.getElementById("popup-lost");
+let winModal = document.getElementById("popup-won");
 let savedBtn = document.getElementById("saved-btn");
 let savedText = document.getElementById("saved-text");
 
@@ -83,11 +85,18 @@ let moneyScore = 0;
 let xpScore = 0;
 
 //Earning Rates for jobs and assets (money)
-let fastFoodRate = 10000;
+let fastFoodRate = 4;
 let moneyPerSecond = 0;
 
+//Earning goals
+let easyMoneyGoal = 1;
+let midMoneyGoal = 750000
+let hardMoneyGoal = 5000000
+
+let moneyGoal;
+
 //Earning rates for xp
-let xpEarningRate = 10000;
+let xpEarningRate = 0;
 
 //Difficulty setting
 
@@ -118,28 +127,7 @@ let cssHTMLBook = {
     xpBonus: 5,
     lvl: "lvl1",
     class: "upgrade",
-    gives: "Allows player to earn xp and adds 5 xp per click to the players xp rate",
-    effects: () =>{
-        //Subtract the bying cost first
-        moneyScore-=cssHTMLBook.moneyPrice;
-        xpScore-=cssHTMLBook.xpPrice;
-
-        //Set the bought to true
-        cssHTMLBook.bought = true;
-
-        //Update the xpEarningRate
-        xpEarningRate += cssHTMLBook.xpBonus;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    gives: "Allows player to earn xp and adds 5 xp per click to the players xp rate"
 }
 
 let jsBookLvl1 = {
@@ -152,31 +140,7 @@ let jsBookLvl1 = {
     xpBonus: 10,
     lvl: "lvl1",
     class: "upgrade",
-    gives: "Allows player to earn xp and adds 10 xp per click to the players xp rate",
-    effects: () =>{
-        //Subtract the bying cost first
-        moneyScore-=jsBookLvl1.moneyPrice;
-        xpScore-=jsBookLvl1.xpPrice;
-
-        //Set the bought to true
-        jsBookLvl1.bought = true;
-
-        //Update the xpEarningRate
-        xpEarningRate += jsBookLvl1.xpBonus;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-
-        //Show lvl 2 items
-        showLvl2();
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    gives: "Allows player to earn xp and adds 10 xp per click to the players xp rate"
 }
 
 //lvl 2 upgrades
@@ -190,28 +154,7 @@ let jsBookLvl2 = {
     xpBonus: 20,
     lvl: "lvl2",
     class: "upgrade",
-    gives: "Additional 20 XP per click",
-    effects: () =>{
-        //Subtract the bying cost first
-        moneyScore-=jsBookLvl2.moneyPrice;
-        xpScore-=jsBookLvl2.xpPrice;
-
-        //Set the bought to true
-        jsBookLvl2.bought = true;
-
-        //Update the xpEarningRate
-        xpEarningRate += jsBookLvl2.xpBonus;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    gives: "Additional 20 XP per click"
 }
 
 let sqlTextBook = {
@@ -224,28 +167,7 @@ let sqlTextBook = {
     xpBonus: 20,
     lvl: "lvl2",
     class: "upgrade",
-    gives: "Additional 20 XP per click",
-    effects: () =>{
-        //Subtract the bying cost first
-        moneyScore-=sqlTextBook.moneyPrice;
-        xpScore-=sqlTextBook.xpPrice;
-
-        //Set the bought to true
-        sqlTextBook.bought = true;
-
-        //Update the xpEarningRate
-        xpEarningRate += sqlTextBook.xpBonus;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    gives: "Additional 20 XP per click"
 }
 
 let phpTextBook = {
@@ -258,31 +180,7 @@ let phpTextBook = {
     xpBonus: 25,
     lvl: "lvl2",
     class: "upgrade",
-    gives: "Additional 25 XP per click",
-    effects: () =>{
-        //Subtract the bying cost first
-        moneyScore-=phpTextBook.moneyPrice;
-        xpScore-=phpTextBook.xpPrice;
-
-        //Set the bought to true
-        phpTextBook.bought = true;
-
-        //Update the xpEarningRate
-        xpEarningRate += phpTextBook.xpBonus;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-
-        //Show lvl 3 items
-        showLvl3();
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    gives: "Additional 25 XP per click"
 }
 
 //lvl 3
@@ -296,28 +194,7 @@ let jsBookLvl3 = {
     xpBonus: 60,
     lvl: "lvl3",
     class: "upgrade",
-    gives: "Additional 60 XP per click",
-    effects: () =>{
-        //Subtract the bying cost first
-        moneyScore-=jsBookLvl3.moneyPrice;
-        xpScore-=jsBookLvl3.xpPrice;
-
-        //Set the bought to true
-        jsBookLvl3.bought = true;
-
-        //Update the xpEarningRate
-        xpEarningRate += jsBookLvl3.xpBonus;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    gives: "Additional 60 XP per click"
 }
 
 let reactJSBook = {
@@ -330,28 +207,7 @@ let reactJSBook = {
     xpBonus: 70,
     lvl: "lvl3",
     class: "upgrade",
-    gives: "Additional 70 XP per click",
-    effects: () =>{
-        //Subtract the bying cost first
-        moneyScore-=reactJSBook.moneyPrice;
-        xpScore-=reactJSBook.xpPrice;
-
-        //Set the bought to true
-        reactJSBook.bought = true;
-
-        //Update the xpEarningRate
-        xpEarningRate += reactJSBook.xpBonus;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    gives: "Additional 70 XP per click"
 }
 
 let ajaxBook = {
@@ -364,28 +220,7 @@ let ajaxBook = {
     xpBonus: 100,
     lvl: "lvl3",
     class: "upgrade",
-    gives: "Additional 100 XP per click",
-    effects: () =>{
-        //Subtract the bying cost first
-        moneyScore-=ajaxBook.moneyPrice;
-        xpScore-=ajaxBook.xpPrice;
-
-        //Set the bought to true
-        ajaxBook.bought = true;
-
-        //Update the xpEarningRate
-        xpEarningRate += ajaxBook.xpBonus;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    gives: "Additional 100 XP per click"
 }
 
 //Projects objects
@@ -401,35 +236,7 @@ let pizzaForm = {
     lvl: "lvl1",
     class: "project",
     gives: "5x players XP investment",
-    numPurchased: 0,
-    effects: () =>{
-        let quantityField = document.querySelector(".Pizza-Order-Form h1");
-
-        //Subtract the bying cost first
-        moneyScore-=pizzaForm.moneyPrice;
-        xpScore-=pizzaForm.xpPrice;
-
-        //Set the bought to true
-        pizzaForm.bought = true;
-
-        //Update the xpEarningRate
-        xpScore += pizzaForm.xpBonus;
-
-        //increment the numPurchased
-        pizzaForm.numPurchased++;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-        quantityField.innerText = pizzaForm.numPurchased;
-
-        //Play the purchase sound
-        //clickSoundPurchase.play();
-
-        //Pass the project element to the function that will
-        //give a different styling and start the cooldown timer
-        startCooldown(projects[0], pizzaForm.name, pizzaFormCooldown);
-    }
+    numPurchased: 0
 }
 
 let toDoList = {
@@ -443,35 +250,7 @@ let toDoList = {
     lvl: "lvl1",
     class: "project",
     gives: "Gives 1000 xp for invested 500",
-    numPurchased: 0,
-    effects: () =>{
-        let quantityField = document.querySelector(".To-Do-List h1");
-
-        //Subtract the bying cost first
-        moneyScore-=toDoList.moneyPrice;
-        xpScore-=toDoList.xpPrice;
-
-        //Set the bought to true
-        toDoList.bought = true;
-
-        //Update the xpEarningRate
-        xpScore += toDoList.xpBonus;
-
-        //increment the numPurchased
-        toDoList.numPurchased++;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-        quantityField.innerText = toDoList.numPurchased;
-
-        //Play the purchase sound
-        //clickSoundPurchase.play();
-
-        //Pass the project element to the function that will
-        //give a different styling and start the cooldown timer
-        startCooldown(projects[1], toDoList.name, toDoListCooldown);
-    }
+    numPurchased: 0
 }
 
 let frogPuzzle = {
@@ -485,35 +264,7 @@ let frogPuzzle = {
     lvl: "lvl1",
     class: "project",
     gives: "Gives 2k XP back for 1k investment",
-    numPurchased: 0,
-    effects: () =>{
-        let quantityField = document.querySelector(".Frog-Puzzle h1");
-
-        //Subtract the bying cost first
-        moneyScore-=frogPuzzle.moneyPrice;
-        xpScore-=frogPuzzle.xpPrice;
-
-        //Set the bought to true
-        frogPuzzle.bought = true;
-
-        //Update the xpEarningRate
-        xpScore += frogPuzzle.xpBonus;
-
-        //increment the numPurchased
-        frogPuzzle.numPurchased++;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-        quantityField.innerText = frogPuzzle.numPurchased;
-
-        //Play the purchase sound
-        //clickSoundPurchase.play();
-
-        //Pass the project element to the function that will
-        //give a different styling and start the cooldown timer
-        startCooldown(projects[2], frogPuzzle.name, frogPuzzleCooldown);
-    }
+    numPurchased: 0
 }
 
 //lvl 2
@@ -528,35 +279,7 @@ let clickerGame = {
     lvl: "lvl2",
     class: "project",
     gives: "Player gets 10k XP when 5k XP is invested",
-    numPurchased: 0,
-    effects: () =>{
-        let quantityField = document.querySelector(".Clicker-Game h1");
-
-        //Subtract the bying cost first
-        moneyScore-=clickerGame.moneyPrice;
-        xpScore-=clickerGame.xpPrice;
-
-        //Set the bought to true
-        clickerGame.bought = true;
-
-        //Update the xpEarningRate
-        xpScore += clickerGame.xpBonus;
-
-        //increment the numPurchased
-        clickerGame.numPurchased++;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-        quantityField.innerText = clickerGame.numPurchased;
-
-        //Play the purchase sound
-        //clickSoundPurchase.play();
-
-        //Pass the project element to the function that will
-        //give a different styling and start the cooldown timer
-        startCooldown(projects[3], clickerGame.name, clickerGameCooldown);
-    }
+    numPurchased: 0
 }
 
 let snakeEnhanced = {
@@ -570,35 +293,7 @@ let snakeEnhanced = {
     lvl: "lvl2",
     class: "project",
     gives: "Player gets 20k XP when 10k XP is invested",
-    numPurchased: 0,
-    effects: () =>{
-        let quantityField = document.querySelector(".Snake-Enhanced h1");
-
-        //Subtract the bying cost first
-        moneyScore-=snakeEnhanced.moneyPrice;
-        xpScore-=snakeEnhanced.xpPrice;
-
-        //Set the bought to true
-        snakeEnhanced.bought = true;
-
-        //Update the xpEarningRate
-        xpScore += snakeEnhanced.xpBonus;
-
-        //increment the numPurchased
-        snakeEnhanced.numPurchased++;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-        quantityField.innerText = snakeEnhanced.numPurchased;
-
-        //Play the purchase sound
-        //clickSoundPurchase.play();
-
-        //Pass the project element to the function that will
-        //give a different styling and start the cooldown timer
-        startCooldown(projects[4], snakeEnhanced.name, snakeEnhancedCooldown);
-    }
+    numPurchased: 0
 }
 
 let tetrisEnhanced = {
@@ -612,35 +307,7 @@ let tetrisEnhanced = {
     lvl: "lvl2",
     class: "project",
     gives: "Player gets 40k XP when 20k XP is invested",
-    numPurchased: 0,
-    effects: () =>{
-        let quantityField = document.querySelector(".Tetris-Enhanced h1");
-
-        //Subtract the bying cost first
-        moneyScore-=tetrisEnhanced.moneyPrice;
-        xpScore-=tetrisEnhanced.xpPrice;
-
-        //Set the bought to true
-        tetrisEnhanced.bought = true;
-
-        //Update the xpEarningRate
-        xpScore += tetrisEnhanced.xpBonus;
-
-        //increment the numPurchased
-        tetrisEnhanced.numPurchased++;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-        quantityField.innerText = tetrisEnhanced.numPurchased;
-
-        //Play the purchase sound
-        //clickSoundPurchase.play();
-
-        //Pass the project element to the function that will
-        //give a different styling and start the cooldown timer
-        startCooldown(projects[5], tetrisEnhanced.name, tetrisEnhancedCooldown);
-    }
+    numPurchased: 0
 }
 
 //Lvl 3 
@@ -655,35 +322,7 @@ let fakeECommerce = {
     lvl: "lvl3",
     class: "project",
     gives: "Player gets 80k XP when 45k XP is invested",
-    numPurchased: 0,
-    effects: () =>{
-        let quantityField = document.querySelector(".Fake-E-Commerce-Store h1");
-
-        //Subtract the bying cost first
-        moneyScore-=fakeECommerce.moneyPrice;
-        xpScore-=fakeECommerce.xpPrice;
-
-        //Set the bought to true
-        fakeECommerce.bought = true;
-
-        //Update the xpEarningRate
-        xpScore += fakeECommerce.xpBonus;
-
-        //increment the numPurchased
-        fakeECommerce.numPurchased++;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-        quantityField.innerText = fakeECommerce.numPurchased;
-
-        //Play the purchase sound
-        //clickSoundPurchase.play();
-
-        //Pass the project element to the function that will
-        //give a different styling and start the cooldown timer
-        startCooldown(projects[6], fakeECommerce.name, fakeECommerceCooldown);
-    }
+    numPurchased: 0
 }
 
 //Asset objects
@@ -699,37 +338,7 @@ let gamesWebsite = {
     lvl: "lvl2",
     class: "asset",
     gives: "Earns 10 dollars passively",
-    numPurchased: 0,
-    effects: () =>{
-        let quantityField = document.querySelector(".Website-with-Games h1");
-        let viewContainer = document.querySelector(".Website-with-Games-Container");
-
-        //Add an indicator to the assets viewContainer
-        addDivToAssetViewContainer(viewContainer);
-
-        //Subtract the bying cost first
-        moneyScore-=gamesWebsite.moneyPrice;
-        xpScore-=gamesWebsite.xpPrice;
-
-        //Update the xpEarningRate
-        moneyPerSecond += gamesWebsite.mps;
-
-        //increment the numPurchased
-        gamesWebsite.numPurchased++;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-        quantityField.innerText = gamesWebsite.numPurchased;
-
-        mpsTracking();
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    numPurchased: 0
 }
 
 //lvl 3
@@ -743,37 +352,7 @@ let eCommerceStore = {
     lvl: "lvl3",
     class: "asset",
     gives: "Earns 250 dollars passively",
-    numPurchased: 0,
-    effects: () =>{
-        let quantityField = document.querySelector(".E-Commerce-Store h1");
-        let viewContainer = document.querySelector(".E-Commerce-Store-Container");
-
-        //Add an indicator to the assets viewContainer
-        addDivToAssetViewContainer(viewContainer);
-
-        //Subtract the bying cost first
-        moneyScore-=eCommerceStore.moneyPrice;
-        xpScore-=eCommerceStore.xpPrice;
-
-        //Update the xpEarningRate
-        moneyPerSecond += eCommerceStore.mps;
-
-        //increment the numPurchased
-        eCommerceStore.numPurchased++;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-        quantityField.innerText = eCommerceStore.numPurchased;
-
-        mpsTracking();
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    numPurchased: 0
 }
 
 let neuralNet = {
@@ -786,37 +365,7 @@ let neuralNet = {
     lvl: "lvl3",
     class: "asset",
     gives: "Earns 500 dollars passively",
-    numPurchased: 0,
-    effects: () =>{
-        let quantityField = document.querySelector(".Neural-Net h1");
-        let viewContainer = document.querySelector(".Neural-Net-Container");
-
-        //Add an indicator to the assets viewContainer
-        addDivToAssetViewContainer(viewContainer);
-
-        //Subtract the bying cost first
-        moneyScore-=neuralNet.moneyPrice;
-        xpScore-=neuralNet.xpPrice;
-
-        //Update the xpEarningRate
-        moneyPerSecond += neuralNet.mps;
-
-        //increment the numPurchased
-        neuralNet.numPurchased++;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-        quantityField.innerText = neuralNet.numPurchased;
-
-        mpsTracking();
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    numPurchased: 0
 }
 
 let cryptoTradingPlatform = {
@@ -829,36 +378,7 @@ let cryptoTradingPlatform = {
     lvl: "lvl3",
     class: "asset",
     gives: "Earns 25k dollars passively",
-    numPurchased: 0,
-    effects: () =>{
-        let quantityField = document.querySelector(".Crypto-Trading-Platform h1");
-        let viewContainer = document.querySelector(".Crypto-Trading-Platform-Container");
-
-        //Add an indicator to the assets viewContainer
-        addDivToAssetViewContainer(viewContainer);
-        //Subtract the bying cost first
-        moneyScore-=cryptoTradingPlatform.moneyPrice;
-        xpScore-=cryptoTradingPlatform.xpPrice;
-
-        //Update the xpEarningRate
-        moneyPerSecond += cryptoTradingPlatform.mps;
-
-        //increment the numPurchased
-        cryptoTradingPlatform.numPurchased++;
-
-        //Update the counters information
-        moneyScoreElement.innerText = moneyScore;
-        xpScoreElement.innerText = xpScore;
-        quantityField.innerText = cryptoTradingPlatform.numPurchased;
-
-        mpsTracking();
-
-        //Play the purchase sound
-        clickSoundPurchase.play();
-
-        //Clear the infoContainer of old info
-        removeInfo();
-    }
+    numPurchased: 0
 }
 
 //Array of all objects in the game
@@ -886,14 +406,21 @@ let allObjects = [
 
 window.onload = startGame;
 
-function createListeners()
+//Listeners for non game objects
+function createListenersNonGameObjects()
 {
     //Menu listeners
     openMenuBtn.addEventListener("click", ()=>{
-        //clear mpsInterval
+        
+        //clear all intervals
+        clearInterval(pizzaFormInterval);
+        clearInterval(toDoListInterval);
+        clearInterval(frogPuzzleInterval);
+        clearInterval(clickerGameInterval);
+        clearInterval(snakeEnhancedInterval);
+        clearInterval(tetrisEnhancedInterval);
+        clearInterval(fakeECommerceInterval);
         clearInterval(mpsInterval);
-
-        //Clear time interval too
         clearInterval(timeInterval);
 
         //Open Modal
@@ -936,13 +463,14 @@ function createListeners()
 
     //Event listener for save button
     savedBtn.addEventListener("click", saveProgress);
+}
 
-    //! put all of these in a separate function
-
+//all listeners for the objects 
+//brand new
+function defaultListeners()
+{
     //List for all the items needing in an
-    //event listener
-    storeUpgradesList = document.querySelectorAll(".store-container div");
-    projectsList = document.querySelectorAll(".actions-menu-container div");
+    //event listene
 
     console.log(storeUpgradesList);
 
@@ -979,15 +507,6 @@ function createListeners()
 
     storeUpgradesList[7].addEventListener("click", () => {
         buyUpgrade(ajaxBook.name, storeUpgradesList[7])
-    });
-
-    //Listeners for upgrade's tooltips
-    storeUpgradesList.forEach(element =>{
-        element.addEventListener("mouseenter", generateInfo);
-    });
-
-    storeUpgradesList.forEach(element =>{
-        element.addEventListener("mouseleave", removeInfo);
     });
 
     //Listeners for projects
@@ -1048,6 +567,18 @@ function createListeners()
     projectsList[10].addEventListener("click", () => {
         buyUpgrade(cryptoTradingPlatform.name, projectsList[10])
     });
+}
+
+function tooltipListeners()
+{
+    //Listeners for upgrade's tooltips
+    storeUpgradesList.forEach(element =>{
+        element.addEventListener("mouseenter", generateInfo);
+    });
+
+    storeUpgradesList.forEach(element =>{
+        element.addEventListener("mouseleave", removeInfo);
+    });
 
     //Tooltip listeners
     projectsList.forEach(element =>{
@@ -1057,25 +588,10 @@ function createListeners()
     projectsList.forEach(element =>{
         element.addEventListener("mouseleave", removeInfo);
     });
-
 }
 
 function startGame()
 {
-    //Fill the store container with upgrades
-    generateStoreItems();
-
-    //Fill the projects variable
-    projects = document.querySelectorAll(".project");
-
-    //Set the mps tracking interval
-    mpsInterval = setInterval(mpsTracking, 1000);
-
-    //Start an interval that runs every second
-    timeInterval = setInterval(updateCountDown, 1000);
-
-    createListeners();
-
     //Get the difficulty setting
     let urlString = window.location.href;
     let url = new URL(urlString);
@@ -1098,9 +614,41 @@ function startGame()
 
     //!Load save here
 
+    //Add event listeners to buttons
+    createListenersNonGameObjects();
+
+    if(localStorage.getItem("data") !== null)
+    {
+        loadSave();
+
+        storeUpgradesList = document.querySelectorAll(".store-container div");
+        projectsList = document.querySelectorAll(".actions-menu-container div");
+
+        tooltipListeners();
+    }
+    else{
+        generateStoreItems();
+
+        storeUpgradesList = document.querySelectorAll(".store-container div");
+        projectsList = document.querySelectorAll(".actions-menu-container div");
+
+        defaultListeners();
+        tooltipListeners();
+    }
+
+    //Fill the projects variable
+    projects = document.querySelectorAll(".project");
+
+    //Set the mps tracking interval
+    mpsInterval = setInterval(mpsTracking, 1000);
+
+    //Start an interval that runs every second
+    timeInterval = setInterval(updateCountDown, 1000);
+
     //Show lvl 1 items
     showLvl1();
 }
+
 //Generates upgardes in the store container
 //and practice projects
 function generateStoreItems()
@@ -1291,6 +839,7 @@ function generateStoreItems()
         //give it a assetName class name on index
         viewWindow.classList.add(assetContainerNames[i]);
         viewWindow.classList.add("lvl3");
+        console.log("Icon container added");
 
         //append it to the assetView Container
         assetViewContainer.appendChild(viewWindow);
@@ -1359,6 +908,12 @@ function setDifficulty(difficulty)
     //and multiply time by two
     if(difficulty === "easy")
     {
+        //Money goal
+        moneyGoal = easyMoneyGoal;
+
+        //Multiply money perclick
+        fastFoodRate *= 2;
+
         //Multiply time by two
         minutesInSeconds *= 2;
 
@@ -1375,10 +930,22 @@ function setDifficulty(difficulty)
         }
     }
 
+    if(difficulty === "mid")
+    {
+        //Money goal
+        moneyGoal = midMoneyGoal;
+    }
+
     //multiply price of items by two
     //
     if(difficulty === "hard")
     {
+        //Money goal
+        moneyGoal = hardMoneyGoal;
+
+        //Dividing money perclick
+        fastFoodRate /= 2;
+
         //Dividing time by two
         minutesInSeconds /= 2;
 
@@ -1426,6 +993,27 @@ function updateCounter(score, rate, element)
 //second
 function updateCountDown()
 {
+    //Check for lose
+    if(minutesInSeconds === -1)
+    {
+        //open lost modal
+        lostModal.showModal();
+
+        //end all intervals
+        clearInterval(pizzaFormInterval);
+        clearInterval(toDoListInterval);
+        clearInterval(frogPuzzleInterval);
+        clearInterval(clickerGameInterval);
+        clearInterval(snakeEnhancedInterval);
+        clearInterval(tetrisEnhancedInterval);
+        clearInterval(fakeECommerceInterval);
+        clearInterval(mpsInterval);
+        clearInterval(timeInterval);
+
+        //return from updateCountDown
+        return;
+    }
+
     //Getting minutes
     minutes = Math.floor(minutesInSeconds/60);
 
@@ -1664,6 +1252,358 @@ function manageCooldown(coolDownElement, projectName, projectElement)
     }
 }
 
+//all functions for each in game object
+// CSS/HTML Book
+function cssHTMLBookEffects() {
+    moneyScore -= cssHTMLBook.moneyPrice;
+    xpScore -= cssHTMLBook.xpPrice;
+
+    cssHTMLBook.bought = true;
+    xpEarningRate += cssHTMLBook.xpBonus;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
+// JS Book Lvl 1
+function jsBookLvl1Effects() {
+    moneyScore -= jsBookLvl1.moneyPrice;
+    xpScore -= jsBookLvl1.xpPrice;
+
+    jsBookLvl1.bought = true;
+    xpEarningRate += jsBookLvl1.xpBonus;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+
+    showLvl2();
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
+// JS Book Lvl 2
+function jsBookLvl2Effects() {
+    moneyScore -= jsBookLvl2.moneyPrice;
+    xpScore -= jsBookLvl2.xpPrice;
+
+    jsBookLvl2.bought = true;
+    xpEarningRate += jsBookLvl2.xpBonus;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
+// SQL Book
+function sqlTextBookEffects() {
+    moneyScore -= sqlTextBook.moneyPrice;
+    xpScore -= sqlTextBook.xpPrice;
+
+    sqlTextBook.bought = true;
+    xpEarningRate += sqlTextBook.xpBonus;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
+// PHP Book
+function phpTextBookEffects() {
+    moneyScore -= phpTextBook.moneyPrice;
+    xpScore -= phpTextBook.xpPrice;
+
+    phpTextBook.bought = true;
+    xpEarningRate += phpTextBook.xpBonus;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+
+    showLvl3();
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
+// JS Book Lvl 3
+function jsBookLvl3Effects() {
+    moneyScore -= jsBookLvl3.moneyPrice;
+    xpScore -= jsBookLvl3.xpPrice;
+
+    jsBookLvl3.bought = true;
+    xpEarningRate += jsBookLvl3.xpBonus;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
+// React JS Book
+function reactJSBookEffects() {
+    moneyScore -= reactJSBook.moneyPrice;
+    xpScore -= reactJSBook.xpPrice;
+
+    reactJSBook.bought = true;
+    xpEarningRate += reactJSBook.xpBonus;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
+// Ajax Book
+function ajaxBookEffects() {
+    moneyScore -= ajaxBook.moneyPrice;
+    xpScore -= ajaxBook.xpPrice;
+
+    ajaxBook.bought = true;
+    xpEarningRate += ajaxBook.xpBonus;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
+// Pizza Order Form
+function pizzaFormEffects() {
+    let quantityField = document.querySelector(".Pizza-Order-Form h1");
+
+    moneyScore -= pizzaForm.moneyPrice;
+    xpScore -= pizzaForm.xpPrice;
+
+    pizzaForm.bought = true;
+    xpScore += pizzaForm.xpBonus;
+
+    pizzaForm.numPurchased++;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+    quantityField.innerText = pizzaForm.numPurchased;
+
+    startCooldown(projects[0], pizzaForm.name, pizzaFormCooldown);
+}
+
+// To-Do List
+function toDoListEffects() {
+    let quantityField = document.querySelector(".To-Do-List h1");
+
+    moneyScore -= toDoList.moneyPrice;
+    xpScore -= toDoList.xpPrice;
+
+    toDoList.bought = true;
+    xpScore += toDoList.xpBonus;
+
+    toDoList.numPurchased++;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+    quantityField.innerText = toDoList.numPurchased;
+
+    startCooldown(projects[1], toDoList.name, toDoListCooldown);
+}
+
+// Frog Puzzle
+function frogPuzzleEffects() {
+    let quantityField = document.querySelector(".Frog-Puzzle h1");
+
+    moneyScore -= frogPuzzle.moneyPrice;
+    xpScore -= frogPuzzle.xpPrice;
+
+    frogPuzzle.bought = true;
+    xpScore += frogPuzzle.xpBonus;
+
+    frogPuzzle.numPurchased++;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+    quantityField.innerText = frogPuzzle.numPurchased;
+
+    startCooldown(projects[2], frogPuzzle.name, frogPuzzleCooldown);
+}
+
+// Clicker Game
+function clickerGameEffects() {
+    let quantityField = document.querySelector(".Clicker-Game h1");
+
+    moneyScore -= clickerGame.moneyPrice;
+    xpScore -= clickerGame.xpPrice;
+
+    clickerGame.bought = true;
+    xpScore += clickerGame.xpBonus;
+
+    clickerGame.numPurchased++;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+    quantityField.innerText = clickerGame.numPurchased;
+
+    startCooldown(projects[3], clickerGame.name, clickerGameCooldown);
+}
+
+// Snake Enhanced
+function snakeEnhancedEffects() {
+    let quantityField = document.querySelector(".Snake-Enhanced h1");
+
+    moneyScore -= snakeEnhanced.moneyPrice;
+    xpScore -= snakeEnhanced.xpPrice;
+
+    snakeEnhanced.bought = true;
+    xpScore += snakeEnhanced.xpBonus;
+
+    snakeEnhanced.numPurchased++;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+    quantityField.innerText = snakeEnhanced.numPurchased;
+
+    startCooldown(projects[4], snakeEnhanced.name, snakeEnhancedCooldown);
+}
+
+// Tetris Enhanced
+function tetrisEnhancedEffects() {
+    let quantityField = document.querySelector(".Tetris-Enhanced h1");
+
+    moneyScore -= tetrisEnhanced.moneyPrice;
+    xpScore -= tetrisEnhanced.xpPrice;
+
+    tetrisEnhanced.bought = true;
+    xpScore += tetrisEnhanced.xpBonus;
+
+    tetrisEnhanced.numPurchased++;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+    quantityField.innerText = tetrisEnhanced.numPurchased;
+
+    startCooldown(projects[5], tetrisEnhanced.name, tetrisEnhancedCooldown);
+}
+
+// Fake E-Commerce
+function fakeECommerceEffects() {
+    let quantityField = document.querySelector(".Fake-E-Commerce-Store h1");
+
+    moneyScore -= fakeECommerce.moneyPrice;
+    xpScore -= fakeECommerce.xpPrice;
+
+    fakeECommerce.bought = true;
+    xpScore += fakeECommerce.xpBonus;
+
+    fakeECommerce.numPurchased++;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+    quantityField.innerText = fakeECommerce.numPurchased;
+
+    startCooldown(projects[6], fakeECommerce.name, fakeECommerceCooldown);
+}
+
+// Games Website
+function gamesWebsiteEffects() {
+    let quantityField = document.querySelector(".Website-with-Games h1");
+    let viewContainer = document.querySelector(".Website-with-Games-Container");
+
+    addDivToAssetViewContainer(viewContainer);
+
+    moneyScore -= gamesWebsite.moneyPrice;
+    xpScore -= gamesWebsite.xpPrice;
+
+    moneyPerSecond += gamesWebsite.mps;
+
+    gamesWebsite.numPurchased++;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+    quantityField.innerText = gamesWebsite.numPurchased;
+
+    mpsTracking();
+
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
+// E-Commerce Store
+function eCommerceStoreEffects() {
+    let quantityField = document.querySelector(".E-Commerce-Store h1");
+    let viewContainer = document.querySelector(".E-Commerce-Store-Container");
+
+    addDivToAssetViewContainer(viewContainer);
+
+    moneyScore -= eCommerceStore.moneyPrice;
+    xpScore -= eCommerceStore.xpPrice;
+
+    moneyPerSecond += eCommerceStore.mps;
+
+    eCommerceStore.numPurchased++;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+    quantityField.innerText = eCommerceStore.numPurchased;
+
+    mpsTracking();
+
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
+// Neural Net
+function neuralNetEffects() {
+    let quantityField = document.querySelector(".Neural-Net h1");
+    let viewContainer = document.querySelector(".Neural-Net-Container");
+
+    addDivToAssetViewContainer(viewContainer);
+
+    moneyScore -= neuralNet.moneyPrice;
+    xpScore -= neuralNet.xpPrice;
+
+    moneyPerSecond += neuralNet.mps;
+
+    neuralNet.numPurchased++;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+    quantityField.innerText = neuralNet.numPurchased;
+
+    mpsTracking();
+
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
+// Crypto Trading Platform
+function cryptoTradingPlatformEffects() {
+    let quantityField = document.querySelector(".Crypto-Trading-Platform h1");
+    let viewContainer = document.querySelector(".Crypto-Trading-Platform-Container");
+
+    addDivToAssetViewContainer(viewContainer);
+
+    moneyScore -= cryptoTradingPlatform.moneyPrice;
+    xpScore -= cryptoTradingPlatform.xpPrice;
+
+    moneyPerSecond += cryptoTradingPlatform.mps;
+
+    cryptoTradingPlatform.numPurchased++;
+
+    moneyScoreElement.innerText = moneyScore;
+    xpScoreElement.innerText = xpScore;
+    quantityField.innerText = cryptoTradingPlatform.numPurchased;
+
+    mpsTracking();
+
+    clickSoundPurchase.play();
+    removeInfo();
+}
+
 //process the action of bying an upgrade
 //checks if player can afford it
 //if buy is succesful the upgrade div disapears
@@ -1676,96 +1616,96 @@ function buyUpgrade(itemName, itemElement)
         switch (itemName) {
             //Upgrades
             case cssHTMLBook.name:
-                cssHTMLBook.effects();
+                cssHTMLBookEffects();
                 itemElement.remove();
                 break;
 
             case jsBookLvl1.name:
-                jsBookLvl1.effects();
+                jsBookLvl1Effects();
                 itemElement.remove();
                 break;
 
             //lvl 2 upgrades
             case jsBookLvl2.name:
-                jsBookLvl2.effects();
+                jsBookLvl2Effects();
                 itemElement.remove();
                 break;
 
             case sqlTextBook.name:
-                sqlTextBook.effects();
+                sqlTextBookEffects();
                 itemElement.remove();
                 break;
 
             case phpTextBook.name:
-                phpTextBook.effects();
+                phpTextBookEffects();
                 itemElement.remove();
                 break;
 
             //Lvl 3 upgrades
             case jsBookLvl3.name:
-                jsBookLvl3.effects();
+                jsBookLvl3Effects();
                 itemElement.remove();
                 break;
 
             case ajaxBook.name:
-                ajaxBook.effects();
+                ajaxBookEffects();
                 itemElement.remove();
                 break;
 
             case reactJSBook.name:
-                reactJSBook.effects();
+                reactJSBookEffects();
                 itemElement.remove();
                 break;
 
             // Projects
             case pizzaForm.name:
-                pizzaForm.effects();
+                pizzaFormEffects();
                 break;
             
             case toDoList.name:
-                toDoList.effects();
+                toDoListEffects();
                 break;
             
             case frogPuzzle.name:
-                frogPuzzle.effects();
+                frogPuzzleEffects();
                 break;
 
             //Lvl 2 projects
             case clickerGame.name:
-                clickerGame.effects();
+                clickerGameEffects();
                 break;
             
             case snakeEnhanced.name:
-                snakeEnhanced.effects();
+                snakeEnhancedEffects();
                 break;
             
             case tetrisEnhanced.name:
-                tetrisEnhanced.effects();
+                tetrisEnhancedEffects();
                 break;
 
             //lvl 3 projects
             case fakeECommerce.name:
-                fakeECommerce.effects();
+                fakeECommerceEffects();
                 break;
 
             //Assets
 
             //lvl 2
             case gamesWebsite.name:
-                gamesWebsite.effects();
+                gamesWebsiteEffects();
                 break;
 
             //lvl 3
             case eCommerceStore.name:
-                eCommerceStore.effects();
+                eCommerceStoreEffects();
                 break;
 
             case neuralNet.name:
-                neuralNet.effects();
+                neuralNetEffects();
                 break;
 
             case cryptoTradingPlatform.name:
-                cryptoTradingPlatform.effects();
+                cryptoTradingPlatformEffects();
                 break;
         }
     }
@@ -2151,6 +2091,24 @@ function generateInnerHTMLToolTip(upgrade)
 //money per second rate and update the fields
 function mpsTracking()
 {
+    //Check for win
+    if(moneyScore >= moneyGoal)
+    {
+        winModal.showModal();
+
+        //clear all intervals
+        clearInterval(pizzaFormInterval);
+        clearInterval(toDoListInterval);
+        clearInterval(frogPuzzleInterval);
+        clearInterval(clickerGameInterval);
+        clearInterval(snakeEnhancedInterval);
+        clearInterval(tetrisEnhancedInterval);
+        clearInterval(fakeECommerceInterval);
+        clearInterval(mpsInterval);
+        clearInterval(timeInterval);
+
+        return;
+    }
     //Display money per socond on the mps field
     moneyPerSecondField.innerText = moneyPerSecond;
 
@@ -2190,11 +2148,22 @@ function loadSave()
     let dataJSON = localStorage.getItem("data");
     let data = JSON.parse(dataJSON);
 
+    // Update each object in the allObjects array with data from localStorage
+    for (let i = 0; i < allObjects.length; i++) {
+        Object.assign(allObjects[i], data[i]);
+    }
+
     //money
     let money = parseInt(localStorage.getItem("money"));
 
+    //fastFood rate
+    let moneyRate = parseInt(localStorage.getItem("money-rate"));
+
     //xp
     let xp = parseInt(localStorage.getItem("xp"));
+
+    //xp-rate
+    let xpRate = parseInt(localStorage.getItem("xp-rate"));
 
     //mps
     let mps = parseInt(localStorage.getItem("mps"));
@@ -2212,9 +2181,15 @@ function loadSave()
     moneyScore = money;
     moneyScoreElement.innerText = moneyScore;
 
+    //fastFoodRate set (money per click)
+    fastFoodRate = moneyRate;
+
     //xp setting
     xpScore = xp;
     xpScoreElement.innerText = xp;
+
+    //xp rate set 
+    xpEarningRate = xpRate;
 
     //set mps
     moneyPerSecond = mps;
@@ -2225,23 +2200,57 @@ function loadSave()
 
     //Check if they are unlocked or not
 
-    //Chekc if lvl 2 is unlocked (JS book level 1)
+    if(data[0].bought === true)
+    {
+        cssHTMLBook.bought = true;
+    }
+
+    //Check if lvl 2 is unlocked (JS book level 1)
     if(data[1].bought === true)
     {
         lvl2Unlocked = true;
+        jsBookLvl1.bought = true;
     }
 
-    //level 3 unlocked
+    if(data[2].bought === true)
+    {
+        lvl2Unlocked = true;
+        jsBookLvl2.bought = true;
+    }
+
+    if(data[3].bought === true)
+    {
+        lvl2Unlocked = true;
+        sqlTextBook.bought = true;
+    }
+
+    //level 3 unlocked (Php book)
     if(data[4].bought === true)
     {
         lvl3Unlocked = true;
+        phpTextBook.bought = true;
+    }
+
+    if(data[5].bought === true)
+    {
+        jsBookLvl3.bought = true;
+    }
+
+    if(data[6].bought === true)
+    {
+        reactJSBook.bought = true;
+    }
+
+    if(data[7].bought === true)
+    {
+        ajaxBook.bought = true;
     }
 
     //Generate all the saved
     //items from data and give them listeners
 
     //Generate all the upgrades
-    for(let i = 0; i < data.indexOf(pizzaForm); i++)
+    for(let i = 0; i < 8; i++)
     {
         //check if upgrade is not yet bought
         //if it isn't generate it
@@ -2272,7 +2281,7 @@ function loadSave()
     }
 
     //Generate all projects
-    for(let i = data.indexOf(pizzaForm); i < data.indexOf(gamesWebsite); i++)
+    for(let i = 8; i < 15; i++)
     {
         //Apends generated divs to the store container
         let projectItem = document.createElement("div");
@@ -2297,8 +2306,11 @@ function loadSave()
         actionContainer.appendChild(projectItem);
     }
 
+    //Generate icon containers
+    
+
     //Generate all assets with their inner icons
-    for(let i = data.indexOf(gamesWebsite), containerIndex = 0; i < data.length; i++, containerIndex++)
+    for(let i = 15, containerIndex = 0; i < data.length; i++, containerIndex++)
     {      
         //Generate The asset itself first and then
         //Apends generated divs to the store container
@@ -2306,6 +2318,7 @@ function loadSave()
         let projectItemImg = document.createElement("img");
         let quantity = document.createElement("h1");
         quantity.innerText = data[i].numPurchased;
+        console.log(data[i].numPurchased);
         projectItem.classList.add("project", data[i].name);
         projectItem.classList.add(data[i].class, data[i].name);
 
@@ -2365,13 +2378,20 @@ function saveProgress()
 
     //In game objects
     let dataJSON = JSON.stringify(allObjects);
+    
     localStorage.setItem("data", dataJSON);
 
     //money setting
     localStorage.setItem("money", moneyScore);
 
+    //money earning rate
+    localStorage.setItem("money-rate", fastFoodRate);
+
     //xp setting
     localStorage.setItem("xp", xpScore);
+
+    //Xp earning rate
+    localStorage.setItem("xp-rate", xpEarningRate);
 
     //mps setting
     localStorage.setItem("mps", moneyPerSecond);
