@@ -1,0 +1,667 @@
+@font-face {
+  src: url(/fonts/Montserrat/static/Montserrat-Medium.ttf);
+  font-family: Montserrat; }
+
+@font-face {
+  src: url(/fonts/Lato/Lato-Regular.ttf);
+  font-family: Lato; }
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0; }
+
+body {
+  background: linear-gradient(to left, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  text-align: center; }
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+
+h1 {
+  font-family: Montserrat;
+  color: white;
+  font-size: 3.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+
+h2 {
+  font-family: Lato;
+  color: #ede2e2;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+
+h3 {
+  font-family: Lato;
+  color: #ede2e2;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+
+p {
+  font-family: Lato;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+
+a {
+  text-decoration: none; }
+
+nav {
+  height: auto;
+  background-color: #ffffff;
+  opacity: .98; }
+
+.navbar-toggler {
+  margin: 0 auto;
+  border: none; }
+
+.navbar-toggler-icon {
+  background-image: url(/images/carret-up.png);
+  background-color: #ffffff;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 3rem;
+  height: 3rem;
+  border: none; }
+
+.navbar-nav {
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center; }
+
+.nav-item {
+  width: 9rem;
+  height: 4.5rem;
+  font-size: 1.1rem;
+  border: 1.5px solid black;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0.9rem;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: black;
+  transition-property: transform, box-shadow, color, background_color, border-width;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+  box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .nav-item:hover {
+    transform: translateY(-15px);
+    box-shadow: 0px 15px 12px rgba(0, 0, 0, 0.5);
+    color: white;
+    transition-duration: 0.5s, 0.5s, 0.5s, 5s, 0.5s, 0.3s;
+    transition-property: border-width, background-color, transform, box-shadow, color;
+    background-color: black;
+    border-width: 2.5px; }
+
+.nav-link {
+  color: black; }
+  .nav-item:hover .nav-link {
+    transition-duration: 0.5s;
+    transition-property: color;
+    color: white; }
+
+.nav-logo {
+  width: 6rem;
+  height: 6rem;
+  color: black;
+  font-size: 1.1rem;
+  border: 1.5px solid black;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+  padding: 0.4rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition-property: color, background-color, border-radius;
+  transition-duration: 0.5s, 0.5s, 0.5s, 0.5s, 0.5s;
+  transition-timing-function: ease; }
+  .nav-logo:hover {
+    transition-property: color, background-color, border-radius;
+    transition-duration: 0.5s, 0.5s, 0.5s, 0.5s, 0.5s;
+    transition-timing-function: ease;
+    border-radius: 50px;
+    background-color: black;
+    color: white;
+    font-family: LatoItalic; }
+
+.intro-header {
+  text-align: center; }
+
+#imgContainer img {
+  display: none; }
+
+#projectsContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: auto; }
+  #projectsContainer .project {
+    height: 60%;
+    margin: auto;
+    text-align: center;
+    border: 4px #00008B solid;
+    padding-top: 0.5rem;
+    border-radius: 30px;
+    background: linear-gradient(to right, #1E90FF, #8A2BE2);
+    margin-bottom: 2rem;
+    font-style: italic;
+    transition: border-color 0.5s ease; }
+    #projectsContainer .project:hover {
+      border-color: #ffd000; }
+    #projectsContainer .project a {
+      text-align: center;
+      font-size: 1.3rem;
+      display: block;
+      padding-bottom: 1rem;
+      color: #e1dada;
+      font-weight: 400; }
+      #projectsContainer .project a:hover {
+        color: yellow; }
+  #projectsContainer .projectShowCase {
+    height: 60%;
+    margin: auto;
+    text-align: center;
+    border: 4px #00008B solid;
+    padding-top: 0.5rem;
+    border-radius: 30px;
+    background: linear-gradient(to right, #75a2cf, #c83d97);
+    margin-bottom: 2rem;
+    font-style: italic;
+    transition: border-color 0.5s ease; }
+    #projectsContainer .projectShowCase:hover {
+      border-color: #eda201; }
+    #projectsContainer .projectShowCase a {
+      text-align: center;
+      font-size: 1.2rem;
+      display: block;
+      padding-bottom: 1rem;
+      color: #e1dada;
+      font-weight: 400; }
+      #projectsContainer .projectShowCase a:hover {
+        color: #ffee00; }
+
+#projectInfoContainer {
+  width: 95%;
+  margin: auto;
+  margin-bottom: 5rem;
+  border: 2px solid black;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-sizing: border-box;
+  /* Ensure padding and border are included in width and height calculations */ }
+  #projectInfoContainer h1 {
+    color: black;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+  #projectInfoContainer h2 {
+    color: black;
+    margin-top: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+
+.projectInfo {
+  color: black;
+  opacity: 1;
+  padding: 1.2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+  .projectInfo .playButton {
+    padding: 1rem 2rem;
+    margin-top: 1.5rem;
+    background: linear-gradient(to right, #EDF1F4, #C3CBDC);
+    border-radius: 20px;
+    font-size: 1.5rem;
+    transition-property: color, background-position;
+    transition-duration: 1s;
+    transition-timing-function: ease; }
+    .projectInfo .playButton:hover {
+      background: linear-gradient(110.1deg, #227e22 2.9%, #a8fb3c 90.3%);
+      color: white; }
+  .projectInfo a {
+    color: yellow; }
+    .projectInfo a:hover {
+      color: #ffbb00; }
+
+#toTopBtn {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Fixed/sticky position */
+  top: 74%;
+  /* Place the button at the top of the page */
+  left: 93%;
+  /* Place the button 30px from the right */
+  z-index: 99;
+  /* Make sure it does not overlap */
+  border: none;
+  /* Remove borders */
+  outline: none;
+  /* Remove outline */
+  background-color: #6d6c6c;
+  /* Set a background color */
+  color: white;
+  /* Text color */
+  cursor: pointer;
+  /* Add a mouse pointer on hover */
+  padding: 1.5rem;
+  /* Some padding */
+  border-radius: 10px;
+  /* Rounded corners */
+  font-size: 15px;
+  /* Increase font size */ }
+  #toTopBtn:hover {
+    background-color: #555;
+    /* Add a dark-grey background on hover */ }
+
+.tetromino {
+  color: #fffb00; }
+
+.achievement {
+  color: lime; }
+
+.enemy {
+  color: red; }
+
+.XP {
+  color: #006eff; }
+
+.money {
+  color: lime; }
+
+.document {
+  color: inherit;
+  text-decoration: underline; }
+  .document:hover {
+    color: #f6ff00; }
+
+.awardsLabel {
+  margin-top: 3vh;
+  color: white; }
+
+.infoContainer {
+  width: 85%;
+  height: 100%;
+  margin: auto;
+  border: 2px solid black;
+  border-radius: 30px;
+  padding: 1.5rem;
+  line-height: 2rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-sizing: border-box; }
+  .infoContainer h2 {
+    color: #2b2b2b;
+    margin: 0;
+    padding: 0; }
+
+#awardContainer img {
+  width: 100%; }
+
+#about-me-container {
+  padding-bottom: 14vh;
+  padding: 0.5rem; }
+  #about-me-container img {
+    width: 60%;
+    height: 30%;
+    margin: 1rem;
+    border-radius: 30px; }
+
+/* Styles mobile devices */
+@media (min-width: 375px) and (max-width: 666px) {
+  h1 {
+    font-size: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem; }
+  h2 {
+    font-size: 1.65rem;
+    padding-bottom: 1.5rem; }
+  #clickerProjectContainer {
+    margin-bottom: 4.8rem !important; }
+  #projectInfoContainer {
+    padding-bottom: 3.4rem; }
+    #projectInfoContainer p {
+      font-size: 1.3rem; }
+  #toTopBtn {
+    padding: .8rem;
+    left: 72%;
+    top: 81%;
+    font-size: 14px; }
+  .nav-logo {
+    display: none; }
+  .nav-item {
+    width: 5rem;
+    height: 2.8rem;
+    font-size: 0.75rem;
+    border: 1.5px solid black;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.9rem;
+    text-align: center; }
+  .project a {
+    font-size: 1rem !important; }
+  #about-me-container {
+    padding-bottom: 10vh !important; }
+    #about-me-container p {
+      font-size: 1.3rem; } }
+
+@media (min-width: 667px) and (max-width: 767px) {
+  h1 {
+    font-size: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem; }
+  h2 {
+    font-size: 1.65rem;
+    padding-bottom: 1.5rem; }
+  p {
+    font-size: 1.1rem; }
+  #projectInfoContainer {
+    padding-bottom: 10rem; }
+  #toTopBtn {
+    padding: .8rem;
+    left: 84%;
+    top: 65%;
+    font-size: 14px; }
+  #projectsContainer {
+    width: 55%; }
+  #clickerProjectContainer {
+    margin-bottom: 4.8rem !important; }
+  #awardContainer img {
+    height: 30%;
+    width: 50%; }
+  .infoContainer {
+    padding: 1.2rem; }
+  .nav-logo {
+    display: none; }
+  .nav-item {
+    width: 7rem;
+    height: 4rem;
+    font-size: 1rem;
+    border: 1.5px solid black;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.9rem;
+    text-align: center; }
+  .project a {
+    font-size: 1rem !important; }
+  #about-me-container {
+    padding-bottom: 18vh !important;
+    padding: 1rem; }
+    #about-me-container img {
+      width: 40%;
+      height: 30%;
+      margin: 1rem;
+      float: right; }
+    #about-me-container p {
+      font-size: 1.3rem; } }
+
+/* Styles for Vertical tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+  h1 {
+    font-size: 2.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem; }
+  h2 {
+    font-size: 2rem;
+    padding-bottom: 1.5rem; }
+  h3 {
+    font-size: 1.7rem; }
+  #toTopBtn {
+    padding: 1.2rem;
+    left: 83%;
+    top: 85%;
+    font-size: 16px; }
+  #projectInfoContainer {
+    padding-bottom: 10rem; }
+  #projectsContainer {
+    width: 65%;
+    padding-bottom: 5rem; }
+  #awardContainer {
+    padding-bottom: 1vh; }
+    #awardContainer img {
+      height: 50%;
+      width: 50%; }
+  .infoContainer {
+    padding: 1.3rem; }
+  .projectsContainer2 {
+    padding-bottom: 1vh !important; }
+  .nav-item {
+    width: 7rem;
+    height: 6rem;
+    font-size: 1.1rem;
+    border: 1.5px solid black;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.9rem;
+    text-align: center; }
+  #about-me-container {
+    padding: 1rem; }
+    #about-me-container img {
+      width: 40%;
+      height: 30%;
+      margin: 1rem;
+      float: right; } }
+
+/* Styles for Horizontal tablets */
+@media (min-width: 1024px) {
+  #projectsContainer {
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 10rem; }
+  .projectsContainer2 {
+    padding-bottom: 1vh !important; }
+  h1 {
+    font-size: 3rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem; }
+  h2 {
+    margin-top: 1.5rem;
+    font-size: 2.5rem;
+    padding-bottom: 1.5rem; }
+  h3 {
+    font-size: 1.7rem; }
+  #toTopBtn {
+    padding: 1.2rem;
+    left: 84%;
+    top: 70%;
+    font-size: 20px; }
+  #projectInfoContainer {
+    padding-bottom: 9rem;
+    width: 90%; }
+  #clickerProjectContainer {
+    margin-bottom: 0rem; }
+  #awardContainer {
+    padding-bottom: 7vh; }
+    #awardContainer img {
+      height: 40%;
+      width: 40%; }
+  .infoContainer {
+    padding: 1.5rem; }
+    .infoContainer h2 {
+      font-size: 2rem; }
+  .intro-header {
+    margin: auto; }
+  .project {
+    width: 30%; }
+  .nav-item {
+    width: 9rem;
+    height: 4rem;
+    font-size: 1.1rem;
+    border: 1.5px solid black;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.9rem;
+    text-align: center; }
+  #about-me-container {
+    padding: 1rem;
+    width: 80%; }
+    #about-me-container img {
+      width: 30%;
+      height: 40%;
+      margin: 1rem;
+      float: right; }
+    #about-me-container p {
+      font-size: 1.2rem; } }
+
+/* Styles for laptops */
+@media (min-width: 1920px) {
+  body {
+    height: 110%; }
+  h1 {
+    font-size: 3.5rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem; }
+  .nav-logo {
+    width: 6.5rem !important;
+    height: 6.5rem !important; }
+  .nav-item {
+    width: 20rem;
+    height: 5rem;
+    font-size: 1.4rem;
+    border: 1.5px solid black;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.9rem;
+    text-align: center; }
+  #projectsContainer {
+    width: 100%;
+    flex-direction: row;
+    padding-bottom: 13vh; }
+    #projectsContainer h3 {
+      font-size: 1.5rem; }
+  .projectsContainer2 {
+    padding-bottom: 1vh !important; }
+  #projectInfoContainer {
+    width: 60%;
+    padding: 1rem;
+    padding-bottom: 10rem; }
+    #projectInfoContainer h1 {
+      font-size: 2.5rem; }
+    #projectInfoContainer button {
+      padding: 1.1rem;
+      width: 10rem;
+      font-size: 2rem; }
+  #awardContainer {
+    padding-bottom: 9vh; }
+    #awardContainer img {
+      height: 20%;
+      width: 20%; }
+  .infoContainer {
+    padding: 1.3rem;
+    width: 50%; }
+  #toTopBtn {
+    left: 90%;
+    top: 73%;
+    font-size: 1.5rem;
+    padding: 1.3rem; }
+  #imgContainer img {
+    display: block; }
+  #personalImg1 {
+    display: inline-block;
+    width: 19%;
+    margin: auto;
+    margin-top: 1rem;
+    border: 20px #46473E ridge;
+    border-radius: 30px; }
+  #personalImg2 {
+    display: inline-block;
+    width: 19%;
+    margin: auto;
+    margin-top: 1rem;
+    border: 20px #46473E ridge;
+    border-radius: 30px; }
+  #personalImg3 {
+    display: inline-block;
+    width: 19%;
+    margin: auto;
+    margin-top: 1rem;
+    border: 20px #46473E ridge;
+    border-radius: 30px; }
+  .project {
+    width: 23%; }
+  #about-me-container {
+    padding: 1.5rem;
+    padding-bottom: 1.5rem;
+    width: 60%;
+    height: 45vh; }
+    #about-me-container img {
+      max-width: 20%;
+      height: 80%;
+      margin: 1rem;
+      float: right; }
+    #about-me-container p {
+      font-size: 1.5rem;
+      line-height: 2.5rem; } }
+
+@media (min-width: 1921px) {
+  /* Styles for desktops */
+  body {
+    height: 120%; }
+  .nav-item {
+    width: 25rem;
+    height: 5rem;
+    font-size: 1.8rem;
+    border: 1.5px solid black;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0.9rem;
+    text-align: center; }
+  .nav-logo {
+    width: 8rem;
+    height: 8rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.3rem; }
+  h1 {
+    font-size: 4rem;
+    margin-top: 3rem; }
+  h2 {
+    margin-top: 1.5rem;
+    font-size: 2.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem; }
+  h3 {
+    font-size: 2.3rem; }
+  #projectsContainer {
+    padding-bottom: 15vh; }
+  #toTopBtn {
+    left: 90.25%;
+    top: 73%;
+    font-size: 1.5rem;
+    padding: 1.5rem; }
+  .project {
+    width: 18%;
+    height: 20%; } }
+
+@media (min-width: 2560px) {
+  body {
+    height: 100%; }
+  .projectShowCase {
+    width: auto;
+    padding: 2rem; }
+  #projectInfoContainer {
+    padding-bottom: 12rem; }
+  #about-me-label {
+    margin-top: 10vh !important; }
+  #about-me-container {
+    padding: 1.5rem;
+    padding-bottom: 1.5rem;
+    width: 60%;
+    height: 45vh; }
+    #about-me-container img {
+      width: 30%;
+      height: 80%;
+      margin: 1rem;
+      float: right; }
+    #about-me-container p {
+      font-size: 1.9rem;
+      line-height: 3rem; } }

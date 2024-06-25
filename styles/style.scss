@@ -1,0 +1,1038 @@
+
+//Fonts
+ 
+// Regular Display
+@font-face {
+    src: url(/fonts/Montserrat/static/Montserrat-Medium.ttf);
+    font-family: Montserrat;
+}
+
+// Text font
+@font-face {
+    src: url(/fonts/Lato/Lato-Regular.ttf);
+    font-family: Lato;
+}
+
+//Mix ins
+@mixin text_shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+//li style
+@mixin nav_item_style($width: 9rem, $height: 4.5rem, $font-size: $nav_element_text_size, $border: 1.5px solid black, $margin-top: 1.5rem, $margin-bottom: 1.5rem, $padding: 0.9rem) {
+    width: $width;
+    height: $height;
+    font-size: $font-size;
+    border: $border;
+    margin-top: $margin-top;
+    margin-bottom: $margin-bottom;
+    padding: $padding;
+    text-align: center;
+}
+
+//a inside li style
+@mixin nav_anchor_style {
+    color: black; 
+}
+
+//design logo mix in
+@mixin nav_logo_style {
+    width: 6rem; 
+    height: 6rem;
+    color: black;
+    font-size: $nav_element_text_size;
+    border: 1.5px solid black;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    padding: 0.4rem; 
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+//mixin for home images
+@mixin home_images ($display : inline-block, $width: 20%, $margin: auto, $margin-top: 1rem) {
+    display: $display;
+    width: $width;
+    // height: $height;
+    margin: $margin;
+    margin-top: $margin-top; 
+    border: 20px #46473E ridge; 
+    border-radius: 30px;
+}
+
+//Project container mixin
+@mixin project_style(
+    $background: $bg-gradient-default, 
+    $height: 60%, 
+    $margin: auto, 
+    $text-align: center, 
+    $border-width: 4px, 
+    $border-color: #00008B, 
+    $border-style: solid, 
+    $padding-top: 0.5rem, 
+    $border-radius: 30px, 
+    $margin-bottom: 2rem, 
+    $font-style: italic, 
+    $transition-property: border-color, 
+    $transition-duration: 0.5s, 
+    $transition-timing-function: ease
+) {
+    height: $height;
+    margin: $margin;
+    text-align: $text-align;
+    border: $border-width $border-color $border-style;
+    padding-top: $padding-top;
+    border-radius: $border-radius;
+    background: $background;
+    margin-bottom: $margin-bottom;
+    font-style: $font-style;
+    // Transition properties
+    transition: $transition-property $transition-duration $transition-timing-function;
+}
+
+// Variables
+$display_font: Montserrat;
+$text_font: Lato;
+$logo_font: LatoItalic;
+$display_font_color: rgb(255, 255, 255);
+$text_font_color: rgb(237, 226, 226);
+$display_text_size: 3.5rem;
+$text_size: 1.5rem;
+$nav_element_text_size: 1.1rem;
+$background_color:  #ADD8E6;
+$nav_background_color: #ffffff;
+$bg-gradient-default: linear-gradient(to right, #1E90FF, #8A2BE2);
+$bg-gradient-showcase: linear-gradient(to right, #75a2cf, #c83d97);
+$play-button-gradient-default: linear-gradient(to right, #EDF1F4, #C3CBDC);
+$play-button-gradient-onhover: linear-gradient(110.1deg, rgb(34, 126, 34) 2.9%, rgb(168, 251, 60) 90.3%);
+
+//Rules
+// Make an animation gradient background when it starts of as 
+//dark blue and turns lighter repeats infinitly, 
+//nav at the bottom will be that light blue color
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(to left, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    text-align: center;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+h1 {
+    font-family: $display_font;
+    color: $display_font_color;
+    font-size: $display_text_size;
+    @include text_shadow();
+} 
+
+h2 {
+    font-family: $text_font;
+    color: $text_font_color;
+    font-size: $text_size;
+    @include text_shadow();
+}
+
+h3 {
+    font-family: $text_font;
+    color: $text_font_color;
+    font-size: $text_size;
+    @include text_shadow();
+}
+
+p {
+    font-family: $text_font;
+    // color: $text_font_color;
+    font-size: $text_size;
+    @include text_shadow();
+}
+
+a {
+    text-decoration: none;
+}
+
+nav {
+    height: auto; 
+    background-color: $nav_background_color;
+    opacity: .98;
+}
+ 
+//Removing border from nav bar toggler
+.navbar-toggler {
+    margin: 0 auto; 
+    border: none;
+}
+// Changing default icon
+.navbar-toggler-icon {
+    background-image: url(/images/carret-up.png);
+    background-color: $nav_background_color;
+    background-size: contain; 
+    background-repeat: no-repeat; 
+    width: 3rem; 
+    height: 3rem;
+    border: none;
+}
+
+//Setting the direction to nav items
+.navbar-nav {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav-item {
+    @include nav_item_style();
+    @include text_shadow();
+    // Set initial text color to white
+    color: black;
+    // Defining Transition
+    transition-property: transform, box-shadow, color, background_color, border-width; 
+    transition-duration: 0.5s; 
+    transition-timing-function: ease; 
+    transition-delay: 0s; 
+    //adding shadow
+    // Adding Box Shadow
+    box-shadow: 0px 8px 6px rgba(0, 0, 0, 0.4);
+    //Centering inside anchor tag
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+
+    //Hover rule for nav elements
+    &:hover {
+        // @include nav_item_style();
+        transform: translateY(-15px);
+        box-shadow: 0px 15px 12px rgba(0, 0, 0, 0.5);
+        //Color and border transition
+        color: white;
+        transition-duration: 0.5s, 0.5s, 0.5s, 5s, 0.5s, 0.3s;
+        transition-property: border-width, background-color, transform, box-shadow, color; 
+        background-color: rgb(0, 0, 0);
+        border-width: 2.5px;
+    }
+}
+
+.nav-link {
+    @include nav_anchor_style();
+
+    .nav-item:hover & {
+        transition-duration: 0.5s;
+        transition-property: color; 
+        color: rgb(255, 255, 255); 
+    }
+}
+
+.nav-logo {
+    @include nav_logo_style();
+    //Transition for color, background-color, border-radius
+    transition-property: color, background-color, border-radius; 
+    transition-duration: 0.5s, 0.5s, 0.5s, 0.5s, 0.5s; 
+    transition-timing-function: ease; 
+    //Display styles
+    
+    //Hover Rule for .nav-logo
+    &:hover {
+        //Color and border transition
+        transition-property: color, background-color, border-radius; 
+        transition-duration: 0.5s, 0.5s, 0.5s, 0.5s, 0.5s; 
+        transition-timing-function: ease;
+        border-radius: 50px;
+        background-color: black;
+        color: white;
+        font-family: $logo_font;
+    } 
+}
+
+//*************HOME PAGE STYLING**************//
+//Intro text centered
+.intro-header {
+    text-align: center;
+}
+
+#imgContainer img {
+    display: none;
+}
+
+//Tetromino container
+#projectsContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+
+    .project { 
+        //include styling for .project
+        @include project_style();
+        
+        &:hover {
+            // Changing properties on hover
+            border-color: #ffd000;
+        }
+
+        a {
+            text-align: center;
+            font-size: 1.3rem;
+            display: block;
+            padding-bottom: 1rem;
+            color: rgb(225, 218, 218);
+            font-weight: 400;
+
+            &:hover {
+                color: rgb(255, 255, 0);
+            }
+        }
+    }
+
+    .projectShowCase { 
+        //include styling for .project
+        @include project_style($bg-gradient-showcase);
+
+        &:hover {
+            // Changing properties on hover
+            border-color: #eda201;
+        }
+
+        a {
+            text-align: center;
+            font-size: 1.2rem;
+            display: block;
+            padding-bottom: 1rem;
+            color: rgb(225, 218, 218);
+            font-weight: 400;
+
+            &:hover {
+                color: rgb(255, 238, 0);
+            }
+        }
+    }
+    
+}  
+
+//*************PROJECT PAGE STYLING**************//
+
+#projectInfoContainer {
+    width: 95%;
+    margin: auto;
+    margin-bottom: 5rem;
+    border: 2px solid black;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-sizing: border-box; /* Ensure padding and border are included in width and height calculations */
+    
+
+    h1 {
+        color: black;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+        @include text_shadow();
+    }
+
+    h2 {
+        color: black;
+        margin-top: 1.5rem;
+        @include text_shadow();
+    }
+
+}
+
+.projectInfo {
+    color: black;
+    opacity: 1;
+    padding: 1.2rem;
+    
+    @include text_shadow();
+
+    //button styling
+    .playButton {
+        padding: 1rem 2rem;
+        margin-top: 1.5rem;
+        background: $play-button-gradient-default;
+        border-radius: 20px;
+        font-size: 1.5rem;
+        // Transition Styles
+        transition-property: color, background-position; 
+        transition-duration: 1s; 
+        transition-timing-function: ease; 
+
+        &:hover {
+            background: $play-button-gradient-onhover;
+            color: white;
+        }
+    } 
+
+    //anchor styling
+    a {
+        color: yellow;
+
+        &:hover {
+            color: rgb(255, 187, 0);
+        }
+    }
+}
+
+//Scroll to top button styling
+#toTopBtn { 
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    top: 74%; /* Place the button at the top of the page */
+    left: 93%; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: rgb(109, 108, 108); /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 1.5rem; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+    font-size: 15px; /* Increase font size */
+
+    &:hover {
+        background-color: #555; /* Add a dark-grey background on hover */
+      }
+}
+  
+//Special words styling
+.tetromino {
+    color: rgb(255, 251, 0);
+}
+
+.achievement {
+    color: rgb(0, 255, 0);
+}
+
+.enemy {
+    color: red;
+}
+
+.XP {
+    color: rgb(0, 110, 255);
+}
+
+.money {
+    color:rgb(0, 255, 0);
+}
+
+// Styling Credentials Page
+.document {
+    color: inherit;
+    text-decoration: underline;
+
+    &:hover {
+        color: rgb(246, 255, 0);
+    }
+}
+
+.awardsLabel {
+    margin-top: 3vh;
+    color: white;
+}
+
+.infoContainer {
+    width: 85%;
+    height: 100%;
+    margin: auto;
+    border: 2px solid black;
+    border-radius: 30px;
+    padding: 1.5rem;
+    line-height: 2rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-sizing: border-box;
+    
+    h2 {
+        color: rgb(43, 43, 43);
+        margin: 0;
+        padding: 0;
+    }
+}
+
+#awardContainer {
+    img {
+        width: 100%;
+    }
+}
+
+// About Me Styling
+#about-me-container {
+    padding-bottom: 14vh;
+    padding: 0.5rem;
+    
+    img {
+        width: 60%;
+        height: 30%;
+        margin: 1rem; 
+        border-radius: 30px;
+    }
+}
+
+//MEDIA QUERIES FOR SCREEN SIZES
+
+/* Styles mobile devices */
+@media (min-width: 375px) and (max-width: 666px) {
+    //Customize h1 tag for mobile
+    h1 {
+        font-size: 2rem; 
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    //Customize Project's label
+    h2 {
+        font-size: 1.65rem;
+        padding-bottom: 1.5rem;
+    }
+
+    
+
+    #clickerProjectContainer {
+        margin-bottom: 4.8rem !important;
+    }
+
+    //Stlyling text size in infoProject
+    #projectInfoContainer {
+        padding-bottom: 3.4rem;
+
+        p {
+            font-size: 1.3rem;
+        }
+    }
+
+    // To Top button
+    #toTopBtn {
+        padding: .8rem;
+        left: 72%;
+        top: 81%;
+        font-size: 14px;
+    }
+
+    //Hide the logo first
+    .nav-logo { 
+        display: none;
+    }
+
+    //Change the size of nav items
+    .nav-item {
+        @include nav_item_style(5rem, 2.8rem, 0.75rem);
+    }
+
+    // Project 
+    .project {
+        a { 
+            font-size: 1rem !important;
+        }
+    } 
+
+    // About me page styling
+    #about-me-container {
+        padding-bottom: 10vh !important;
+
+        p{
+            font-size: 1.3rem;
+        }
+    }
+}
+
+//Horizontal mobile devices
+@media (min-width: 667px) and (max-width: 767px) {
+    
+    //Customize h1 tag for mobile
+    h1 {
+        font-size: 2rem; 
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    //Customize Project's label
+    h2 {
+        font-size: 1.65rem;
+        padding-bottom: 1.5rem;
+    }
+
+    //Paragraph styling
+    p {
+        font-size: 1.1rem;
+    }
+
+    #projectInfoContainer {
+        padding-bottom: 10rem;
+    } 
+
+    // To Top button
+    #toTopBtn {
+        padding: .8rem;
+        left: 84%;
+        top: 65%;
+        font-size: 14px;
+    }
+
+    #projectsContainer {
+        width: 55%; 
+    }
+
+    #clickerProjectContainer {
+        margin-bottom: 4.8rem !important;
+    }
+
+    //Credentials Page restyling
+    
+    #awardContainer {
+        img {
+            height: 30%;
+            width: 50%;
+        }
+    }
+
+    .infoContainer {
+        padding: 1.2rem;
+    }
+
+    //Hide the logo first
+    .nav-logo { 
+        display: none;
+    }
+
+    //Change the size of nav items
+    .nav-item {
+        @include nav_item_style(7rem, 4rem, 1rem);
+    }
+
+    // Project 
+    .project {
+        a { 
+            font-size: 1rem !important;
+        }
+    }
+
+    // About me page styling
+    #about-me-container {
+        padding-bottom: 18vh !important;
+        padding: 1rem;
+        
+        img {
+            width: 40%;
+            height: 30%;
+            margin: 1rem;
+            float: right;
+        }
+
+        p{
+            font-size: 1.3rem;
+        }
+    }
+    
+}
+
+/* Styles for Vertical tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+    
+    //Customize h1 tag for mobile
+    h1 {
+        font-size: 2.5rem;  
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    //Customize Project's label
+    h2 {
+        font-size: 2rem;
+        padding-bottom: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.7rem;
+    }
+
+    // To Top button
+    #toTopBtn {
+        padding: 1.2rem;
+        left: 83%;
+        top: 85%;
+        font-size: 16px;
+    }
+
+    #projectInfoContainer {
+        padding-bottom: 10rem;
+    }
+
+    #projectsContainer {
+        width: 65%; 
+        padding-bottom: 5rem;
+    }
+
+    //Credentials styling
+    #awardContainer {
+        padding-bottom: 1vh;
+        
+        img {
+            height: 50%;
+            width: 50%;
+        } 
+    }
+
+    .infoContainer {
+        padding: 1.3rem;
+    }
+
+    //ProjectContainer correction
+    .projectsContainer2 {
+        padding-bottom: 1vh !important;
+    }
+
+    //Change the size of nav items
+    .nav-item {
+        @include nav_item_style(7rem, 6rem, 1.1rem);
+    }
+
+    // About me page styling
+    #about-me-container {
+        padding: 1rem;
+        
+        img {
+            width: 40%;
+            height: 30%;
+            margin: 1rem;
+            float: right;
+        }
+    }
+}
+
+/* Styles for Horizontal tablets */
+@media (min-width: 1024px) {
+    
+    // Flex direction of project container
+    #projectsContainer {
+        width: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 10rem; 
+    }
+
+    //ProjectContainer correction
+    .projectsContainer2 {
+        padding-bottom: 1vh !important;
+    }
+
+    //Customize h1 tag for mobile
+    h1 {
+        font-size: 3rem;  
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    //Customize Project's label
+    h2 {
+        margin-top: 1.5rem;
+        font-size: 2.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.7rem;
+    }
+
+    // To Top button
+    #toTopBtn {
+        padding: 1.2rem;
+        left: 84%;
+        top: 70%;
+        font-size: 20px;
+    }
+
+    //Project container styles
+    #projectInfoContainer {
+        padding-bottom: 9rem;
+        width: 90%;
+    }
+
+    #clickerProjectContainer {
+        margin-bottom: 0rem;
+    }
+
+    //Credentials styling
+    #awardContainer {
+        padding-bottom: 7vh;
+
+        img {
+            height: 40%;
+            width: 40%;
+        } 
+    }
+
+    .infoContainer {
+        padding: 1.5rem;
+        h2 {
+            font-size: 2rem;
+        }
+        
+    }
+
+    //Center intro-header
+    .intro-header {
+        margin: auto;
+    }
+
+    //Item sizing
+    .project {
+        width: 30%;
+    }
+
+    //Change the size of nav items
+    .nav-item {
+        @include nav_item_style(9rem, 4rem, 1.1rem);
+    }
+
+    // About me page styling
+    #about-me-container {
+        padding: 1rem;
+        width: 80%;
+        
+        img {
+            width: 30%;
+            height: 40%;
+            margin: 1rem;
+            float: right;
+        }
+
+        p{
+            font-size: 1.2rem;
+        }
+    }
+}
+
+/* Styles for laptops */
+@media (min-width: 1920px) {
+    //Extending the body height
+    body { 
+        height: 110%;
+    } 
+ 
+    //Customize h1 tag for mobile
+    h1 {
+        font-size: 3.5rem;  
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    } 
+
+    //Reduce the size of the logo a bit
+    .nav-logo {
+        width: 6.5rem !important;
+        height: 6.5rem !important;
+    }
+
+    .nav-item {
+        @include nav_item_style(20rem, 5rem, 1.4rem);
+    } 
+    
+    #projectsContainer { 
+        width: 100%;
+        flex-direction: row;
+        padding-bottom: 13vh;
+
+        h3 {
+            font-size: 1.5rem;
+        } 
+    }
+
+    .projectsContainer2 {
+        padding-bottom: 1vh !important;
+    }
+
+    #projectInfoContainer {
+        width: 60%;
+        padding: 1rem;
+        padding-bottom: 10rem;
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        button {
+            padding: 1.1rem;
+            width: 10rem;
+            font-size: 2rem;
+        }
+    }
+
+    //Credentials
+    #awardContainer {
+        padding-bottom: 9vh;
+        
+        img {
+            height: 20%;
+            width: 20%;
+        } 
+    }
+
+    .infoContainer {
+        padding: 1.3rem;
+        width: 50%;
+    }
+    
+    // To Top button
+    #toTopBtn {
+        left: 90%;
+        top: 73%;
+        font-size: 1.5rem;
+        padding: 1.3rem;
+    }
+
+    #imgContainer img {
+        display: block;
+    }
+
+    #personalImg1 {
+        @include home_images(inline-block, 19%);
+    }
+
+    #personalImg2 {
+        @include home_images(inline-block, 19%);
+    }
+
+    #personalImg3 {
+        @include home_images(inline-block, 19%);
+    }
+
+    //Item sizing
+    .project {
+        width: 23%;
+    }
+
+    // About me page styling
+    #about-me-container {
+        padding: 1.5rem;
+        padding-bottom: 1.5rem;
+        width: 60%;
+        height:45vh;
+        
+        img {
+            max-width: 20%;
+            height: 80%;
+            margin: 1rem;
+            float: right;
+        }
+
+        p{
+            font-size: 1.5rem;
+            line-height: 2.5rem;
+        }
+    }
+    
+}
+
+// Styles for XL screens
+@media (min-width: 1921px) {
+    /* Styles for desktops */
+
+    //Reseting body styling
+
+    body {
+        height: 120%;
+    }
+
+    .nav-item {
+        @include nav_item_style(25rem, 5rem, 1.8rem);
+    }
+
+    .nav-logo {
+        width: 8rem; 
+        height: 8rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+    }
+
+    //Customize h1 tag for mobile
+    h1 {
+        font-size: 4rem;  
+        margin-top: 3rem;
+    }
+
+    //Customize Project's label
+    h2 {
+        margin-top: 1.5rem;
+        font-size: 2.5rem;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+    }
+
+    h3 {
+        font-size: 2.3rem;
+    }
+
+    #projectsContainer {
+        padding-bottom: 15vh;
+    }
+
+    // To Top button
+    #toTopBtn {
+        left: 90.25%;
+        top: 73%;
+        font-size: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    //Item sizing
+    .project {
+        width: 18%;
+        height: 20%;
+    }
+}
+
+@media (min-width: 2560px) {
+    body {
+        height: 100%;
+    }
+
+    .projectShowCase {
+        width: auto;
+        padding: 2rem;
+    }
+
+    #projectInfoContainer {
+        padding-bottom: 12rem;
+    }
+
+    // About me page styling
+    #about-me-label {
+        margin-top: 10vh !important;
+    }
+
+    #about-me-container {
+        padding: 1.5rem;
+        padding-bottom: 1.5rem;
+        width: 60%;
+        height:45vh;
+
+        img {
+            width: 30%;
+            height: 80%;
+            margin: 1rem;
+            float: right;
+        }
+
+        p{
+            font-size: 1.9rem;
+            line-height: 3rem;
+        }
+    }
+}
+ 

@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "watch:scss": "node-sass -w styles/style.scss styles/style.css"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "node-sass": "^9.0.0",
+    "puppeteer": "^22.12.0"
+  }
+}
