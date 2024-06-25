@@ -1,0 +1,98 @@
+<!-- Started: 1/26/2024 -->
+<!-- Finished: 2/7/2024 -->
+<!-- Bogdan Gura -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="/Projects/FullStackClicker/Css/clicker.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/Projects/FullStackClicker/images/fullStackClicker-favicon.png" type="image/x-icon" sizes="16x16 32x32">
+    <title>Full Stack Clicker</title>
+</head>
+<body>
+    <div class="container">
+        <div class="money-img-container">
+            <img alt="spatula" id="job" src="/Projects/FullStackClicker/images/spatula.jpg">
+            <h1>Money: <span id="moneyScoreElement" class="money">0</span></h1>
+            <h2>MPS: <span id="money-per-second-field" class="money">0</span></h2>
+            <h2>Money Goal: <span id="currentBalance" class="money">0</span>/<span id="moneyGoal" class="money"></span></h2>
+            <button id="openMenuBtn">Menu</button>
+
+            <p id="saved-text">Progress Saved</p>
+            <button id="saved-btn">Save Progress</button>
+        </div>
+
+        <div class="xp-img-container">
+            <img alt="js-book" id="jsBook" src="/Projects/FullStackClicker/images/download.jpeg">
+            <h1>XP: <span id="xpScoreElement" class="xp">0</span></h1>
+        </div>
+
+        <div class="timer-container">
+            <p id="countdown"></p>
+        </div>
+
+        <div class="store-container"></div>
+
+        <!-- Actions menu is where you can activate 
+        Upgrades and buy assets -->
+        <div class="view-assets-container"></div>
+        <div class="actions-menu-container"></div>
+        <div class="info-container">Select an item or a project to receive info about it</div>
+        
+    </div>
+
+    <!-- Pop up modals -->
+
+    <!-- Pop up menu -->
+    <dialog id="popup-menu">
+    <!-- Heading -->
+    <h1>Menu <button id="closeMenuBtn"><span id="X">X</span></button></h1> 
+
+        <a href="menu.html">
+            <button>Quit</button>
+        </a>
+    
+    </dialog>
+
+     <!-- Pop up lost -->
+     <dialog id="popup-won">
+        <h1>You Won</h1> 
+        <!-- When Quit button is clicked it send the 
+        player to the menu -->
+
+        <a href="menu.html">
+            <button>Quit</button>
+        </a>
+        
+    </dialog>
+
+    <!-- Pop up lost -->
+    <dialog id="popup-lost">
+        <h1>You Lost</h1> 
+        <!-- When Quit button is clicked it send the 
+        player to the menu -->
+
+        <a href="menu.html">
+            <button>Quit</button>
+        </a>
+        
+    </dialog>
+
+    <!-- Audio elements -->
+    <audio id="clickSoundXP">
+        <source src="/Projects/FullStackClicker/Sound Effects/mixkit-cool-interface-click-tone-2568.wav" type="audio/mp3">
+    </audio>
+    
+    <audio id="clickSoundMoney">
+        <source src="/Projects/FullStackClicker/Sound Effects/collectcoin-6075.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="clickSoundPurchase">
+        <source src="/Projects/FullStackClicker/Sound Effects/cash-register-purchase-87313.mp3" type="audio/mp3">
+    </audio>
+
+<!-- Personal JS -->
+<script src="/Projects/FullStackClicker/Scripts/clicker.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+body {
+    background-image: url(images/background.webp);
+    background-repeat: none;
+    color: gold;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0;
+    padding: 0; 
+}
+
+label {
+    font-size: 2rem;
+}
+
+button:hover {
+    background-color: brown;
+    color: rgb(255, 183, 0);
+}
+
+img {
+    display: block;
+}
+
+select {
+    background-color: rgb(191, 191, 191);
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 5px;
+}
+
+#selection-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    align-items: center;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+#info-container {
+    width: 40vh;
+    height: 65vh;
+    background-color: grey;
+    color: white;
+    margin: auto;
+    text-align: center;
+    padding: 1rem;
+}
+
+#info-container img {
+    height: 90%;
+    width: 100%;
+}
+
+/* Media Queries */
+@media (min-width: 667px) {
+
+    #info-container {
+        width: 60vh;
+        height: 85vh;
+        padding-bottom: 1.5rem;
+        background-color: grey;
+    }
+}
+
+@media (min-width: 768px) {
+
+    label {
+        font-size: 2.5rem;
+    }
+
+    select {
+        font-size: 1.2rem;
+    }
+
+    button {
+        font-size: 1.4rem;
+    }
+
+    #info-container {
+        width: 50vh;
+        height: 65vh;
+        background-color: grey;
+    }
+}
+
+@media (min-width: 1920px) {
+    body {
+        background-size: cover;
+    }
+}
+
+@media (min-width: 2560px) {
+    p {
+        font-size: 1.5rem;
+        text-align: start;
+    }
+
+    span,
+    select,
+    button {
+        font-size: 1.5rem;
+    }
+}
+
