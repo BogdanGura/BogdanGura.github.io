@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/Projects/FullStackClicker/images/fullStackClicker-favicon.png" type="image/x-icon" sizes="16x16 32x32">
+    <link href="/Projects/FullStackClicker/Css/difficulty.css" rel="stylesheet">
+    <title>Difficulty Selection</title>
+</head>
+<body>
+    <div class="main-container">
+
+        <div class="difficulty-container">
+            <h1>Select Difficulty</h1>
+
+            <!-- Difficulty Selectors -->
+            <a onclick="clearLocalStorageEasy()">
+                <button id="easy" class="easy-btn">Frontend Explorer</button>
+            </a>
+            
+            <a onclick="clearLocalStorageMid()">
+                <button id="medium" class="mid-btn">Backend Enthusiast</button>
+            </a>
+
+            <a onclick="clearLocalStorageHard()">
+                <button id="hard" class="hard-btn">Full Stack Master</button>
+            </a>
+
+            <a href="menu.html">
+                <button>Back</button>
+            </a>
+        </div>
+
+        <div class="difficulty-info-container">
+            <img id="image" src="/Projects/FullStackClicker/images/no-selection-icon.png">
+            <h2 id="textArea">Select a difficulty to view information about it.</h2>
+        </div>
+        
+    </div>
+
+<script src="/Projects/FullStackClicker/Scripts/difficulty.js"></script>
+</body>
+</html>

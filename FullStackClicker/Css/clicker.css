@@ -1,0 +1,289 @@
+/* Bogdan Gura */
+body
+{
+    background-color: rgb(156, 156, 156);
+}
+
+p{
+    margin: 2px;
+    font-weight: bold;
+    font-size:medium;
+}
+
+.container
+{
+    width: 88.5%;
+    height: 830px;
+    border: 5px black solid;
+    position: relative;
+}
+
+.money-img-container
+{
+    width: 352px;
+    height: 98.5%;
+    /* border: 5px rgb(0, 255, 55) solid; */
+    display: inline-block;
+    vertical-align: top;
+}
+
+.xp-img-container
+{
+    width: 350px;
+    height: 100%;
+    border-left: 5px black solid;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* Stylign images inside of the containers */
+.money-img-container img,
+.xp-img-container img
+{
+    width: 85%;
+    margin-top: 50%;
+    margin-left: 3%;
+}
+
+.money-img-container img:hover,
+.xp-img-container img:hover
+{
+    width: 90%;
+    cursor: pointer;
+}
+
+.store-container
+{
+    width: 566px;
+    height: 20.1%;
+    border-bottom: 5px black solid;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+
+/* Store Items Styling */
+.store-container div
+{
+    width: 65px;
+    height: 65px;
+    border: 4px green ridge;
+    display: inline-block;
+    margin-left: 40px;
+    margin-top: 10px;
+
+    /* Invisible styling */
+    display: none;
+    transition: display 1s ease;
+}
+
+.store-container div:hover
+{
+    border: 4px rgb(4, 205, 4) ridge;
+}
+
+.timer-container
+{
+    width: 245px;
+    height: 21%;
+    border-right: 5px black solid;
+    border-left: 5px black solid;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+}
+
+.actions-menu-container
+{
+    width: 559px;
+    height: 78%;
+    /* border: 5px rgb(255, 0, 51) solid; */
+    display: inline-block;
+    position: absolute;
+    top: 21%;
+    left: 70%;
+    overflow: auto;
+}
+
+.view-assets-container
+{
+    width: 595px;
+    height: 79% !important;
+    border-bottom: none !important;
+    display: inline-block;
+    position: absolute;
+    top: 21%;
+}
+
+.info-container
+{
+    width: 340px;
+    height: 21%;
+    border-right: 5px black solid;
+    display: inline-block;
+    position: absolute;
+    right: 30%;
+}
+
+/* Scores styling */
+
+.money
+{
+    color: #00ff00;
+}
+
+.xp
+{
+    color:aqua
+}
+
+/* Timer styling */
+#countdown
+{
+    font-family: 'Digital-7', Arial, sans-serif;;
+    color: red;
+    font-size: 50px;
+    margin-top: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Styling for tooltips */
+.tooltip-toggler .tooltip
+{
+    border: 2px black solid;
+    width: 500px;
+    background-color: rgb(255, 106, 0);
+    display: none;
+}
+
+.can-afford
+{
+    color: red;
+    font-weight: bold;
+}
+
+/* Projects Styling */
+.project{
+    border: 3px solid black;
+    height: 100px;
+    background-color: rgb(0, 173, 173);
+    display: none;
+}
+
+.project:hover{
+    border: 5px solid rgb(15, 180, 6); 
+    cursor: pointer;
+}
+
+.project h1{
+    margin-left: 10px;
+}
+
+.project-cooldown{
+    border: 3px solid black;
+    border: 5px solid rgb(255, 0, 0); 
+    background-color: grey;
+    pointer-events: none;
+}
+
+.project-cooldown h1{
+    margin-left: 10px;
+}
+
+
+.coolDownDigits{
+    color: red;
+    font-size: 20px;
+}
+
+.asset{
+    background-color: rgb(255, 132, 0);
+}
+
+/* view-assets-container styling */
+.view-assets-container {
+    width: 595px;
+    height: 78%;
+    border: 5px black solid;
+    display: inline-block;
+    position: absolute;
+    top: 21%;
+    white-space: nowrap; 
+}
+
+.view-assets-container div{
+    width: 100%;
+    background-color: rgb(229, 250, 215);
+    height: 24.3%;
+    border: 1px solid black;
+    overflow-y: auto;
+    display: none;
+}
+
+.view-assets-container div img{
+    width: 65px;
+    height: 65px;
+    border: 4px rgb(113, 113, 113) ridge;
+    display: inline-block;
+    margin-left: 40px;
+    margin-top: 50px;
+    /* overflow-y: auto; */
+}
+
+/* Lvls of items styling */
+.lvl1,
+.lvl2,
+.lvl3{
+    display: none;
+}
+
+/* Styling for saved button */
+#saved-text{
+    font-size: 25px;
+    display: none;
+    color:#00ff00;
+}
+
+/* Menu and save progress buttons */
+#openMenuBtn,
+#saved-btn {
+    padding: 1rem;
+    font-size: 1.2rem;
+    background-color: black;
+    color: white;
+}
+
+#openMenuBtn:hover,
+#saved-btn:hover {
+    color: rgb(0, 255, 0);
+    cursor: pointer;
+}
+
+/* Dialog boxes styling */
+dialog {
+    width: 17vh;
+}
+
+dialog h1 {
+    font-size: 3rem;
+}
+
+dialog button {
+    padding: 0.7rem;
+    font-size: 1.2rem;
+    background-color: black;
+    color: white;
+}
+
+dialog button:hover {
+    color: rgb(0, 255, 0);
+    cursor: pointer;
+}
+
+/* Media Query */
+@media(min-width: 2560px) {
+    .container {
+        width: 74%;
+    }
+}

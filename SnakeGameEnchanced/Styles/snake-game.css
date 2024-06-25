@@ -1,0 +1,355 @@
+/* Wooden Log font */
+@font-face {
+    src: url(/fonts/junglefever/JungleFeverNF.ttf);
+    font-family: wooden-log;
+}
+/* Make body a display flex so it can cenetr my pop ups */
+body {
+    color: white;
+    background-image: url("/Projects/SnakeGameEnchanced/Images/snake-background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 160%;
+    font-family: wooden-log;
+}
+
+h1,
+h3 {
+    color: white;
+}
+
+/* Achievement Earned h4 styled */
+h4 {
+    margin-bottom: 0px;
+    padding-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+/* General Modal Styling */
+dialog {
+    width: 40vh;
+    height: 23vh;
+    text-align: center;
+    margin-bottom: 60%;
+    /* Border */
+    border: 10px solid transparent;
+    border-image: url('/Projects/SnakeGameEnchanced/Images/wood-1.jpeg') 30 round;
+    /* background-color */
+    background-color: #402905;
+    /* positioning */
+    position: relative;
+}
+
+/* buttons inside modals */
+dialog button {
+    font-size: 2.5rem;
+    margin-top: 1rem;
+    padding: .5rem;
+}
+
+/* h1 in dialog */
+dialog h1 {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+}
+
+/* Button Styling */
+button {
+    background-color: #76552b;
+    color: white;
+}
+
+button:hover {
+    color: red;
+}
+
+/* Board Container Styling */
+.board-container {
+    /* Height and Width */
+    height: 100%;
+    width: 67.8%;
+    /* Border */
+    border: 10px solid transparent;
+    border-image: url('/Projects/SnakeGameEnchanced/Images/wood-1.jpeg') 30 round;
+    /* Center it horizontaly */
+    margin: auto;
+    /* Move the container down a bit */
+    margin-top: 5%;
+}
+
+/* Snake game panel styling */
+.snake-game-panel {
+    /* Background image */
+    background-image: url("/Projects/SnakeGameEnchanced/Images/wood-bkg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 190%;
+}
+
+/* Styling the board */
+.board {
+    display: flex;
+    flex-wrap: wrap;;
+}
+
+.board div {
+    background-color: #76552b;
+    width: 50px;
+    height: 50px;
+    /* Border Styling */
+    border: 1px solid #402905;
+}
+
+/* Button container style */
+.btn-container {
+    width: 19.5vh;
+    height: 16vh;
+    margin: auto;
+    margin-top: 3rem;
+    /* Border */
+    border: 10px solid transparent;
+    border-image: url('/Projects/SnakeGameEnchanced/Images/wood-1.jpeg') 30 round;
+    /* Background color */
+    background-color: #402905;
+    /* padding */
+    padding-top: .8rem;
+    padding-bottom: 15.5rem;
+}
+
+/* Buttons inside button container styling */
+.btn-container button {
+    background-color: #76552b;
+    color: white;
+    border: 2px solid #402905;
+}
+
+/* Container buttons on hover and active styles*/
+.btn-container button:hover {
+    background-color: #5c4221 !important;
+    color: yellow !important;
+}
+
+.btn-container button:active {
+    background-color: #5c4221 !important;
+    color: red !important;
+}
+
+/* Snake style */
+.snake {
+    background-color: orange !important;
+}
+
+/* Apple styling */
+.apple {
+    background-image: url("/Projects/SnakeGameEnchanced/Images/apple.png");
+    background-size: contain;
+}
+
+/* mine styling */
+.mine {
+    background-image: url("/Projects/SnakeGameEnchanced/Images/mine.png");
+    background-size: contain;
+}
+
+/* Achievement Field Styling */
+#achievementField {
+    font-size: 1.4rem;
+}
+
+/* Score label styling */
+#score {
+    margin-right: 3%;
+}
+
+/* Record score styling */
+#recordScore {
+    margin-right: 51%;
+}
+
+/* Menu Button */
+#openMenuBtn {
+    background-color: #76552b;
+    color: white;
+}
+
+/* Quit buttons have a small margin to the right */
+#quitGameBtn1,
+#quitGameBtn2 {
+    margin-right: 4rem;
+}
+
+/* Close menu button */
+#closeMenuBtn {
+    background-color: red;
+    border: none;
+    position: absolute;
+    top: -5%;
+    right: 0%;
+}
+
+#closeMenuBtn:hover {
+    color: grey;
+}
+
+/* Tablet control buttons */
+#btn-up {
+    display: block;
+    margin-left: 36%;
+}
+
+#btn-left {
+    margin-left: 8%;
+    margin-right: 23%;
+}
+
+#btn-down {
+    display: block;
+    margin-left: 36%;
+}
+
+/* Horizontal Tablet */
+@media (min-width: 1024px) {
+    dialog {
+        margin-bottom: 35%;
+    }
+
+    dialog h1 {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+        margin-top: 0;
+    }
+
+    dialog h3 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        margin-top: .5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    dialog button {
+        font-size: 1.5rem;
+        margin-bottom: 0rem;
+    }
+
+    .board-container {
+        /* Height and Width */
+        height: 100%;
+        width: 50.8%;
+        margin-top: 0rem;
+    }
+
+    .btn-container {
+        width: 24.5vh;
+        height: 8vh;
+        padding-bottom: 12rem;
+        margin-top: 0rem;
+    }
+
+    .btn-container button {
+        font-size: 1rem;
+    }
+
+    #quitGameBtn1,
+    #gameRestart1 {
+    font-size: 2rem;
+    padding: 1rem;
+}
+    
+}
+
+/* PC Screen */
+@media (min-width: 1920px) {
+
+    dialog {
+        margin-bottom: 27%;
+    }
+
+    dialog h1 {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+        margin-top: 1.5rem;
+    }
+
+    dialog h3 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        margin-top: .5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    dialog button {
+        font-size: 2rem;
+        margin-top: 3rem;
+    }
+
+    .board-container {
+        /* Height and Width */
+        height: 100%;
+        width: 27.11%;
+        margin-top: 8rem;
+    }
+
+    .btn-container {
+        width: 18vh;
+        height: 8vh;
+        padding-bottom: 14rem;
+        margin-top: 6rem;
+    }
+
+    .btn-container button {
+        font-size: 1.5rem;
+    }
+}
+
+/* XLL Screens */
+@media (min-width: 2560px) {
+    dialog {
+        margin-bottom: 27%;
+    }
+
+    dialog h1 {
+        font-size: 6rem;
+        margin-bottom: 2rem;
+        margin-top: 1.5rem;
+    }
+
+    dialog h3 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        margin-top: .5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    dialog button {
+        font-size: 5rem;
+        margin-top: 3rem;
+    }
+
+    .board-container {
+        /* Height and Width */
+        height: 100%;
+        width: 20.399%;
+        margin-top: 22rem;
+    }
+
+    .btn-container {
+        width: 14vh;
+        height: 12vh;
+        padding-bottom: 16rem;
+        margin-top: 6rem;
+    }
+
+    .btn-container button {
+        font-size: 1.9rem;
+    }
+
+    #quitGameBtn1,
+    #gameRestart1 {
+        font-size: 4rem;
+        padding: 1rem;
+    }
+}
+
+
+
+

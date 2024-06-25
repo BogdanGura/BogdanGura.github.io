@@ -1,0 +1,140 @@
+/* Wooden Log font */
+@font-face {
+    src: url(/fonts/junglefever/JungleFeverNF.ttf);
+    font-family: wooden-log;
+}
+
+body {
+    background-image: url(/images/jungle-achievement-bkg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1 {
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    margin-bottom: 4rem;
+    font-size: 3rem;
+    padding: 2rem;
+    width: 80%;
+    margin-left: 7rem;
+    background-color: #76552b;
+    /* Border */
+    border: 10px solid transparent;
+    border-image: url('/Projects/SnakeGameEnchanced/Images/wood-1.jpeg') 30 round;
+}
+
+button {
+    padding: 10px;
+    width: 100px;
+    background-color: #76552b;
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;;
+    margin-top: 4rem;
+    font-size: 2rem;
+}
+
+button:hover {
+    color: red;
+}
+
+img {
+    width: 20%;
+    height: auto; /* Maintain aspect ratio */
+    border: 1vh #42A362 ridge;
+    filter: grayscale(1);
+    margin: 2vh; /* Add some margin to avoid images sticking together */
+}
+
+.container {
+    margin: auto;
+    margin-top: 5%;
+    height: 100vh;
+    text-align: center;
+}
+
+.achievement-container {
+    margin: auto;
+    padding: 3vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 50vh;
+    /* Border */
+    border: 10px solid transparent;
+    border-image: url('/Projects/SnakeGameEnchanced/Images/wood-1.jpeg') 30 round;
+    /* Background color */
+    background-color: #402905;
+
+}
+
+/* Media Queries */
+@media (min-width: 1024px) {
+
+    h1 {
+        width: 60%;
+        margin-left: 18.5rem
+    }
+
+    .container {
+        margin-top: 1.5%;
+    }
+
+    .achievement-container {
+        width: 70vh;
+    }
+}
+
+@media (min-width: 1920px) {
+
+    h1 {
+        width: 60%;
+        margin-bottom: 6rem;
+        margin-left: 22rem;
+        font-size: 4rem;
+    }
+
+    button {
+        font-size: 3rem;
+        width: 16vh;
+        text-align: center;
+    }
+
+    .container {
+        margin-top: 1%;
+    }
+
+    .achievement-container {
+        width: 90vh;
+    }
+}
+
+@media (min-width: 2560px) {
+
+    h1 {
+        width: 60%;
+        margin-left: 22rem;
+        font-size: 6rem;
+    }
+
+    img {
+        width: 18%;
+    }
+
+    button {
+        margin-top: 6rem;
+        padding: 3rem;
+        font-size: 5rem;
+        width: 16vh;
+        text-align: center;
+    }
+
+    .container {
+        margin-top: 6%;
+    }
+
+    .achievement-container {
+        width: 80vh;
+    }
+}
