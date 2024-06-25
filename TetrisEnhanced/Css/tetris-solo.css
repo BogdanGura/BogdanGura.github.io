@@ -1,0 +1,270 @@
+body{
+    background-color: grey;
+    height: 100vh;
+    width: 100%;
+    color: white;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}
+
+a:hover{
+    color: black;
+    text-decoration: none;
+}
+
+button{
+    background-color: gray;
+}
+/* Styling the board */
+.board-container{
+    margin: auto;
+    margin-top: 100px;
+    width: 710px;
+    height: 710px;
+    border: 5px rgb(255, 102, 0) ridge;
+}
+
+#game-board{
+    width: 350px;
+    height: 100%;
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* #stats-board{
+    width: 200px;
+} */
+
+#tetromino-screen-label{
+    margin-left: 50px;
+}
+
+#next-tetromino-screen{
+    width: 230px;
+    height: 140px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+    float: right;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0px;
+}
+
+#next-tetromino-screen div
+{
+    background-color: black;
+    width: 48px;
+    height: 48px;
+}
+
+/* Styling for small divs inside the 
+   game board
+*/
+#game-board div{
+    background-color: black;
+    /* border: 1px rgb(117, 8, 108) solid; */
+    width: 35px;
+    height: 35px;
+}
+
+@keyframes flashColors {
+    0% {
+        background-color: rgb(255, 255, 255);
+    }
+    100% {
+        background-color: rgb(0, 0, 0);
+    }
+}
+
+.flash {
+    animation: flashColors 0.5s infinite; 
+}
+
+/* 
+Styling for tetrominoes
+*/
+
+.I {
+    background-color:#011efe !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+  }
+/* I shadow */
+.I-shadow{
+    border:1px #011efe solid !important;
+}
+
+.O{
+    background-color: #fdfe02 !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+}
+/* O shadow */
+.O-shadow{
+    border:1px #fdfe02 solid !important;
+}
+
+.S{
+    background-color: #fe0000 !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+}
+/* S shadow */
+.S-shadow{
+    border:1px #fe0000 solid !important; 
+}
+
+.Z{
+    background-color: #0bff01 !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+}
+/* Z shadow */
+.Z-shadow{
+    border:1px #0bff01 solid !important; 
+}
+
+.L{
+    background-color: #ffac00 !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3) !important;
+}
+/* L shadow */
+.L-shadow{
+    border:1px #ffac00 solid !important; 
+}
+
+.J{
+    background-color: #f52789 !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+}
+/* L shadow */
+.J-shadow{
+    border:1px #f52789 solid !important;
+}
+
+.T{
+    background-color: #e900ff !important; 
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), -3px -3px 5px rgba(0, 0, 0, 0.3);
+}
+/* L shadow */
+.T-shadow{
+    border:1px #e900ff solid !important; 
+}
+
+/* class for tetrominoes (detection) */
+.tetromino{
+    /* Filler rule, doesn't mean anything */
+    text-align: center; 
+}
+
+#stats-board{
+    width: 350px;
+    height: 100%;
+    background-color: rgb(151, 121, 95);
+    padding-top: 20px;
+    padding-left: 20px;
+    border-left: 4px rgb(255, 102, 0) solid; 
+    float:right;
+}
+
+/* Modals styling */
+#popup-menu,
+#popup-lost {
+    width: 25vh;
+    height: 15.5vh;
+    text-align: center;
+    margin-bottom: 70%;
+    background-color: rgb(151, 121, 95);
+    border: 3px ridge rgb(255, 102, 0);
+    color: whitesmoke;
+    display: relative;
+}
+
+/* H1 in pop up menu */
+#popup-menu h1 {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+}
+
+/* Restart button */
+#restartBtn1,
+#restartBtn2 {
+    padding: 0.5rem;
+    font-size: 2rem;
+    background-color: rgb(151, 121, 95);
+    color: white;
+}
+
+/* Quit button */
+#quitGameBtn1,
+#quitGameBtn2{
+    padding: 0.5rem;
+    font-size: 2rem;
+    background-color: rgb(151, 121, 95);
+    margin-right: 2dvh;
+}
+
+#restartBtn1:hover,
+#restartBtn2:hover,
+#quitGameBtn1:hover,
+#quitGameBtn2:hover {
+    color: red;
+    background-color: rgb(126, 101, 79);
+}
+
+/* X stylyning for Menu modal */
+#closeMenuBtn {
+    display: absolute;
+    color: white;
+    background-color: red;
+    border: none;
+    position: absolute;
+    top: -2%;
+    right: 0%;
+}
+
+#closeMenuBtn:hover {
+    color: grey;
+}
+
+/* Media Queries */
+@media (min-width: 1024px) {
+    .board-container {
+        margin-top: 20px;
+    }
+    /* Move modals done a bit */
+    #popup-menu,
+    #popup-lost {
+        margin-bottom: 30%;
+        height: 20vh;
+    }
+}
+
+@media (min-width: 1920px) {
+    /* Move modals done a bit */
+    /* Moving Board container to the center of our screen */
+    .board-container {
+        margin-top: 40px;
+    }
+    /* Modal media styling */
+    #popup-menu,
+    #popup-lost {
+        margin-bottom: 25%;
+        height: 18vh;
+    }
+}
+
+@media (min-width: 2560px) {
+    /* Moving Board container to the center of our screen */
+    .board-container {
+        margin-top: 120px;
+        margin-right: 37%;
+    }
+    /* Move modals done a bit */
+    #popup-menu,
+    #popup-lost {
+        margin-bottom: 32%;
+        height: 12vh;
+        width: 15vh;
+    }
+}
