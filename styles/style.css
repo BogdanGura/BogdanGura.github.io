@@ -535,7 +535,7 @@ nav {
   #projectsContainer {
     width: 100%;
     flex-direction: row;
-    padding-bottom: 13vh; }
+    margin-bottom: 13vh !important; }
     #projectsContainer h3 {
       font-size: 1.5rem; }
   .projectsContainer2 {
@@ -590,9 +590,9 @@ nav {
     width: 23%; }
   #about-me-container {
     padding: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 2.8rem;
     width: 60%;
-    height: 45vh; }
+    height: 48vh; }
     #about-me-container img {
       max-width: 20%;
       height: 80%;
