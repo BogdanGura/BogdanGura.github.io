@@ -914,14 +914,13 @@ nav {
     //Item sizing
     .project {
         width: 23%;
-    }
+    } 
 
     // About me page styling
     #about-me-container {
         padding: 1.5rem;
-        padding-bottom: 2.8rem;
         width: 60%;
-        height:48vh;
+        height:auto;
         
         img {
             max-width: 20%;

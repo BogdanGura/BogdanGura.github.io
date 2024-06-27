@@ -590,9 +590,8 @@ nav {
     width: 23%; }
   #about-me-container {
     padding: 1.5rem;
-    padding-bottom: 2.8rem;
     width: 60%;
-    height: 48vh; }
+    height: auto; }
     #about-me-container img {
       max-width: 20%;
       height: 80%;
